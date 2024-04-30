@@ -1,4 +1,4 @@
-import Question from "../Question";
+import Question from "../components/Question";
 
 export default function FAQs() {
 	return (
