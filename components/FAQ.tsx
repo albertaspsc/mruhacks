@@ -2,13 +2,11 @@ import Question from "../components/Question";
 
 export default function FAQs() {
 	return (
-		<div className="container p-8">
+		<div className="container p-8 mt-4">
 			<h1 className="text-4xl font-semibold text-center">Frequently Asked Questions</h1>
-			<div className="columns-1 md:columns-2 m-4">
+			<div className="gap-8 columns-1 md:columns-2 mt-12 space-y-8">
 				<Question question="What is a Hackathon?"
-					answer="A hackathon can be thought of as an “invention marathon” or a “real time science fair”. Anyone who has an interest in technology and software attends a hackathon to learn, build & share their creations over the course of a weekend in a relaxed and welcoming atmosphere.
-
-Over the course of 24-hours you will bring your crazy ideas to life through technology before showcasing them to a team of judges." />
+					answer="A hackathon can be thought of as an “invention marathon” or a “real time science fair”. Anyone who has an interest in technology and software attends a hackathon to learn, build & share their creations over the course of a weekend in a relaxed and welcoming atmosphere. Over the course of 24-hours you will bring your crazy ideas to life through technology before showcasing them to a team of judges." />
 				<Question question="When is MRUHacks?"
 					answer="MRUHacks will be held from October 5th - 6th, 2024, in the Riddell Library and Learning Centre. You can sign up here to subscribe to our mailing list to receive details when they become available." />
 				<Question question="Who can participate?"
