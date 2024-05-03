@@ -12,6 +12,7 @@ export default function Community() {
                     alt="Big cat chilling"
                     className="rounded"
                     width={1600}
+                    height={0}
                 />
             </div>
             <h1 className="text-2xl font-bold mb-4">Join The MRUHACKS Community!</h1>
