@@ -19,9 +19,9 @@ export default function Header() {
 				<a className="btn btn-ghost"><Image src="/mruhacks_title.PNG" alt="MRUHacks" width={150} height={150} /></a>
 			</div>
 
-			<div className="hidden md:flex flex-row ">
-				<div className="items-end">
-					<ul className="menu menu-lg menu-horizontal px-1">
+			<div className="navbar-end hidden md:flex flex-row items-end">
+				<div className="flex-none">
+					<ul className="menu menu-md menu-horizontal px-1">
 						<li><a href="#">Home</a></li>
 						<li><a href="#">About MRUHacks</a></li>
 						<li><a href="#">FAQs</a></li>
