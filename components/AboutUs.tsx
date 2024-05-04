@@ -1,6 +1,6 @@
 export default function AboutUs() {
-	return (
-		<div className="hero min-h-screen bg-base-200">
+    return (
+        <div className="hero min-h-screen bg-base-200">
             <div className="hero-content flex-col lg:flex-row">
                 <img src="/cat.jpg" className="max-w-sm rounded-lg shadow-2xl" />
                 <div>
@@ -10,5 +10,5 @@ export default function AboutUs() {
                 </div>
             </div>
         </div>
-	);
+    );
 }

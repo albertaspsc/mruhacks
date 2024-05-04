@@ -1,4 +1,4 @@
-export default function AhoutHacks() {
+export default function AboutHacks() {
     return (
         <>
             <div className="hero min-h-screen bg-base-200">
@@ -14,3 +14,4 @@ export default function AhoutHacks() {
         </>
     )
 }
+

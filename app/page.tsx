@@ -3,6 +3,7 @@ import Welcome from "@/components/Welcome";
 import Community from "@/components/Community";
 import AboutUs from "@/components/AboutUs";
 import AboutHacks from "@/components/AboutHacks";
+import Sponsors from "@/components/Sponsors";
 
 export default function Home() {
   return (
@@ -12,6 +13,7 @@ export default function Home() {
       <AboutHacks />
       <FAQs />
       <Community />
+      <Sponsors />
     </div>
   );
 }
