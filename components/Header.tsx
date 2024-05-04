@@ -1,5 +1,6 @@
 import Image from "next/image";
 
+
 export default function Header() {
 	return (
 		<div className="navbar bg-base-100">
