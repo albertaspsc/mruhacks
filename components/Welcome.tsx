@@ -1,8 +1,16 @@
 export default function Welcome() {
 	return (
-		<div className="flex flex-col p-12 items-center justify-center">
-			<h1 className="text-2xl font-bold">Welcome to MRUHacks</h1>
-			<p>Enabling students to dream, design, and develop their future!</p>
+		<div className="hero min-h-screen" style={{backgroundImage: 'url(bg.jpg)'}}>
+		<div className="hero-overlay bg-opacity-60">
+			{/* <img src="/bg.jpg" alt="" /> */}
+		</div>
+		<div className="hero-content text-center text-neutral-content">
+			<div className="max-w-md">
+			<h1 className="mb-5 text-7xl font-bold">Welcome to MRUHacks</h1>
+			<p className="mb-5">Enabling students to dream, design, and develop their future!</p>
+			<button className="btn btn-primary">Join Us</button>
+			</div>
+		</div>
 		</div>
 	);
 }
