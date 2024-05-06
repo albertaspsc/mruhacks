@@ -3,7 +3,7 @@ import Image from "next/image";
 
 export default function Header() {
 	return (
-		<div className="navbar top-0 bg-base-100">
+		<div className="navbar sticky top-0 bg-base-100">
 			<div className="navbar-start flex-row flex-initial">
 				<div className="dropdown">
 					<div tabIndex={0} role="button" className="btn btn-ghost md:hidden">
