@@ -3,7 +3,7 @@ import Image from "next/image";
 
 export default function Header() {
 	return (
-		<div className="navbar bg-base-100">
+		<div className="navbar top-0 bg-base-100">
 			<div className="navbar-start flex-row flex-initial">
 				<div className="dropdown">
 					<div tabIndex={0} role="button" className="btn btn-ghost md:hidden">
@@ -17,7 +17,10 @@ export default function Header() {
 						<li><a href="#">Sponsors</a></li>
 					</ul>
 				</div>
-				<a className="btn btn-ghost"><Image src="/mruhacks_title.PNG" alt="MRUHacks" width={150} height={150} /></a>
+				<a className="btn btn-ghost">
+					<Image className="dark:hidden"src="/mru_title_dark.jpg" alt="MRUHacks" width={150} height={150} />
+					<Image className="hidden dark:block" src="/mru_title_light.jpg" alt="MRUHacks" width={150} height={150} />
+				</a>
 			</div>
 
 			<div className="navbar-end hidden md:flex flex-row items-end">
