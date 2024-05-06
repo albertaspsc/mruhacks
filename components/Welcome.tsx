@@ -1,7 +1,7 @@
 export default function Welcome() {
 	return (
 		<div className="hero min-h-screen" style={{backgroundImage: 'url(bg.jpg)'}}>
-		<div className="hero-overlay bg-opacity-60">
+		<div className="hero-overlay bg-opacity-30">
 			{/* <img src="/bg.jpg" alt="" /> */}
 		</div>
 		<div className="hero-content text-center text-neutral-content">
