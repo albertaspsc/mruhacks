@@ -5,6 +5,8 @@ import AboutUs from "@/components/AboutUs";
 import AboutHacks from "@/components/AboutHacks";
 import Sponsors from "@/components/Sponsors";
 import Header from "@/components/Header";
+import { ScrollToTop } from "@/components/ScrollToTop";
+import { Footer } from "@/components/Footer";
 
 export default function Home() {
   return (
@@ -17,6 +19,8 @@ export default function Home() {
         <FAQs />
         <Community />
         <Sponsors />
+        <Footer />
+        <ScrollToTop />
       </div>
     </>
   );
