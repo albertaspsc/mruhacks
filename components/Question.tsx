@@ -3,7 +3,7 @@ export default function Question({ question, answer }: {
 	answer: string;
 }) {
 	return (
-		<div className="collapse collapse-arrow p-4 border border-accent-500">
+		<div className="collapse collapse-arrow p-4 border border-accent bg-secondary">
 			<input type="checkbox" />
 			<div className="collapse-title text-xl font-medium">
 				{question}
