@@ -1,13 +1,24 @@
 export default function AboutUs() {
-    return (
-        <div className="hero min-h-full bg-base-200 py-20">
-            <div className="hero-content flex-col lg:flex-row">
-                <img src="/cat.jpg" className=" rounded-lg shadow-2xl" />
-                <div className="p-8">
-                    <h1 className="text-3xl font-bold">About US!</h1>
-                    <p className="py-6">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dicta ea quidem in voluptatum mollitia impedit magni deserunt quae corrupti! Libero, illum hic eligendi expedita possimus consequuntur tenetur error odit aliquid?</p>
-                </div>
-            </div>
+  return (
+    <div className="hero min-h-full py-20" id="about">
+      <div className="hero-content flex-col lg:flex-row">
+        <img src="/cat.jpg" className=" rounded-lg shadow-2xl" />
+        <div className="p-8 bg-primary-700 rounded-xl">
+          <h1 className="text-3xl font-bold text-secondary-200">
+            About the Competition
+          </h1>
+          <p className="py-6 text-text-50">
+            Every October, join 150+ hackers in the Riddell Library and Learning
+            Center for a hackathon experience like no other. Discover a
+            community of like-minded designers, developers, programmers, and
+            tech enthusiasts. Connect and engage with industry mentors from a
+            variety of fields. At MRUHacks, the participant experience comes
+            first. Experience engaging workshops, exciting activities before and
+            during the event, and have the chance to network with not only
+            companies, but your fellow hackers.
+          </p>
         </div>
-    );
+      </div>
+    </div>
+  );
 }
