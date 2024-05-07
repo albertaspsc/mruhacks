@@ -39,7 +39,7 @@ export default function Header() {
         show ? "translate-y-0" : "-translate-y-full"
       } z-30`}
     >
-      <div className="navbar sticky top-0 bg-accent-400">
+      <div className="navbar sticky top-0 bg-accent-800">
         <div className="navbar-start flex-row flex-initial">
           <div className="dropdown">
             <div tabIndex={0} role="button" className="btn btn-ghost md:hidden">
