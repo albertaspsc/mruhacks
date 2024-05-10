@@ -7,26 +7,15 @@ export default function Header() {
   const [show, setShow] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
 
-  const controlNavbar = () => {
-    if (typeof window !== "undefined") {
-      if (window.scrollY > lastScrollY) {
-        // if scrolling down, hide the navbar
-        setShow(false);
-      } else {
-        // if scrolling up, show the navbar
-        setShow(true);
-      }
-
-      // remember the current page location for the next move
-      setLastScrollY(window.scrollY);
-    }
-  };
-
   useEffect(() => {
+    const controlNavbar = () => {
+      setShow(window.scrollY <= lastScrollY || window.scrollY < 10);
+      setLastScrollY(window.scrollY);
+    };
+
     if (typeof window !== "undefined") {
       window.addEventListener("scroll", controlNavbar);
 
-      // cleanup function
       return () => {
         window.removeEventListener("scroll", controlNavbar);
       };
@@ -40,7 +29,7 @@ export default function Header() {
       } z-30`}
     >
       <div className="navbar sticky top-0 bg-accent-800">
-        <div className="navbar-start flex-row flex-initial">
+        <div className="navbar-start flex-row lg:flex-initial">
           <div className="dropdown">
             <div tabIndex={0} role="button" className="btn btn-ghost md:hidden">
               <svg
