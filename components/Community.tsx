@@ -3,30 +3,23 @@ import { FaLinkedinIn } from "react-icons/fa";
 import { FaDiscord } from "react-icons/fa";
 import { FaInstagram } from "react-icons/fa";
 
+import groupPicture from "../public/group_image_vlad4.jpg";
+
 export default function Community() {
   return (
-    <div
-      className="flex flex-col p-12 items-center justify-center"
-      id="community"
-    >
-      <h1 className="text-3xl font-bold text-primary-700 mb-4">
+    <div className="flex flex-col items-center ">
+      <h1 className="text-2xl md:text-3xl font-bold text-primary-700 text-center">
         Join the MRUHacks Community!
       </h1>
-      <div className="mb-8">
-        <Image
-          src="/group_image_vlad4.jpg"
-          alt="Big cat chilling"
-          className="rounded"
-          width={1600}
-          height={0}
-        />
-      </div>
-      <div className="flex flex-wrap mb-4 text-primary-500">
-        {" "}
-        {/* Added flex-wrap for responsive wrapping */}
+      <Image
+        src={groupPicture}
+        alt="Image of MRUHacks 2023 Attendance, gathered for group photo"
+        className="rounded-2xl"
+      />
+
+      <div className="mb-4 text-primary-500">
         <a
           href="https://www.instagram.com/mruhacks"
-          target="_blank"
           rel="noopener noreferrer"
           className="btn btn-active btn-link mr-4 mb-2"
         >
@@ -50,15 +43,20 @@ export default function Community() {
         </a>
       </div>
 
-      <h2 className="text-xl font-semibold mb-4 text-accent-700">
-        {" "}
-        Or sign up for our newsletter!
-      </h2>
-      <div className="join">
-        <input className="input input-bordered join-item" placeholder="Email" />
-        <button className="btn join-item rounded-r-full bg-primary-300">
-          Submit
-        </button>
+      <div>
+        <h2 className="text-xl font-semibold text-accent-700">
+          Sign up for our newsletter!
+        </h2>
+
+        <div className="join">
+          <input
+            className="input input-bordered join-item"
+            placeholder="Email"
+          />
+          <button className="btn join-item rounded-r-full bg-primary-300">
+            Submit
+          </button>
+        </div>
       </div>
     </div>
   );
