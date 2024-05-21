@@ -50,7 +50,7 @@ export default function Community() {
         </a>
       </div>
 
-      <h2 className="text-xl font-semibold mb-4 text-accent-700">
+      {/* <h2 className="text-xl font-semibold mb-4 text-accent-700">
         {" "}
         Or sign up for our newsletter!
       </h2>
@@ -59,7 +59,7 @@ export default function Community() {
         <button className="btn join-item rounded-r-full bg-primary-300">
           Submit
         </button>
-      </div>
+      </div> */}
     </div>
   );
 }
