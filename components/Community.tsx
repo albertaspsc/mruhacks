@@ -1,4 +1,5 @@
 import Image from "next/image";
+import BubbleUI from "react-bubble-ui-v2";
 import { FaLinkedinIn } from "react-icons/fa";
 import { FaDiscord } from "react-icons/fa";
 import { FaInstagram } from "react-icons/fa";
@@ -49,17 +50,6 @@ export default function Community() {
           <FaLinkedinIn size={24} />
         </a>
       </div>
-
-      {/* <h2 className="text-xl font-semibold mb-4 text-accent-700">
-        {" "}
-        Or sign up for our newsletter!
-      </h2>
-      <div className="join">
-        <input className="input input-bordered join-item" placeholder="Email" />
-        <button className="btn join-item rounded-r-full bg-primary-300">
-          Submit
-        </button>
-      </div> */}
     </div>
   );
 }
