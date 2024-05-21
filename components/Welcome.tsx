@@ -8,7 +8,7 @@ export default function Welcome() {
       <div className="hero-overlay">
         {/* <img src="/bg.jpg" alt="" /> */}
       </div>
-      <div className="hero-content text-center text-neutral-content">
+      <div className="hero-content text-center text-neutral-content p-10 opacity-90 bg-primary-700 rounded-2xl">
         <div className="max-w-md">
           <h1 className="mb-5 text-7xl font-bold text-text-200">MRUHacks</h1>
           <p className="mb-5 text-text-200 text-lg">
