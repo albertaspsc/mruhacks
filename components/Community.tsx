@@ -3,25 +3,22 @@ import { FaLinkedinIn } from "react-icons/fa";
 import { FaDiscord } from "react-icons/fa";
 import { FaInstagram } from "react-icons/fa";
 
+import groupPicture from "../public/group_image_vlad4.jpg";
+
 export default function Community() {
   return (
-    <div
-      className="flex flex-col p-12 items-center justify-center"
-      id="community"
-    >
-      <h1 className="text-3xl font-bold text-primary-700 mb-4">
+    <div className="flex flex-col items-center" id="community">
+      <h1 className="text-2xl md:text-3xl font-bold text-primary-700 text-center">
         Join the MRUHacks Community
       </h1>
       <div className="mb-8">
         <Image
-          src="/group_image_vlad4.jpg"
-          alt="MRUHacks 2023"
-          className="rounded"
-          width={1600}
-          height={0}
+          src={groupPicture}
+          alt="MRUHacks 2023 Participants"
+          className="rounded-2xl"
         />
       </div>
-      <div className="flex flex-wrap mb-4 space-x-8 text-primary-500">
+      <div className="flex flex-row mb-4 content-evenly lg:flex-wrap space-x-8 text-primary-500">
         {" "}
         {/* Added flex-wrap for responsive wrapping */}
         <div className="flex flex-col content-center mb-2">
