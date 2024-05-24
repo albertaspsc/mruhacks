@@ -7,7 +7,6 @@ import Sponsors from "@/components/Sponsors";
 import Header from "@/components/Header";
 import { ScrollToTop } from "@/components/ScrollToTop";
 import { Footer } from "@/components/Footer";
-
 export default function Home() {
   return (
     <>

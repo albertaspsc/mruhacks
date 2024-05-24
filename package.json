@@ -13,7 +13,8 @@
     "react": "^18",
     "react-bubble-ui-v2": "^0.1.2",
     "react-dom": "^18",
-    "react-icons": "^5.2.0"
+    "react-icons": "^5.2.0",
+    "react-photo-album": "^2.4.0"
   },
   "devDependencies": {
     "@types/node": "^20",
