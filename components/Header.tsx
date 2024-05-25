@@ -42,7 +42,7 @@ export default function Header() {
       <div className="navbar sticky top-0 bg-accent-800">
         <div className="navbar-start flex-row flex-initial">
           <div className="dropdown">
-            <div tabIndex={0} role="button" className="btn btn-ghost md:hidden">
+            <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-5 w-5"
@@ -79,14 +79,7 @@ export default function Header() {
               </li>
             </ul>
           </div>
-          <a className="btn btn-ghost">
-            <Image
-              className="dark:hidden"
-              src="/mru_title_dark.jpg"
-              alt="MRUHacks"
-              width={150}
-              height={150}
-            />
+          <a className="btn btn-ghost align-center">
             <Image
               className="hidden dark:block"
               src="/mru_title_light.jpg"
@@ -97,7 +90,7 @@ export default function Header() {
           </a>
         </div>
 
-        <div className="navbar-end hidden md:flex flex-row items-end">
+        <div className="navbar-end hidden lg:flex flex-row items-end">
           <div className="flex-none">
             <ul className="menu menu-lg menu-horizontal px-1 font-medium text-text-50">
               <li>

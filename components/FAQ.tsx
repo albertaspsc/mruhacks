@@ -6,7 +6,7 @@ export default function FAQs() {
       <h1 className="text-2xl md:text-3xl font-bold text-center text-primary-700">
         Frequently Asked Questions
       </h1>
-      <div className="mt-4 space-y-2">
+      <div className="mt-4 space-y-2 px-5">
         {faqs.map((f, key) => (
           <Question key={key} {...f}></Question>
         ))}
