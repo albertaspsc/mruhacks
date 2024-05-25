@@ -42,7 +42,7 @@ export default function Header() {
       <div className="navbar sticky top-0 bg-accent-800">
         <div className="navbar-start flex-row flex-initial">
           <div className="dropdown">
-            <div tabIndex={0} role="button" className="btn btn-ghost md:hidden">
+            <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-5 w-5"
@@ -97,7 +97,7 @@ export default function Header() {
           </a>
         </div>
 
-        <div className="navbar-end hidden md:flex flex-row items-end">
+        <div className="navbar-end hidden lg:flex flex-row items-end">
           <div className="flex-none">
             <ul className="menu menu-lg menu-horizontal px-1 font-medium text-text-50">
               <li>

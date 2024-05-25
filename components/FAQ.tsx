@@ -1,5 +1,4 @@
 import Question from "../components/Question";
-
 export default function FAQs() {
   return (
     <div id="faq">
