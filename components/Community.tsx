@@ -11,7 +11,7 @@ export default function Community() {
       <h1 className="text-2xl md:text-3xl font-bold text-primary-700 text-center">
         Join the MRUHacks Community
       </h1>
-      <div className="mb-8">
+      <div className="mb-8 px-4">
         <Image
           src={groupPicture}
           alt="MRUHacks 2023 Participants"
