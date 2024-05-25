@@ -1,11 +1,11 @@
 import Image from "next/image";
-
+import background from "../public/bg3.jpg";
 import logo from "../public/mru_title_light.jpg";
 
 export default function Welcome() {
   return (
-    <div className="hero bg-[url('../public/bg3.jpg')] bg-auto" id="home">
-      <div className="min-h-screen hero-overlay bg-opacity-60"></div>
+    <div className="hero min-h-screen bg-opacity-60 bg-auto" id="home">
+      <Image src={background} alt="" className="hero-overlay absolute" />
       <div className="hero-content text-center text-white flex-col">
         <Image src={logo} alt="MRUHacks title logo" />
         <p className="mb-5 text-xl font-semibold p-4">

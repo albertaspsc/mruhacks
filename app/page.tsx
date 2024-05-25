@@ -8,7 +8,7 @@ import { Footer } from "@/components/Footer";
 import Section from "@/components/Section";
 
 import welcomeImage from "../public/welcome.jpg";
-import aboutImage from "../public/about2.jpg";
+import aboutImage from "../public/about3.jpg";
 
 export default function Home() {
   return (
