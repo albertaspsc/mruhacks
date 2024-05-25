@@ -32,7 +32,7 @@ export default function Community() {
             <p className="text-md font-medium">Instagram</p>
           </a>
         </div>
-        <div className="flex flex-col content-center mb-2">
+        {/* <div className="flex flex-col content-center mb-2">
           <a
             href="https://www.example.com"
             target="_blank"
@@ -42,7 +42,7 @@ export default function Community() {
             <FaDiscord size={24} />
             <p className="text-md font-medium">Discord</p>
           </a>
-        </div>
+        </div> */}
         <div className="flex flex-col justify-center mb-2">
           <a
             href="https://www.linkedin.com/company/mruhacks"

@@ -8,14 +8,14 @@ import { Footer } from "@/components/Footer";
 import Section from "@/components/Section";
 
 import welcomeImage from "../public/welcome.jpg";
-import aboutImage from "../public/about2.jpg";
+import aboutImage from "../public/about3.jpg";
 
 export default function Home() {
   return (
     <div className="w-full flex flex-col items-center bg-background-100 m-auto">
       <Header />
       <Welcome />
-      <div className="my-5 space-y-20 max-w-screen-2xl" id="about">
+      <div className="py-16 space-y-20 max-w-screen-2xl" id="about">
         <Section
           image={welcomeImage}
           title="Welcome to MRUHacks"
