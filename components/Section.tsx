@@ -37,7 +37,7 @@ export default function Section({
           <h1 className="text-xl sm:text-2xl font-bold text-secondary-200">
             {title}
           </h1>
-          <p className="py-6 text-text-50">{body}</p>
+          <p className="py-6 text-md text-text-50 font-medium lg:text-lg">{body}</p>
           {children}
         </div>
       </div>
