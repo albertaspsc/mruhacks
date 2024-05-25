@@ -7,7 +7,7 @@ export default function Welcome() {
     <div className="hero min-h-screen bg-opacity-60 bg-auto" id="home">
       <Image src={background} alt="" className="hero-overlay absolute" />
       <div className="hero-content text-center text-white flex-col">
-        <Image src={logo} alt="MRUHacks title logo" />
+        <Image src={logo} alt="MRUHacks title logo" width={900} height={900} />
         <p className="mb-5 text-xl font-semibold p-4">
           24 Hours of Collaboration, Coding, and Connections
         </p>
