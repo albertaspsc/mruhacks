@@ -15,7 +15,7 @@ export default function Home() {
     <div className="w-full flex flex-col items-center bg-background-100 m-auto">
       <Header />
       <Welcome />
-      <div className="py-16 space-y-20 max-w-screen-2xl px-5 " id="about">
+      <div className="py-20 space-y-20 max-w-screen-2xl px-5 " id="about">
         <Section
           image={welcomeImage}
           title="Welcome to MRUHacks"
