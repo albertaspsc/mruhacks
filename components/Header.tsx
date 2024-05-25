@@ -79,14 +79,7 @@ export default function Header() {
               </li>
             </ul>
           </div>
-          <a className="btn btn-ghost">
-            <Image
-              className="dark:hidden"
-              src="/mru_title_dark.jpg"
-              alt="MRUHacks"
-              width={150}
-              height={150}
-            />
+          <a className="btn btn-ghost align-center">
             <Image
               className="hidden dark:block"
               src="/mru_title_light.jpg"

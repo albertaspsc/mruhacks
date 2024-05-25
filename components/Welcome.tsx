@@ -8,7 +8,7 @@ export default function Welcome() {
       <Image src={background} alt="" className="hero-overlay absolute" />
       <div className="hero-content text-center text-white flex-col">
         <Image src={logo} alt="MRUHacks title logo" width={900} height={900} />
-        <p className="mb-5 text-xl font-semibold p-4">
+        <p className="text-xl font-semibold p-4">
           24 Hours of Collaboration, Coding, and Connections
         </p>
         <a href="https://forms.gle/3E7CXnPtpGGGuN3y7" target="_blank">
