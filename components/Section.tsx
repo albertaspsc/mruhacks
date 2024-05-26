@@ -18,8 +18,7 @@ export default function Section({
 }: SectionParams) {
   // Allow for placing the image on the right side of the text, we default to
   // left if none is provided
-  const image_side_style =
-    image_side === "right" ? "order-last" : "lg:flex-row";
+  const image_side_style = image_side === "right" ? "md:order-last" : "";
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-5 items-center ">
@@ -30,7 +29,7 @@ export default function Section({
       />
       <div className="p-5 bg-primary-700 rounded-xl h-min bg-primary-content text-neutral">
         <h1 className="font-bold text-xl">{title}</h1>
-        <p className="py-6 text-text-50  ">{body}</p>
+        <p className="py-6  ">{body}</p>
         {children}
       </div>
     </div>

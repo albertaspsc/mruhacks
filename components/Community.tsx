@@ -27,7 +27,7 @@ export default async function Community() {
           href={props.href}
           target="_blank" /* Open in new tab */
           rel="noopener noreferrer"
-          className="btn btn-link font-medium text-primary-content text-lg"
+          className="btn btn-link font-medium text-primary-content text-base sm:text-lg"
         >
           {/* I hate this more than you know but it works soooo*/}
           <props.icon />
@@ -41,14 +41,14 @@ export default async function Community() {
       <h1 className="text-xl font-bold text-primary-content text-center">
         Join the MRUHacks Community
       </h1>
-      <div className="mb-8 px-4">
+      <div className="mb-8">
         <Image
           src={groupPicture}
           alt="MRUHacks 2023 Participants"
           className="rounded-2xl"
         />
       </div>
-      <div className="flex flex-row justify-center space-x-10">
+      <div className="flex flex-row justify-center ">
         <Socials />
       </div>
     </div>

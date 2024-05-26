@@ -9,7 +9,7 @@ export default function Question({
     <details className="collapse collapse-arrow join-item p-4 my-4 border border-accent-100 bg-primary text-neutral">
       <input type="checkbox" name="faq" className="hidden" />
       <summary className="collapse-title font-bold text-lg">{question}</summary>
-      <div className="collapse-content text-md font-medium lg:text-lg">
+      <div className="collapse-content ">
         <p>{answer}</p>
       </div>
     </details>

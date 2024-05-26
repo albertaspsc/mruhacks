@@ -12,7 +12,7 @@ export default function Header() {
 
   useEffect(() => {
     const controlNavbar = () => {
-      setShow(window.scrollY <= lastScrollY);
+      setShow(window.scrollY <= lastScrollY || window.scrollY < 10);
       setLastScrollY(window.scrollY);
     };
 

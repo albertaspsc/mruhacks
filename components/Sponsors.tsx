@@ -10,7 +10,7 @@ export default function Sponsors() {
         </p>
         <a
           href="mailto:outreach@mruhacks.ca"
-          className="text-neutral btn btn-primary"
+          className="text-neutral btn btn-primary btn-lg"
         >
           Become a Sponsor!
         </a>

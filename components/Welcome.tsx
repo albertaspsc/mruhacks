@@ -19,7 +19,7 @@ export default function Welcome() {
         <Link
           href="https://forms.gle/3E7CXnPtpGGGuN3y7"
           target="_blank"
-          className="btn btn-secondary"
+          className="btn btn-secondary btn-lg"
         >
           Pre-register now!
         </Link>
