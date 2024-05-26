@@ -19,6 +19,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" data-theme="mruhacks">
+      <meta name="theme-color" content="#002766" />
       <body className={dm_sans.className}>{children}</body>
     </html>
   );
