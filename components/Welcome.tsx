@@ -12,7 +12,7 @@ export default function Welcome() {
         className="hero-overlay absolute object-cover"
       />
       <div className="hero-content text-center text-white flex-col">
-        <Image className="hidden dark:block w-1/2" src={logo} alt="MRUHacks" />
+        <Image className="w-1/2" src={logo} alt="MRUHacks" />
         <p className="mb-5 font-semibold p-4">
           24 Hours of Collaboration, Coding, and Connections
         </p>

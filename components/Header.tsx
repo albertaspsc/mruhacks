@@ -52,11 +52,7 @@ export default function Header() {
       <div className="navbar sticky top-0 bg-primary text-neutral h-[52px]">
         <div className="navbar-start">
           <DropDown />
-          <Image
-            className="hidden dark:block max-h-10 w-auto"
-            src={Logo}
-            alt="MRUHacks Logo"
-          />
+          <Image className="max-h-10 w-auto" src={Logo} alt="MRUHacks Logo" />
         </div>
 
         <div className="navbar-end hidden  lg:flex">
