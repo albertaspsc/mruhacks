@@ -12,7 +12,7 @@ export default async function Community() {
       href: "https://www.instagram.com/mruhacks",
       icon: FaInstagram,
     },
-    Discord: { href: "https://www.example.com", icon: FaDiscord },
+    // Discord: { href: "https://www.example.com", icon: FaDiscord },
     LinkedIn: {
       href: "https://www.linkedin.com/company/mruhacks",
       icon: FaLinkedinIn,
@@ -48,44 +48,9 @@ export default async function Community() {
           className="rounded-2xl"
         />
       </div>
-      <div className="flex flex-row mb-4 content-evenly lg:flex-wrap space-x-8 text-primary-500">
-        {" "}
-        {/* Added flex-wrap for responsive wrapping */}
-        <div className="flex flex-col content-center mb-2">
-          <a
-            href="https://www.instagram.com/mruhacks"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn btn-active btn-link"
-          >
-            <FaInstagram size={24} />
-            <p className="text-md font-medium">Instagram</p>
-          </a>
-        </div>
-        {/* <div className="flex flex-col content-center mb-2">
-          <a
-            href="https://www.example.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn btn-active btn-link"
-          >
-            <FaDiscord size={24} />
-            <p className="text-md font-medium">Discord</p>
-          </a>
-        </div> */}
-        <div className="flex flex-col justify-center mb-2">
-          <a
-            href="https://www.linkedin.com/company/mruhacks"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn btn-active btn-link"
-          >
-            <FaLinkedinIn size={24} />
-            <p className="text-md font-medium">LinkedIn</p>
-          </a>
-        </div>
+      <div className="flex flex-row justify-center space-x-10">
+        <Socials />
       </div>
-      <Sponsors />
     </div>
   );
 }

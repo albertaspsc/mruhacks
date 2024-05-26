@@ -8,6 +8,7 @@ import Section from "@/components/Section";
 
 import welcomeImage from "../public/welcome.jpg";
 import aboutImage from "../public/about3.jpg";
+import Sponsors from "@/components/Sponsors";
 
 const Sections = () => (
   <>
@@ -34,6 +35,7 @@ export default function Home() {
         <FAQs />
         <Community />
         <ScrollToTop />
+        <Sponsors />
       </div>
       <Footer />
     </div>

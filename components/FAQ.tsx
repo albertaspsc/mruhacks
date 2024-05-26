@@ -1,8 +1,12 @@
 import Question from "../components/Question";
 export default function FAQs() {
+  const half = faqs.length / 2;
+  const left = faqs.slice(0, half);
+  const right = faqs.slice(half);
+
   return (
-    <div id="faq" className="space-y-5">
-      <h1 className="font-bold text-center text-primary-content text-2xl">
+    <div id="faq">
+      <h1 className="text-xl font-bold text-center text-primary-content">
         Frequently Asked Questions
       </h1>
       <div className="-mx-4 flex flex-wrap pt-4">
@@ -62,7 +66,3 @@ const faqs: { question: string; answer: string }[] = [
     answer: "They are way too fun to pass up!",
   },
 ];
-
-let half = faqs.length / 2;
-let left = faqs.slice(0, half);
-let right = faqs.slice(half);
