@@ -6,8 +6,8 @@ export default function Question({
   answer: string;
 }) {
   return (
-    <div className="collapse collapse-arrow p-4 border border-accent-100 bg-accent-700">
-      <input type="checkbox" />
+    <div className="collapse collapse-arrow join-item p-4 border border-accent-100 bg-accent-700">
+      <input type="radio" name="faq" />
       <div className="collapse-title text-lg lg:text-xl font-semibold text-secondary-200">
         {question}
       </div>
