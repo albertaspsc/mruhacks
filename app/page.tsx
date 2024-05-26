@@ -1,7 +1,6 @@
 import FAQs from "@/components/FAQ";
 import Welcome from "@/components/Welcome";
 import Community from "@/components/Community";
-import Sponsors from "@/components/Sponsors";
 import Header from "@/components/Header";
 import { ScrollToTop } from "@/components/ScrollToTop";
 import { Footer } from "@/components/Footer";
@@ -34,7 +33,6 @@ export default function Home() {
         <Sections />
         <FAQs />
         <Community />
-        <Sponsors />
         <ScrollToTop />
       </div>
       <Footer />

@@ -5,10 +5,17 @@ export default function FAQs() {
       <h1 className="font-bold text-center text-primary-content text-2xl">
         Frequently Asked Questions
       </h1>
-      <div className="mt-4 space-y-2 lg:grid grid-cols-2 gap-x-6 gap-y-4">
-        {faqs.map((f, key) => (
-          <Question key={key} {...f}></Question>
-        ))}
+      <div className="-mx-4 flex flex-wrap pt-4">
+        <div className="w-full px-4 lg:w-1/2">
+          {left.map((f, key) => (
+            <Question key={key} {...f}></Question>
+          ))}
+        </div>
+        <div className="w-full px-4 lg:w-1/2">
+          {right.map((f, key) => (
+            <Question key={key} {...f}></Question>
+          ))}
+        </div>
       </div>
     </div>
   );
@@ -55,3 +62,7 @@ const faqs: { question: string; answer: string }[] = [
     answer: "They are way too fun to pass up!",
   },
 ];
+
+let half = faqs.length / 2;
+let left = faqs.slice(0, half);
+let right = faqs.slice(half);
