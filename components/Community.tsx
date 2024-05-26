@@ -1,13 +1,13 @@
 import Image from "next/image";
 import { FaLinkedinIn } from "react-icons/fa";
-import { FaDiscord } from "react-icons/fa";
+import Sponsors from "../components/Sponsors";
 import { FaInstagram } from "react-icons/fa";
 
 import groupPicture from "../public/group_image_vlad4.jpg";
 
 export default function Community() {
   return (
-    <div className="flex flex-col items-center" id="community">
+    <div className="flex flex-col items-center pb-0" id="community">
       <h1 className="text-2xl md:text-3xl font-bold text-primary-700 text-center">
         Join the MRUHacks Community
       </h1>
@@ -55,6 +55,7 @@ export default function Community() {
           </a>
         </div>
       </div>
+      <Sponsors />
     </div>
   );
 }
