@@ -1,8 +1,8 @@
 import Question from "../components/Question";
 export default function FAQs() {
   return (
-    <div id="faq">
-      <h1 className="text-2xl md:text-3xl font-bold text-center text-primary-700">
+    <div id="faq" className="space-y-5">
+      <h1 className="font-bold text-center text-primary-content text-2xl">
         Frequently Asked Questions
       </h1>
       <div className="mt-4 space-y-2 lg:grid grid-cols-2 gap-x-6 gap-y-4">

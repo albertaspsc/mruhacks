@@ -1,6 +1,6 @@
 export const Footer = () => {
   return (
-    <footer className="footer footer-center p-10 bg-accent-800 text-accent-50 text-md font-semibold rounded">
+    <footer className="footer footer-center p-10 bg-primary text-neutral font-semibold">
       <aside>
         <p>
           Copyright © 2024 - MRUHacks Development Team
