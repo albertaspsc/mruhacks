@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useState, useEffect } from "react";
 
-import Logo from "../public/mru_title_light.jpg";
+import Logo from "../public/mru_title_light.png";
 import { FaBars } from "react-icons/fa";
 
 export default function Header() {

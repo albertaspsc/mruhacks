@@ -1,6 +1,6 @@
 import Image from "next/image";
 import background from "../public/bg3.jpg";
-import logo from "../public/mru_title_light.jpg";
+import logo from "../public/mru_title_light.png";
 import Link from "next/link";
 
 export default function Welcome() {
