@@ -27,10 +27,10 @@ const Sections = () => (
 );
 export default function Home() {
   return (
-    <div className="w-full flex flex-col items-center bg-background-100 m-auto">
+    <div className="flex flex-col items-center">
       <Header />
       <Welcome />
-      <div className="p-5 space-y-20 max-w-screen-2xl">
+      <div className="py-10 space-y-20 max-w-screen-2xl">
         <Sections />
         <FAQs />
         <Community />
