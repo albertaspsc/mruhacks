@@ -10,21 +10,21 @@ export default function Header() {
   const [show, setShow] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
 
-  useEffect(() => {
-    const controlNavbar = () => {
-      setShow(window.scrollY <= lastScrollY || window.scrollY < 10);
-      setLastScrollY(window.scrollY);
-    };
+  // useEffect(() => {
+  //   const controlNavbar = () => {
+  //     setShow(window.scrollY <= lastScrollY || window.scrollY < 10);
+  //     setLastScrollY(window.scrollY);
+  //   };
 
-    if (typeof window !== "undefined") {
-      window.addEventListener("scroll", controlNavbar);
+  //   if (typeof window !== "undefined") {
+  //     window.addEventListener("scroll", controlNavbar);
 
-      // cleanup function
-      return () => {
-        window.removeEventListener("scroll", controlNavbar);
-      };
-    }
-  }, [lastScrollY]);
+  //     // cleanup function
+  //     return () => {
+  //       window.removeEventListener("scroll", controlNavbar);
+  //     };
+  //   }
+  // }, [lastScrollY]);
 
   const DropDown = () => (
     <div className="dropdown">
