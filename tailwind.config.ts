@@ -34,8 +34,8 @@ const config: Config = {
         mruhacks: {
           primary: "#002766",
           "primary-content": "#581188",
-          secondary: "#ff00ff",
-          accent: "#0062ff",
+          secondary: "#0062ff",
+          accent: "#ff00ff",
           neutral: "#f2f2f2",
           // Background Color
           "base-100": "#e4e4e7",
