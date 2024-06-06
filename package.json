@@ -21,6 +21,7 @@
     "tailwind-merge": "^2.3.0"
   },
   "devDependencies": {
+    "@types/node": "^20.14.2",
     "@types/react": "^18",
     "daisyui": "^4.10.2",
     "depcheck": "^1.4.7",
