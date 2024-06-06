@@ -7,28 +7,13 @@ import Logo from "../public/mru_title_light.png";
 import { FaBars } from "react-icons/fa";
 
 export default function Header() {
-  const [show, setShow] = useState(true);
-  const [lastScrollY, setLastScrollY] = useState(0);
-
-  // useEffect(() => {
-  //   const controlNavbar = () => {
-  //     setShow(window.scrollY <= lastScrollY || window.scrollY < 10);
-  //     setLastScrollY(window.scrollY);
-  //   };
-
-  //   if (typeof window !== "undefined") {
-  //     window.addEventListener("scroll", controlNavbar);
-
-  //     // cleanup function
-  //     return () => {
-  //       window.removeEventListener("scroll", controlNavbar);
-  //     };
-  //   }
-  // }, [lastScrollY]);
-
   const DropDown = () => (
     <div className="dropdown">
-      <button tabIndex={0} role="button" className="btn btn-primary lg:hidden">
+      <button
+        tabIndex={0}
+        role="button"
+        className="btn btn-primary lg:hidden text-base-100"
+      >
         <FaBars />
       </button>
       <ul
@@ -43,12 +28,7 @@ export default function Header() {
   );
 
   return (
-    <nav
-      className={`fixed w-full z-30 
-          transition-transform duration-300 transform 
-          ${show ? "translate-y-0" : "-translate-y-full"} 
-          `}
-    >
+    <nav className="fixed w-full z-30">
       <div className="navbar sticky top-0 bg-primary text-neutral h-[52px]">
         <div className="navbar-start">
           <DropDown />
