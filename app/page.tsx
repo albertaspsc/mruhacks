@@ -7,8 +7,9 @@ import { Footer } from "@/components/Footer";
 import Section from "@/components/Section";
 
 import welcomeImage from "../public/welcome.jpg";
-import aboutImage from "../public/about3.jpg";
+import aboutImage from "../public/matts_pretty_wheel.jpg";
 import Sponsors from "@/components/Sponsors";
+import Carousel from "@/components/Carousel";
 
 export default function Home() {
   return (
@@ -28,6 +29,7 @@ export default function Home() {
           body="In 2023, Sunny Parmar, Matthew Hrehirchuk, and Jaunie Williams established MRUHacks, organizing the very first event. Attracting an impressive 60 participants, they hosted one of the most successful pilot events in the history of Mount Royal Computing, setting the stage for a series of spectacular events."
           image_side="right"
         />
+        <Carousel />
         <FAQs />
         <Community />
         <ScrollToTop />
