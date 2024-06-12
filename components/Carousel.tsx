@@ -42,8 +42,8 @@ export default function Home() {
             <CarouselImage {...item} key={key} />
           ))}
         </CarouselContent>
-        <CarouselPrevious className="left-0 bg-secondary " />
-        <CarouselNext className="right-0 bg-secondary" />
+        <CarouselPrevious className="left-0 bg-secondary text-base-100 " />
+        <CarouselNext className="right-0 bg-secondary text-base-100" />
       </Carousel>
     </div>
   );
