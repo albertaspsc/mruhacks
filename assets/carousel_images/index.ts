@@ -3,7 +3,6 @@ import type { StaticImageData } from "next/image";
 // Yay vim macros I hate writing code, there is not really a good way of doing
 // this without codegen sorry
 import img1 from "./carousel_image_1.jpg";
-import img2 from "./carousel_image_2.jpg";
 import img3 from "./carousel_image_3.jpg";
 import img5 from "./carousel_image_5.jpg";
 import img6 from "./carousel_image_6.jpg";
@@ -23,10 +22,6 @@ const carouselItems: CarouselItem[] = [
   {
     src: img1,
     alt: "Four young men standing together indoors, three of them smiling and one giving thumbs up. A laptop and water bottle on the table in front of them.",
-  },
-  {
-    src: img2,
-    alt: "Group of four young men presenting and discussing their project around a table with a laptop and water bottles.",
   },
   {
     src: img3,
@@ -60,6 +55,6 @@ const carouselItems: CarouselItem[] = [
     src: img12,
     alt: "Group of hackathon participants posing with goodie bags, wearing sunglasses and smiling indoors.",
   },
-];
+].map((x) => ({ ...x, legend: x.alt }));
 
 export default carouselItems;
