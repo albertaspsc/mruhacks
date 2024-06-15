@@ -12,7 +12,7 @@ export default async function Community() {
       href: "https://www.instagram.com/mruhacks",
       icon: FaInstagram,
     },
-    // Discord: { href: "https://www.example.com", icon: FaDiscord },
+    Discord: { href: "https://discord.gg/tRtW5phPQv", icon: FaDiscord },
     LinkedIn: {
       href: "https://www.linkedin.com/company/mruhacks",
       icon: FaLinkedinIn,
