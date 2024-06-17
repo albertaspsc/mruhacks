@@ -3,18 +3,10 @@
 import { useEffect, useState } from "react";
 import { BiArrowFromBottom } from "react-icons/bi";
 
-import { classNames } from "./utils/classNames";
+import { Button } from "./ui/button";
 
 export const ScrollToTop = () => {
   const [isVisible, setIsVisible] = useState(false);
-
-  const toggleVisibility = () => {
-    if (window.pageYOffset > 300) {
-      setIsVisible(true);
-    } else {
-      setIsVisible(false);
-    }
-  };
 
   const scrollToTop = () => {
     window.scrollTo({
@@ -24,25 +16,30 @@ export const ScrollToTop = () => {
   };
 
   useEffect(() => {
+    const toggleVisibility = () => setIsVisible(window.scrollY > 300);
+
     window.addEventListener("scroll", toggleVisibility);
 
     return () => {
       window.removeEventListener("scroll", toggleVisibility);
     };
-  }, []);
+  }, [isVisible]);
+
+  if (!isVisible) {
+    return;
+  }
 
   return (
     <div className="fixed bottom-2 right-2 p-20">
-      <button
-        type="button"
+      <Button
+        variant="outline"
         onClick={scrollToTop}
-        className={classNames(
-          isVisible ? "opacity-100" : "opacity-0",
-          "hidden lg:inline-flex lg:bg-purple-700 hover:bg-purple-600 focus:ring-purple-600 items-center rounded-full p-3 text-purple shadow-sm transition-opacity focus:outline-none focus:ring-2 focus:ring-offset-2",
-        )}
+        className={`
+            text-base-100 rounded-full w-12 h-12 bg-secondary
+            `}
       >
-        <BiArrowFromBottom className="h-6 w-6" aria-hidden="true" />
-      </button>
+        <BiArrowFromBottom className="text-xl scale-[150%]" />
+      </Button>
     </div>
   );
 };

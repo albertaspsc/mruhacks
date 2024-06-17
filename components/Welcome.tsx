@@ -1,5 +1,5 @@
 import Image from "next/image";
-import background from "../public/bg3.jpg";
+import background from "../public/hero.jpg";
 import logo from "../public/mru_title_light.png";
 import Link from "next/link";
 
