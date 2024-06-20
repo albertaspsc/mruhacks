@@ -1,11 +1,13 @@
+import { createClient } from "@/lib/supabase/server";
+import { User } from "@supabase/auth-js";
 import Image from "next/image";
+import Link from "next/link";
+import { redirect } from "next/navigation";
+import { FaBars } from "react-icons/fa";
+import { getCallbackUrl } from "@/lib/getCallbackUrl";
 
 import Logo from "../public/mru_title_light.png";
-import { FaBars } from "react-icons/fa";
-import { headers } from "next/headers";
-import { createClient } from "@/lib/supabase/server";
-import { redirect } from "next/navigation";
-import { User } from "@supabase/auth-js";
+
 export default async function Header() {
   const DropDown = () => (
     <div className="dropdown">
@@ -46,13 +48,12 @@ export default async function Header() {
   const handleLogIn = async () => {
     "use server";
 
-    const origin = headers().get("origin") as string;
     const supabase = createClient();
 
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider: "github",
       options: {
-        redirectTo: `${origin}/auth/callback`,
+        redirectTo: getCallbackUrl(),
       },
     });
 
@@ -74,7 +75,6 @@ export default async function Header() {
 
   return (
     <nav className="fixed w-full z-30">
-      {user ? JSON.stringify(user, null, 2) : "No user"}
       <div className="navbar sticky top-0 bg-primary text-neutral h-[52px]">
         <div className="navbar-start">
           <DropDown />
@@ -106,19 +106,19 @@ const MenuItems = ({
 }) => (
   <>
     <li>
-      <a href="#home">Home</a>
+      <Link href="#home">Home</Link>
     </li>
     <li>
-      <a href="#about">About MRUHacks</a>
+      <Link href="#about">About MRUHacks</Link>
     </li>
     <li>
-      <a href="#faq">FAQs</a>
+      <Link href="#fLinkq">FAQs</Link>
     </li>
     <li>
-      <a href="#community">Our Community</a>
+      <Link href="#community">Our Community</Link>
     </li>
     <li>
-      <a href="#sponsors">Sponsors</a>
+      <Link href="#sponsors">Sponsors</Link>
     </li>
     <li>
       {user ? (
