@@ -5,7 +5,7 @@ import { FaBars } from "react-icons/fa";
 import { headers } from "next/headers";
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
-
+import { User } from "@supabase/auth-js";
 export default async function Header() {
   const DropDown = () => (
     <div className="dropdown">
@@ -102,7 +102,7 @@ const MenuItems = ({
 }: {
   handleLogIn: () => Promise<void>;
   signout: () => Promise<void>;
-  user: User;
+  user: User | null;
 }) => (
   <>
     <li>
