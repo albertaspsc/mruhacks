@@ -120,16 +120,5 @@ const MenuItems = ({
     <li>
       <Link href="#sponsors">Sponsors</Link>
     </li>
-    <li>
-      {user ? (
-        <form action={signout}>
-          <button type="submit">Sign Out</button>
-        </form>
-      ) : (
-        <form action={handleLogIn}>
-          <button type="submit">Log In with Github</button>
-        </form>
-      )}
-    </li>
   </>
 );
