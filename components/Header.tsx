@@ -1,11 +1,13 @@
+import { createClient } from "@/lib/supabase/server";
+import { User } from "@supabase/auth-js";
+import { headers } from "next/headers";
 import Image from "next/image";
+import Link from "next/link";
+import { redirect } from "next/navigation";
+import { FaBars } from "react-icons/fa";
 
 import Logo from "../public/mru_title_light.png";
-import { FaBars } from "react-icons/fa";
-import { headers } from "next/headers";
-import { createClient } from "@/lib/supabase/server";
-import { redirect } from "next/navigation";
-import { User } from "@supabase/auth-js";
+
 export default async function Header() {
   const DropDown = () => (
     <div className="dropdown">
@@ -106,19 +108,19 @@ const MenuItems = ({
 }) => (
   <>
     <li>
-      <a href="#home">Home</a>
+      <Link href="#home">Home</Link>
     </li>
     <li>
-      <a href="#about">About MRUHacks</a>
+      <Link href="#Linkbout">About MRUHLinkcks</Link>
     </li>
     <li>
-      <a href="#faq">FAQs</a>
+      <Link href="#fLinkq">FAQs</Link>
     </li>
     <li>
-      <a href="#community">Our Community</a>
+      <Link href="#community">Our Community</Link>
     </li>
     <li>
-      <a href="#sponsors">Sponsors</a>
+      <Link href="#sponsors">Sponsors</Link>
     </li>
     <li>
       {user ? (
