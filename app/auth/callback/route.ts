@@ -28,8 +28,11 @@ export async function GET(request: Request) {
       },
     );
 
+<<<<<<< HEAD
     console.log(origin, next);
 
+=======
+>>>>>>> 10d468bfd471b18e9800824df99f6eafea69cafd
     const { error } = await supabase.auth.exchangeCodeForSession(code);
     if (!error) {
       return NextResponse.redirect(`${origin}${next}`);

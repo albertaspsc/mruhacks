@@ -1,10 +1,10 @@
 import { createClient } from "@/lib/supabase/server";
 import { User } from "@supabase/auth-js";
-import { headers } from "next/headers";
 import Image from "next/image";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { FaBars } from "react-icons/fa";
+import { getCallbackUrl } from "@/lib/getCallbackUrl";
 
 import Logo from "../public/mru_title_light.png";
 
@@ -48,7 +48,6 @@ export default async function Header() {
   const handleLogIn = async () => {
     "use server";
 
-    const origin = headers().get("origin") as string;
     const supabase = createClient();
 
     console.log(origin);
@@ -56,7 +55,7 @@ export default async function Header() {
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider: "github",
       options: {
-        redirectTo: `${origin}/auth/callback`,
+        redirectTo: getCallbackUrl(),
       },
     });
 
@@ -78,7 +77,6 @@ export default async function Header() {
 
   return (
     <nav className="fixed w-full z-30">
-      {user ? JSON.stringify(user, null, 2) : "No user"}
       <div className="navbar sticky top-0 bg-primary text-neutral h-[52px]">
         <div className="navbar-start">
           <DropDown />
@@ -113,7 +111,7 @@ const MenuItems = ({
       <Link href="#home">Home</Link>
     </li>
     <li>
-      <Link href="#Linkbout">About MRUHLinkcks</Link>
+      <Link href="#about">About MRUHacks</Link>
     </li>
     <li>
       <Link href="#fLinkq">FAQs</Link>
@@ -123,17 +121,6 @@ const MenuItems = ({
     </li>
     <li>
       <Link href="#sponsors">Sponsors</Link>
-    </li>
-    <li>
-      {user ? (
-        <form action={signout}>
-          <button type="submit">Sign Out</button>
-        </form>
-      ) : (
-        <form action={handleLogIn}>
-          <button type="submit">Log In with Github</button>
-        </form>
-      )}
     </li>
   </>
 );
