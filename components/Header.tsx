@@ -1,12 +1,10 @@
-"use client";
-
 import Image from "next/image";
-import { useState, useEffect } from "react";
-
-import Logo from "../public/mru_title_light.png";
+import Link from "next/link";
 import { FaBars } from "react-icons/fa";
 
-export default function Header() {
+import Logo from "../public/mru_title_light.png";
+
+export default async function Header() {
   const DropDown = () => (
     <div className="dropdown">
       <button
@@ -48,19 +46,19 @@ export default function Header() {
 const MenuItems = () => (
   <>
     <li>
-      <a href="#home">Home</a>
+      <Link href="#home">Home</Link>
     </li>
     <li>
-      <a href="#about">About MRUHacks</a>
+      <Link href="#about">About MRUHacks</Link>
     </li>
     <li>
-      <a href="#faq">FAQs</a>
+      <Link href="#fLinkq">FAQs</Link>
     </li>
     <li>
-      <a href="#community">Our Community</a>
+      <Link href="#community">Our Community</Link>
     </li>
     <li>
-      <a href="#sponsors">Sponsors</a>
+      <Link href="#sponsors">Sponsors</Link>
     </li>
   </>
 );
