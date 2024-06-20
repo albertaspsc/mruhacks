@@ -34,6 +34,8 @@ export default async function Header() {
       error,
     } = await supabase.auth.getUser();
 
+    console.error(error);
+
     if (!user) {
       return null;
     }
@@ -100,7 +102,7 @@ const MenuItems = ({
 }: {
   handleLogIn: () => Promise<void>;
   signout: () => Promise<void>;
-  user: any;
+  user: User;
 }) => (
   <>
     <li>
