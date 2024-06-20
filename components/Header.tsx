@@ -1,10 +1,6 @@
-import { createClient } from "@/lib/supabase/server";
-import { User } from "@supabase/auth-js";
 import Image from "next/image";
 import Link from "next/link";
-import { redirect } from "next/navigation";
 import { FaBars } from "react-icons/fa";
-import { getCallbackUrl } from "@/lib/getCallbackUrl";
 
 import Logo from "../public/mru_title_light.png";
 
@@ -24,56 +20,10 @@ export default async function Header() {
                         shadow rounded-box 
                         bg-secondary [&_*]:text-nowrap"
       >
-        <MenuItems handleLogIn={handleLogIn} signout={signout} user={user} />
+        <MenuItems />
       </ul>
     </div>
   );
-
-  const getUserInfo = async () => {
-    const supabase = createClient();
-    const {
-      data: { user },
-      error,
-    } = await supabase.auth.getUser();
-
-    console.error(error);
-
-    if (!user) {
-      return null;
-    }
-
-    return user;
-  };
-
-  const handleLogIn = async () => {
-    "use server";
-
-    const supabase = createClient();
-
-    console.log(origin);
-
-    const { data, error } = await supabase.auth.signInWithOAuth({
-      provider: "github",
-      options: {
-        redirectTo: getCallbackUrl(),
-      },
-    });
-
-    if (error) {
-      console.error("Error logging in:", error);
-      return;
-    }
-
-    return redirect(data.url as string);
-  };
-
-  const signout = async () => {
-    "use server";
-    const supabase = createClient();
-    await supabase.auth.signOut();
-  };
-
-  const user = await getUserInfo();
 
   return (
     <nav className="fixed w-full z-30">
@@ -85,11 +35,7 @@ export default async function Header() {
 
         <div className="navbar-end hidden  lg:flex">
           <ul className="menu menu-horizontal font-medium flex-nowrap">
-            <MenuItems
-              handleLogIn={handleLogIn}
-              signout={signout}
-              user={user}
-            />
+            <MenuItems />
           </ul>
         </div>
       </div>
@@ -97,15 +43,7 @@ export default async function Header() {
   );
 }
 
-const MenuItems = ({
-  handleLogIn,
-  signout,
-  user,
-}: {
-  handleLogIn: () => Promise<void>;
-  signout: () => Promise<void>;
-  user: User | null;
-}) => (
+const MenuItems = () => (
   <>
     <li>
       <Link href="#home">Home</Link>
