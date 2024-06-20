@@ -12,6 +12,9 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
+
+    "no-any": true,
+    "no-unsafe-any": true,
     "plugins": [
       {
         "name": "next"
