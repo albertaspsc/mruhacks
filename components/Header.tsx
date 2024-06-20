@@ -1,12 +1,12 @@
-"use client";
-
 import Image from "next/image";
-import { useState, useEffect } from "react";
 
 import Logo from "../public/mru_title_light.png";
 import { FaBars } from "react-icons/fa";
+import { headers } from "next/headers";
+import { createClient } from "@/lib/supabase/server";
+import { redirect } from "next/navigation";
 
-export default function Header() {
+export default async function Header() {
   const DropDown = () => (
     <div className="dropdown">
       <button
@@ -22,13 +22,57 @@ export default function Header() {
                         shadow rounded-box 
                         bg-secondary [&_*]:text-nowrap"
       >
-        <MenuItems />
+        <MenuItems handleLogIn={handleLogIn} signout={signout} user={user} />
       </ul>
     </div>
   );
 
+  const getUserInfo = async () => {
+    const supabase = createClient();
+    const {
+      data: { user },
+      error,
+    } = await supabase.auth.getUser();
+
+    if (!user) {
+      return null;
+    }
+
+    return user;
+  };
+
+  const handleLogIn = async () => {
+    "use server";
+
+    const origin = headers().get("origin") as string;
+    const supabase = createClient();
+
+    const { data, error } = await supabase.auth.signInWithOAuth({
+      provider: "github",
+      options: {
+        redirectTo: `${origin}/auth/callback`,
+      },
+    });
+
+    if (error) {
+      console.error("Error logging in:", error);
+      return;
+    }
+
+    return redirect(data.url as string);
+  };
+
+  const signout = async () => {
+    "use server";
+    const supabase = createClient();
+    await supabase.auth.signOut();
+  };
+
+  const user = await getUserInfo();
+
   return (
     <nav className="fixed w-full z-30">
+      {user ? JSON.stringify(user, null, 2) : "No user"}
       <div className="navbar sticky top-0 bg-primary text-neutral h-[52px]">
         <div className="navbar-start">
           <DropDown />
@@ -37,7 +81,11 @@ export default function Header() {
 
         <div className="navbar-end hidden  lg:flex">
           <ul className="menu menu-horizontal font-medium flex-nowrap">
-            <MenuItems />
+            <MenuItems
+              handleLogIn={handleLogIn}
+              signout={signout}
+              user={user}
+            />
           </ul>
         </div>
       </div>
@@ -45,7 +93,15 @@ export default function Header() {
   );
 }
 
-const MenuItems = () => (
+const MenuItems = ({
+  handleLogIn,
+  signout,
+  user,
+}: {
+  handleLogIn: () => Promise<void>;
+  signout: () => Promise<void>;
+  user: any;
+}) => (
   <>
     <li>
       <a href="#home">Home</a>
@@ -61,6 +117,17 @@ const MenuItems = () => (
     </li>
     <li>
       <a href="#sponsors">Sponsors</a>
+    </li>
+    <li>
+      {user ? (
+        <form action={signout}>
+          <button type="submit">Sign Out</button>
+        </form>
+      ) : (
+        <form action={handleLogIn}>
+          <button type="submit">Log In with Github</button>
+        </form>
+      )}
     </li>
   </>
 );
