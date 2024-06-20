@@ -51,6 +51,8 @@ export default async function Header() {
     const origin = headers().get("origin") as string;
     const supabase = createClient();
 
+    console.log(origin);
+
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider: "github",
       options: {
