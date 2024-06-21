@@ -1,0 +1,35 @@
+name: Linting/Code Correctness
+
+on: push
+
+jobs:
+  lint:
+    name: Code Correctness
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up cache for npm
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.npm
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "22"
+
+      - name: Install dependencies
+        run: |
+          npm i --silent
+
+      - name: ESLint
+        if: always()
+        run: npx eslint .
+
+      - name: Prettier Check
+        if: always()
+        run: npx prettier --check .
