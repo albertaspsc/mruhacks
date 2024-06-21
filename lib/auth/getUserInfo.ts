@@ -4,7 +4,6 @@ const getUserInfo = async () => {
   const supabase = createClient();
   const {
     data: { user },
-    error,
   } = await supabase.auth.getUser();
 
   if (!user) {
