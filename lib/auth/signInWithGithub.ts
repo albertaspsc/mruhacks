@@ -10,7 +10,7 @@ export default async function signInWithGithub() {
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider: "github",
     options: {
-      redirectTo: getCallbackUrl(),
+      redirectTo: `${getCallbackUrl()}?next=apply`,
     },
   });
 
@@ -19,5 +19,6 @@ export default async function signInWithGithub() {
     return;
   }
 
+  console.log(data.url);
   return redirect(data.url as string);
 }
