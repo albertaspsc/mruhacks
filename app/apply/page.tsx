@@ -2,9 +2,9 @@
 
 import { applicationSchema } from "./schema";
 
-import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { ZodNumber, ZodString, z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { memo } from "react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -16,97 +16,124 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Select, SelectItem, SelectTrigger } from "@/components/ui/select";
-import { Checkbox } from "@/components/ui/checkbox";
-import { SelectContent } from "@radix-ui/react-select";
 
-function camelToSentence(str: string) {
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+
+import { Input } from "@/components/ui/input";
+
+import { Checkbox } from "@/components/ui/checkbox";
+import { useMemo } from "react";
+
+const camelToSentence = (str) => {
   if (!str) {
     return;
   }
   return str
-    .replace(/([a-z])([A-Z])/g, "$1 $2") // Insert a space before each uppercase letter
-    .replace(/([A-Z])([A-Z][a-z])/g, "$1 $2") // Handle cases with consecutive uppercase letters
-    .toLowerCase() // Convert the entire string to lowercase
-    .replace(/^\w/, (c) => c.toUpperCase()); // Capitalize the first letter
-}
-
-const renderField = (field, form) => {
-  const fieldType = field._def.typeName;
-
-  switch (fieldType) {
-    case "ZodString":
-      return <Input placeholder={camelToSentence(field.name)} {...form} />;
-    case "ZodNumber":
-      return (
-        <Input
-          type="number"
-          placeholder={camelToSentence(field.name)}
-          {...form}
-        />
-      );
-    case "ZodEnum":
-      return (
-        <Select {...form}>
-          <SelectTrigger> </SelectTrigger>
-          <SelectContent>
-            {field._def.values.map((option) => (
-              <SelectItem key={option} value={option}>
-                {option}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-      );
-    case "ZodArray":
-      return (
-        <Checkbox {...form}>
-          {field._def.type._def.values.map((option) => (
-            <label key={option}>
-              <input type="checkbox" value={option} />
-              {option}
-            </label>
-          ))}
-        </Checkbox>
-      );
-    default:
-      return <Input placeholder={camelToSentence(field.name)} {...form} />;
-  }
+    .replace(/([A-Z])/g, " $1")
+    .replace(/^./, (str) => str.toUpperCase());
 };
 
-export default function Register() {
-  const form = useForm<z.infer<typeof applicationSchema>>({
+export default function ApplicationForm() {
+  const RenderField = memo(({ field, form }) => {
+    const fieldType = field._def.typeName;
+
+    switch (fieldType) {
+      case "ZodString":
+        return (
+          <FormControl>
+            <Input placeholder={camelToSentence(field.name)} {...form} />
+          </FormControl>
+        );
+      case "ZodNumber":
+        return (
+          <FormControl>
+            <Input
+              type="number"
+              placeholder={camelToSentence(field.name)}
+              {...form}
+            />
+          </FormControl>
+        );
+      case "ZodEnum":
+        const Options = memo(() => {
+          return (
+            <SelectContent>
+              {field._def.values.map((option) => (
+                <SelectItem key={option} value={option}>
+                  {option}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          );
+        });
+
+        return (
+          <Select onValueChange={field.onChange} defaultValue={field.value}>
+            <FormControl>
+              <SelectTrigger>
+                <SelectValue />
+              </SelectTrigger>
+            </FormControl>
+            <Options />
+          </Select>
+        );
+      case "ZodArray":
+        return (
+          <FormControl>
+            <Checkbox {...form}>
+              {field._def.type._def.values.map((option) => (
+                <label key={option}>
+                  <input type="checkbox" value={option} />
+                  {option}
+                </label>
+              ))}
+            </Checkbox>
+          </FormControl>
+        );
+      default:
+        return <Input placeholder={camelToSentence(field.name)} {...form} />;
+    }
+  });
+
+  const form = useForm({
     resolver: zodResolver(applicationSchema),
   });
 
-  function onSubmit(values: z.infer<typeof applicationSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
-  }
+  const onSubmit = (data) => {
+    console.log(data);
+  };
+
+  const memoizedFields = useMemo(() => {
+    return Object.keys(applicationSchema.shape).map((key) => (
+      <FormField
+        key={key}
+        control={form.control}
+        name={key}
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>{camelToSentence(field.name)}</FormLabel>
+            <RenderField field={applicationSchema.shape[key]} form={field} />
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+    ));
+  }, [applicationSchema.shape, form.control]);
 
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-        {Object.keys(applicationSchema.shape).map((key) => (
-          <FormField
-            key={key}
-            control={form.control}
-            name={key}
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>{camelToSentence(field.name)}</FormLabel>
-                <FormControl>
-                  {renderField(applicationSchema.shape[key], field)}
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        ))}
+        {memoizedFields}
         <Button type="submit">Submit</Button>
       </form>
     </Form>
   );
 }
+
+ApplicationForm.displayName = "foo";

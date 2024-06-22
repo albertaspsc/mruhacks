@@ -1,11 +1,12 @@
 import { z } from "zod";
 import { universities } from "./universities";
+import { majors } from "./majors";
 
 export const applicationSchema = z.object({
   firstName: z.string().min(1),
   lastName: z.string().min(1),
   email: z.string().email(),
-  age: z.number().gte(18),
+  age: z.coerce.number().gte(18, "Must be 18 or older"),
   gender: z.enum(["Female", "Male", "Other", "Prefer not to say"]),
   race: z.enum([
     "Native American",
@@ -33,8 +34,8 @@ export const applicationSchema = z.object({
     )
     .optional(),
   accommodations: z.string().optional(),
-  university: z.string(),
-  major: z.string().min(1),
+  university: z.enum(universities),
+  major: z.enum(majors),
   studyLevel: z.enum([
     "1st",
     "2nd",

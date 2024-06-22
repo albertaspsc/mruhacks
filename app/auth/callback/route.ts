@@ -6,7 +6,11 @@ export async function GET(request: Request) {
   const { searchParams, origin } = new URL(request.url);
   const code = searchParams.get("code");
   // if "next" is in param, use it as the redirect URL
-  const next = searchParams.get("next") ?? "/";
+  const next = searchParams.get("next") ?? "";
+
+  // set the redirect for an auth-code-error
+  const redirect = new URL(origin);
+  redirect.pathname = "auth/auth-code-error";
 
   if (code) {
     const cookieStore = cookies();
@@ -30,10 +34,11 @@ export async function GET(request: Request) {
 
     const { error } = await supabase.auth.exchangeCodeForSession(code);
     if (!error) {
-      return NextResponse.redirect(`${origin}${next}`);
+      // overriide the pathname if there are no errors
+      redirect.pathname = next;
     }
   }
 
-  // return the user to an error page with instructions
-  return NextResponse.redirect(`${origin}/auth/auth-code-error`);
+  // provide the user with the appropriate redirect
+  return NextResponse.redirect(redirect.toString());
 }
