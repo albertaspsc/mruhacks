@@ -1,13 +1,17 @@
-import { get } from "@vercel/edge-config";
-import { notFound } from "next/navigation";
+"use client";
+
+import { applicationSchema } from "./schema";
+
+import { ZodNumber, ZodString, z } from "zod";
+
 import ApplyForm from "./ApplyForm";
 
-export default async function Register() {
-  const deploy_page: boolean = (await get("allow_apply")) ?? false;
-
-  if (!deploy_page) {
-    notFound();
+export default function Register() {
+  function onSubmit(values: z.infer<typeof applicationSchema>) {
+    // Do something with the form values.
+    // ✅ This will be type-safe and validated.
+    console.log(values);
   }
 
-  return <ApplyForm />;
+  return <ApplyForm onSubmit={onSubmit} />;
 }
