@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { universities } from "./universities";
+import { majors } from "./majors";
 
 export const applicationSchema = z.object({
   firstName: z.string().min(1),

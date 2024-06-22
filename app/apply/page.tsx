@@ -2,7 +2,7 @@
 
 import { applicationSchema } from "./schema";
 
-import { ZodNumber, ZodString, z } from "zod";
+import { z } from "zod";
 
 import ApplyForm from "./ApplyForm";
 
