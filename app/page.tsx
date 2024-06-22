@@ -1,7 +1,6 @@
 import FAQs from "@/components/FAQ";
 import Welcome from "@/components/Welcome";
 import Community from "@/components/Community";
-import Header from "@/components/Header";
 import { ScrollToTop } from "@/components/ScrollToTop";
 import { Footer } from "@/components/Footer";
 import Section from "@/components/Section";
@@ -14,7 +13,6 @@ import Carousel from "@/components/Carousel";
 export default function Home() {
   return (
     <div className="">
-      <Header />
       <Welcome />
       <div className="my-10 space-y-20 max-w-screen-2xl mx-auto px-4 overflow-hidden">
         <span id="about" />

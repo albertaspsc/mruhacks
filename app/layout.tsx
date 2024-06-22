@@ -3,6 +3,8 @@ import { DM_Sans } from "next/font/google";
 
 import "./globals.css";
 
+import Header from "@/components/Header";
+
 const dm_sans = DM_Sans({
   subsets: ["latin"],
   display: "swap",
@@ -20,7 +22,10 @@ export default function RootLayout({
   return (
     <html lang="en" data-theme="mruhacks">
       <meta name="theme-color" content="#002766" />
-      <body className={dm_sans.className}>{children}</body>
+      <body className={dm_sans.className}>
+        <Header />
+        {children}
+      </body>
     </html>
   );
 }
