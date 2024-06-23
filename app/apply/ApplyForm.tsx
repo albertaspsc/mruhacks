@@ -317,7 +317,7 @@ export default function ApplyForm({
   return (
     <Form {...form}>
       <form
-        onSubmit={form.handleSubmit(onSubmit)}
+        action={() => onSubmit(form.getValues())}
         className="pt-24 mx-auto px-4 max-w-screen-md"
       >
         {/* <p className="text-2xl font-bold text-gray-900">Personal Information</p>
