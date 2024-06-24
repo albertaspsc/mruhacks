@@ -1,6 +1,6 @@
 "use client";
 
-import { applicationSchema } from "./schema";
+import { applicationSchema, options } from "./schema";
 import { universities } from "./universities";
 import { majors } from "./majors";
 import { Check, ChevronsUpDown } from "lucide-react";
@@ -42,45 +42,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, UseFormReturn } from "react-hook-form";
 import { z } from "zod";
 import { cn } from "@/lib/utils";
-
-const dietaryOptions = [
-  {
-    id: "Halal",
-    label: "Halal",
-  },
-  {
-    id: "Kosher",
-    label: "Kosher",
-  },
-  {
-    id: "Vegan",
-    label: "Vegan",
-  },
-  {
-    id: "Vegetarian",
-    label: "Vegetarian",
-  },
-  {
-    id: "Nuts",
-    label: "Nuts",
-  },
-  {
-    id: "Fish",
-    label: "Fish",
-  },
-  {
-    id: "Wheat",
-    label: "Wheat",
-  },
-  {
-    id: "Dairy",
-    label: "Dairy",
-  },
-  {
-    id: "Eggs",
-    label: "Eggs",
-  },
-];
 
 type ApplicationField = keyof z.infer<typeof applicationSchema>;
 
@@ -146,7 +107,7 @@ const SelectInput = ({
   label: string;
   name: ApplicationField;
   form: UseFormReturn<z.infer<typeof applicationSchema>>;
-  options: { value: string; label: string }[];
+  options: (string | { label: string; value: string })[];
   description?: string;
   required?: boolean;
 }) => (
@@ -168,11 +129,16 @@ const SelectInput = ({
             </SelectTrigger>
           </FormControl>
           <SelectContent className="bg-white">
-            {options.map((option) => (
-              <SelectItem key={option.value} value={option.value}>
-                {option.label}
-              </SelectItem>
-            ))}
+            {options
+              // Normalize to the label-value pair
+              .map((t) => (typeof t === "string" ? { label: t, value: t } : t))
+              .map((option, key) => {
+                return (
+                  <SelectItem key={key} value={option.value}>
+                    {option.label}
+                  </SelectItem>
+                );
+              })}
           </SelectContent>
         </Select>
         <FormMessage className="text-red-500 text-md" />
@@ -195,115 +161,117 @@ const ComboBoxInput = ({
   options: string[];
   description?: string;
   required?: boolean;
-}) => (
-  <FormField
-    control={form.control}
-    name={name}
-    render={({ field }) => (
-      <FormItem className="mb-8 min-w-screen-md">
-        <FormLabel className="text-xl font-bold text-gray-900">
-          {label}
-          <span className="text-red-500">*</span>
-        </FormLabel>
-        <Popover>
-          <PopoverTrigger asChild>
-            <FormControl>
-              <Button
-                variant="outline"
-                role="combobox"
-                className={cn(
-                  "min-w-full bg-white justify-between hover:bg-white text-md",
-                  !field.value && "text-muted-foreground",
-                )}
-              >
-                {field.value || "Select " + label}
-                <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-              </Button>
-            </FormControl>
-          </PopoverTrigger>
-          <PopoverContent className="w-[--radix-popover-trigger-width] bg-white p-0">
-            <Command>
-              <CommandInput placeholder="Search majors..." />
-              <CommandEmpty>No major found.</CommandEmpty>
-              <CommandGroup className=" max-h-[400px] overflow-auto">
-                {options.map((option) => (
-                  <CommandItem
-                    value={option}
-                    key={option}
-                    onSelect={() => {
-                      form.setValue(name, option);
-                      field.onChange(option);
-                    }}
-                  >
-                    <Check
-                      className={cn(
-                        "mr-2 h-4 w-4",
-                        option === field.value ? "opacity-100" : "opacity-0",
-                      )}
-                    />
-                    {option}
-                  </CommandItem>
-                ))}
-              </CommandGroup>
-              <CommandList />
-            </Command>
-          </PopoverContent>
-        </Popover>
-        <FormMessage className="text-red-500 text-md" />
-      </FormItem>
-    )}
-  />
-);
+}) => {
+  return (
+    <FormField
+      control={form.control}
+      name={name}
+      render={({ field }) => (
+        <FormItem className="mb-8 min-w-screen-md">
+          <FormLabel className="text-xl font-bold text-gray-900">
+            {label}
+            <span className="text-red-500">*</span>
+          </FormLabel>
+          <Popover modal={false}>
+            <PopoverTrigger asChild>
+              <FormControl>
+                <Button
+                  variant="outline"
+                  role="combobox"
+                  className={cn(
+                    "min-w-full bg-white justify-between hover:bg-white text-md",
+                    !field.value && "text-muted-foreground",
+                  )}
+                >
+                  {field.value || "Select " + label}
+                  <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                </Button>
+              </FormControl>
+            </PopoverTrigger>
+            <PopoverContent className="w-[--radix-popover-trigger-width] bg-white p-0">
+              <Command>
+                <CommandInput placeholder="Search majors..." />
+                <CommandEmpty>No major found.</CommandEmpty>
+                <CommandGroup className=" max-h-[400px] overflow-auto">
+                  {options.map((option) => (
+                    <CommandItem
+                      value={option}
+                      key={option}
+                      onSelect={() => {
+                        form.setValue(name, option);
+                        field.onChange(option);
+                      }}
+                    >
+                      <Check
+                        className={cn(
+                          "mr-2 h-4 w-4",
+                          option === field.value ? "opacity-100" : "opacity-0",
+                        )}
+                      />
+                      {option}
+                    </CommandItem>
+                  ))}
+                </CommandGroup>
+                <CommandList />
+              </Command>
+            </PopoverContent>
+          </Popover>
+          <FormMessage className="text-red-500 text-md" />
+        </FormItem>
+      )}
+    />
+  );
+};
 
 const DietaryRestrictions = ({
   form,
 }: {
   form: UseFormReturn<z.infer<typeof applicationSchema>>;
-}) => (
-  <FormField
-    control={form.control}
-    name="dietary"
-    render={() => (
-      <FormItem className="mb-8">
-        <FormLabel className="text-xl font-bold text-gray-900">
-          Dietary Restrictions
-        </FormLabel>
-        {dietaryOptions.map((item) => (
-          <FormField
-            key={item.id}
-            control={form.control}
-            name="dietary"
-            render={({ field }) => (
-              <FormItem className="flex flex-row items-center space-x-3 space-y-0">
-                <FormControl>
-                  <Checkbox
-                    // @ts-ignore
-                    checked={field.value?.includes(item.id)}
-                    onCheckedChange={(checked) =>
-                      checked
-                        ? // @ts-ignore
-                          field.onChange([...field.value, item.id])
-                        : field.onChange(
-                            field.value?.filter((value) => value !== item.id),
-                          )
-                    }
-                  />
-                </FormControl>
-                <FormLabel className="font-normal text-md">
-                  {item.label}
-                </FormLabel>
-              </FormItem>
-            )}
-          />
-        ))}
-        <FormMessage className="text-red-500 text-md" />
-      </FormItem>
-    )}
-  />
-);
+}) => {
+  return (
+    <FormField
+      control={form.control}
+      name="dietary"
+      render={() => (
+        <FormItem className="mb-8">
+          <FormLabel className="text-xl font-bold text-gray-900">
+            Dietary Restrictions
+          </FormLabel>
+          {options.dietary.map((item, id) => (
+            <FormField
+              key={id}
+              control={form.control}
+              name="dietary"
+              render={({ field }) => (
+                <FormItem className="flex flex-row items-center space-x-3 space-y-0">
+                  <FormControl>
+                    <Checkbox
+                      checked={field.value?.includes(
+                        item as (typeof field.value)[number],
+                      )}
+                      onCheckedChange={(checked) =>
+                        checked
+                          ? field.onChange([...(field.value ?? []), item])
+                          : field.onChange(
+                              field.value?.filter((value) => value !== item),
+                            )
+                      }
+                    />
+                  </FormControl>
+                  <FormLabel className="font-normal text-md">{item}</FormLabel>
+                </FormItem>
+              )}
+            />
+          ))}
+          <FormMessage className="text-red-500 text-md" />
+        </FormItem>
+      )}
+    />
+  );
+};
 
 export default function ApplyForm({
-  onSubmit,
+  onSubmit: server_submit_handler,
 }: {
   onSubmit: (values: z.infer<typeof applicationSchema>) => void;
 }) {
@@ -314,90 +282,54 @@ export default function ApplyForm({
     },
   });
 
+  function onSubmit(values: z.infer<typeof applicationSchema>) {
+    server_submit_handler(values);
+  }
+
   return (
     <Form {...form}>
       <form
-        action={() => onSubmit(form.getValues())}
+        onSubmit={form.handleSubmit(onSubmit)}
         className="pt-24 mx-auto px-4 max-w-screen-md"
       >
-        {/* <p className="text-2xl font-bold text-gray-900">Personal Information</p>
-        <p className="text-lg text-gray-500 mb-8">
-          Disclaimer: your answers to these questions do not have any impact on
-          your admission.
-        </p> */}
         <FormSection
           title="Personal Information"
           description="Disclaimer: your answers to these questions do not have any impact on your admission."
         >
-          <TextInput label="First Name" name="firstName" form={form} required />
-          <TextInput label="Last Name" name="lastName" form={form} required />
+          <TextInput
+            label="First Name"
+            name="first_name"
+            form={form}
+            required
+          />
+          <TextInput label="Last Name" name="last_name" form={form} required />
           <TextInput label="Email" name="email" form={form} required />
           <TextInput label="Age" name="age" form={form} required />
           <SelectInput
             label="Gender"
             name="gender"
             form={form}
-            options={[
-              {
-                value: "Male",
-                label: "Male",
-              },
-              {
-                value: "Female",
-                label: "Female",
-              },
-              {
-                value: "Other",
-                label: "Other",
-              },
-              {
-                value: "Prefer not to say",
-                label: "Prefer not to say",
-              },
-            ]}
+            options={options.gender}
             required
           />
           <SelectInput
             label="Race"
             name="race"
             form={form}
-            options={[
-              { value: "Native American", label: "Native American" },
-              {
-                value: "Asian / Pacific Islander",
-                label: "Asian / Pacific Islander",
-              },
-              {
-                value: "Black or African American",
-                label: "Black or African American",
-              },
-              { value: "Hispanic", label: "Hispanic" },
-              { value: "White / Caucasian", label: "White / Caucasian" },
-              { value: "Multiple / Other", label: "Multiple / Other" },
-              { value: "Prefer not to answer", label: "Prefer not to answer" },
-            ]}
+            options={options.race}
             required
           />
           <SelectInput
             label="Ethnicity"
             name="ethnicity"
             form={form}
-            options={[
-              {
-                label: "Hispanic or Latino",
-                value: "Hispanic or Latino",
-              },
-              {
-                label: "Not Hispanic or Latino",
-                value: "Not Hispanic or Latino",
-              },
-            ]}
+            options={options.ethnicity}
             required
           />
           <DietaryRestrictions form={form} />
           <TextInput
             label="Additional Information"
-            name="accommodations"
+            name="additional"
             form={form}
             description="Is there anything we can do to better accommodate you?"
             area
@@ -423,55 +355,30 @@ export default function ApplyForm({
           />
           <SelectInput
             label="Study Level"
-            name="studyLevel"
+            name="year"
             form={form}
-            options={[
-              { value: "1st", label: "1st Year" },
-              { value: "2nd", label: "2nd Year" },
-              { value: "3rd", label: "3rd Year" },
-              { value: "4th +", label: "4th Year +" },
-              {
-                value: "Graduate (<1 year after)",
-                label: "Graduate (<1 year after)",
-              },
-            ]}
+            options={options.year}
             required
           />
           <TextInput
             label="Hackathon Experience"
-            name="hackathonExperience"
+            name="hackathons"
             form={form}
             description="Please enter the number of hackathons you have attended."
             required
           />
           <SelectInput
             label="Software Experience"
-            name="softwareExperience"
+            name="software_exp"
             form={form}
-            options={[
-              { value: "Beginner", label: "Beginner" },
-              { value: "Intermediate", label: "Intermediate" },
-              { value: "Advanced", label: "Advanced" },
-              { value: "Expert", label: "Expert" },
-            ]}
+            options={options.experience_level}
             required
           />
           <SelectInput
             label="How did you hear about MRUHacks?"
-            name="heardFrom"
+            name="heardAbout"
             form={form}
-            options={[
-              { value: "Instagram", label: "Instagram" },
-              { value: "LinkedIn", label: "LinkedIn" },
-              { value: "Posters", label: "Posters" },
-              {
-                value: "Student Newsletters",
-                label: "Student Newsletters",
-              },
-              { value: "In my classroom", label: "In my classroom" },
-              { value: "Word of mouth", label: "Word of mouth" },
-              { value: "Other", label: "Other" },
-            ]}
+            options={options.head_about}
             required
           />
         </FormSection>
@@ -482,19 +389,17 @@ export default function ApplyForm({
         >
           <TextInput label="GitHub" name="github" form={form} />
           <TextInput label="LinkedIn" name="linkedin" form={form} />
-          <TextInput label="Website" name="website" form={form} />
+          <TextInput label="Website" name="personalSite" form={form} />
           <SelectInput
             label="Can we share your information with companies?"
-            name="companies"
+            name="sponsorConsent"
             form={form}
-            options={[
-              { value: "Yes", label: "Yes" },
-              { value: "No", label: "No" },
-            ]}
+            options={["Yes", "No"]}
           />
         </FormSection>
 
         <Button
+          role="submit"
           type="submit"
           className="text-white font-bold float-right mb-12"
         >
