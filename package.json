@@ -60,7 +60,7 @@
   },
   "lint-staged": {
     "*.(*ts*|*js*)": [
-      "prettier --check",
+      "prettier --check .",
       "eslint"
     ]
   }
