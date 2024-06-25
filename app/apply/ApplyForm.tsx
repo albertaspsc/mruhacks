@@ -3,7 +3,7 @@
 import { applicationSchema, options } from "./schema";
 import { universities } from "./universities";
 import { majors } from "./majors";
-import { Check, ChevronsUpDown } from "lucide-react";
+import { Check, ChevronsUpDown, LucideLoader2 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -42,6 +42,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, UseFormReturn } from "react-hook-form";
 import { z } from "zod";
 import { cn } from "@/lib/utils";
+import { useToast } from "@/components/ui/use-toast";
+import { useState } from "react";
+import { redirect } from "next/navigation";
 
 type ApplicationField = keyof z.infer<typeof applicationSchema>;
 
@@ -68,6 +71,7 @@ const TextInput = ({
   description,
   required = false,
   area = false,
+  number = false,
 }: {
   label: string;
   name: ApplicationField;
@@ -75,6 +79,7 @@ const TextInput = ({
   description?: string;
   required?: boolean;
   area?: boolean;
+  number?: boolean;
 }) => (
   <FormField
     control={form.control}
@@ -85,7 +90,29 @@ const TextInput = ({
           {label} {required && <span className="text-red-500">*</span>}
         </FormLabel>
         <FormControl>
-          {area ? <Textarea {...field} /> : <Input {...field} />}
+          {area ? (
+            <Textarea
+              {...field}
+              placeholder={label}
+              className="bg-white"
+              required={required}
+            />
+          ) : number ? (
+            <Input
+              {...field}
+              type="number"
+              placeholder={label}
+              className="bg-white"
+              required={required}
+            />
+          ) : (
+            <Input
+              {...field}
+              placeholder={label}
+              className="bg-white"
+              required={required}
+            />
+          )}
         </FormControl>
         <FormDescription className="text-gray-500 text-md">
           {description}
@@ -272,18 +299,32 @@ const DietaryRestrictions = ({
 
 export default function ApplyForm({
   onSubmit: server_submit_handler,
+  previousResponses,
 }: {
   onSubmit: (values: z.infer<typeof applicationSchema>) => void;
+  previousResponses?: { data: z.infer<typeof applicationSchema>[] };
 }) {
+  const { toast } = useToast();
+  const [loading, setLoading] = useState(false);
+  let defaultValues = previousResponses ? previousResponses.data[0] : {};
+
   const form = useForm<z.infer<typeof applicationSchema>>({
     resolver: zodResolver(applicationSchema),
-    defaultValues: {
-      dietary: [],
-    },
+    defaultValues,
   });
 
-  function onSubmit(values: z.infer<typeof applicationSchema>) {
-    server_submit_handler(values);
+  async function onSubmit(values: z.infer<typeof applicationSchema>) {
+    setLoading(true);
+    await server_submit_handler(values);
+
+    toast({
+      title: "Application submitted!",
+      description: "Your application has been submitted.",
+    });
+
+    setLoading(false);
+
+    window.location.href = "/";
   }
 
   return (
@@ -304,7 +345,7 @@ export default function ApplyForm({
           />
           <TextInput label="Last Name" name="last_name" form={form} required />
           <TextInput label="Email" name="email" form={form} required />
-          <TextInput label="Age" name="age" form={form} required />
+          <TextInput label="Age" name="age" form={form} number required />
           <SelectInput
             label="Gender"
             name="gender"
@@ -365,6 +406,7 @@ export default function ApplyForm({
             name="hackathons"
             form={form}
             description="Please enter the number of hackathons you have attended."
+            number
             required
           />
           <SelectInput
@@ -376,9 +418,9 @@ export default function ApplyForm({
           />
           <SelectInput
             label="How did you hear about MRUHacks?"
-            name="heardAbout"
+            name="hearAbout"
             form={form}
-            options={options.head_about}
+            options={options.hear_about}
             required
           />
         </FormSection>
@@ -398,13 +440,25 @@ export default function ApplyForm({
           />
         </FormSection>
 
-        <Button
-          role="submit"
-          type="submit"
-          className="text-white font-bold float-right mb-12"
-        >
-          Submit
-        </Button>
+        {loading ? (
+          <Button
+            role="submit"
+            type="submit"
+            className="text-white font-bold float-right mb-12"
+            disabled
+          >
+            <LucideLoader2 className="animate-spin mr-2" />
+            Submit
+          </Button>
+        ) : (
+          <Button
+            role="submit"
+            type="submit"
+            className="text-white font-bold float-right mb-12"
+          >
+            Submit
+          </Button>
+        )}
       </form>
     </Form>
   );

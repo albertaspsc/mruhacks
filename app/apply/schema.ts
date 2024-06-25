@@ -43,7 +43,7 @@ export const options = {
     "Expert",
   ] as MinLengthArray,
 
-  head_about: [
+  hear_about: [
     "Instagram",
     "LinkedIn",
     "Posters",
@@ -71,9 +71,13 @@ export const applicationSchema = z.object({
   university: z.string(),
   major: z.string(),
   year: z.enum(options.year),
-  hackathons: z.string().min(1).pipe(z.coerce.number().gte(0)),
+  hackathons: z.coerce
+    .number({ message: "That's not a number!" })
+    .pipe(
+      z.number().gte(0, { message: "How can you attend negative events???" }),
+    ),
   software_exp: z.enum(options.experience_level),
-  heardAbout: z.enum(options.head_about),
+  hearAbout: z.enum(options.hear_about),
   github: z.string().optional(),
   linkedin: z.string().optional(),
   personalSite: z.string().optional(),
