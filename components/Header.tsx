@@ -38,32 +38,31 @@ export default async function Header() {
     : undefined;
 
   const DropDown = () => (
-    <div className="dropdown">
-      <button
+    <Popover>
+      <PopoverTrigger
         tabIndex={0}
         role="button"
-        className="btn btn-primary lg:hidden text-base-100"
+        className="btn btn-primary text-base-100"
       >
         <FaBars />
-      </button>
-      <ul
-        tabIndex={0}
-        className="menu menu-sm dropdown-content mt-2 z-[1] 
-                        shadow rounded-box 
-                        bg-secondary [&_*]:text-nowrap"
-      >
-        <MenuItems />
-        <li className="mt-2">
+      </PopoverTrigger>
+      <PopoverContent className="bg-secondary w-min outline-none border-none m-1 mt-0">
+        <div className="flex flex-col bg-secondary [&>*]:text-nowrap text-base-100 space-y-1">
+          <Link href="/#home">Home</Link>
+          <Link href="/#about">About MRUHacks</Link>
+          <Link href="/#fLinkq">FAQs</Link>
+          <Link href="/#community">Our Community</Link>
+          <Link href="/#sponsors">Sponsors</Link>
           {userInfo ? (
             <ProfileModal
               user={userInfo}
               application_status={userApplicationStatus || "<unknown>"}
             />
           ) : (
-            <form action={signInWithGithub} className="inline-block p-0">
+            <form action={signInWithGithub}>
               <Button
                 variant="outline"
-                className="w-full p-2 text-md"
+                className="w-full p-2 text-md mt-4"
                 type="submit"
               >
                 <FaGithub className="mr-2" />
@@ -71,60 +70,51 @@ export default async function Header() {
               </Button>
             </form>
           )}
-        </li>
-      </ul>
-    </div>
+        </div>
+      </PopoverContent>
+    </Popover>
   );
 
   return (
-    <nav className="fixed w-full z-30">
-      <div className="navbar sticky top-0 bg-primary text-neutral h-[52px]">
-        <div className="navbar-start">
+    <nav className="w-full z-30">
+      <div className="flex flex-row items-center bg-primary justify-between text-base-100 h-[60px]">
+        <div className="lg:hidden flex flex-row items-center ">
           <DropDown />
-          <Link href="/">
-            <Image className="max-h-10 w-auto" src={Logo} alt="MRUHacks Logo" />
-          </Link>
         </div>
-
-        <div className="navbar-end hidden  lg:flex">
-          <ul className="menu menu-horizontal font-medium flex-nowrap items-center">
-            <MenuItems />
-            <li>
-              {userInfo ? (
-                <ProfileModal
-                  user={userInfo}
-                  application_status={userApplicationStatus || "<unknown>"}
-                />
-              ) : (
-                <SignInModal />
-              )}
-            </li>
-          </ul>
+        <Link
+          href="/"
+          className="h-10 mb-2
+                    absolute left-[50%] translate-x-[-50%]
+                    lg:relative lg:left-auto lg:translate-x-0"
+        >
+          <Image
+            className="max-h-[52px] w-auto"
+            src={Logo}
+            alt="MRUHacks Logo"
+          />
+        </Link>
+        <div className="hidden lg:flex flex-row items-center space-x-5">
+          <MenuItems />
+          <Link href="/#home">Home</Link>
+          <Link href="/#about">About MRUHacks</Link>
+          <Link href="/#fLinkq">FAQs</Link>
+          <Link href="/#community">Our Community</Link>
+          <Link href="/#sponsors">Sponsors</Link>
+          {userInfo ? (
+            <ProfileModal
+              user={userInfo}
+              application_status={userApplicationStatus || "<unknown>"}
+            />
+          ) : (
+            <SignInModal />
+          )}
         </div>
       </div>
     </nav>
   );
 }
 
-const MenuItems = () => (
-  <>
-    <li>
-      <Link href="#home">Home</Link>
-    </li>
-    <li>
-      <Link href="#about">About MRUHacks</Link>
-    </li>
-    <li>
-      <Link href="#fLinkq">FAQs</Link>
-    </li>
-    <li>
-      <Link href="#community">Our Community</Link>
-    </li>
-    <li>
-      <Link href="#sponsors">Sponsors</Link>
-    </li>
-  </>
-);
+const MenuItems = () => [];
 
 const SignInModal = () => {
   return (
