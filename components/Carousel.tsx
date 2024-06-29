@@ -33,6 +33,9 @@ export default function Home() {
       <h1 className="text-xl font-bold text-center text-primary-content">
         Image Gallery
       </h1>
+      <p className="text-center text-black/70 mt-2">
+        Take a look at some of the images from our previous events!
+      </p>
       <Carousel
         opts={{ loop: true }}
         className="p-10  rounded-2xl fade-out-left fade-out-right"
