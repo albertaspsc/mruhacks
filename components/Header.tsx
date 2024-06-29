@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -8,39 +7,35 @@ import {
   FaSignInAlt,
   FaSignOutAlt,
 } from "react-icons/fa";
-
 import Logo from "../public/mru_title_light.png";
-
-import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
-import { Button } from "./ui/button";
 import getUserInfo from "@/lib/auth/getUserInfo";
-
+import { Button } from "./ui/button";
+import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import signInWithGithub from "@/lib/auth/signInWithGithub";
 import signout from "@/lib/auth/signout";
-import { UserIcon } from "lucide-react";
-import { User } from "@supabase/auth-js";
 import { createClient } from "@/lib/supabase/server";
+import { User } from "@supabase/auth-js";
+import { UserIcon } from "lucide-react";
 
 const getUserApplicationStatus = async (user: User) => {
   const supabase = createClient();
-  const userApplicationStatus = await supabase
+  const { error, data } = await supabase
     .from("users")
     .select("application_status")
     .eq("user_id", user.id);
 
-  if (userApplicationStatus.error) {
-    console.error(userApplicationStatus.error);
-    return null;
+  if (error) {
+    console.error(error);
   }
 
-  return userApplicationStatus;
+  return data?.[0]?.application_status;
 };
 
 export default async function Header() {
   const userInfo = await getUserInfo();
   const userApplicationStatus = userInfo
-    ? (await getUserApplicationStatus(userInfo))?.data[0]?.application_status
-    : null;
+    ? await getUserApplicationStatus(userInfo)
+    : undefined;
 
   const DropDown = () => (
     <div className="dropdown">
@@ -62,7 +57,7 @@ export default async function Header() {
           {userInfo ? (
             <ProfileModal
               user={userInfo}
-              application_status={userApplicationStatus}
+              application_status={userApplicationStatus || "<unknown>"}
             />
           ) : (
             <form action={signInWithGithub} className="inline-block p-0">
@@ -98,7 +93,7 @@ export default async function Header() {
               {userInfo ? (
                 <ProfileModal
                   user={userInfo}
-                  application_status={userApplicationStatus}
+                  application_status={userApplicationStatus || "<unknown>"}
                 />
               ) : (
                 <SignInModal />
@@ -182,6 +177,7 @@ const ProfileModal = ({
       <PopoverContent className="w-80 bg-white">
         <div className="grid gap-4">
           <div className="flex flex-row items-center justify-left">
+            {/*eslint-disable-next-line @next/next/no-img-element*/}
             <img
               src={user?.user_metadata?.avatar_url}
               className="w-12 h-12 rounded-full mr-2"
