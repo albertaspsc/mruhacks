@@ -1,18 +1,41 @@
 import Image from "next/image";
 import Link from "next/link";
-import { FaBars, FaGithub, FaSignInAlt, FaSignOutAlt } from "react-icons/fa";
-
+import {
+  FaBars,
+  FaBookOpen,
+  FaGithub,
+  FaSignInAlt,
+  FaSignOutAlt,
+} from "react-icons/fa";
 import Logo from "../public/mru_title_light.png";
-
-import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
-import { Button } from "./ui/button";
 import getUserInfo from "@/lib/auth/getUserInfo";
-
+import { Button } from "./ui/button";
+import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import signInWithGithub from "@/lib/auth/signInWithGithub";
 import signout from "@/lib/auth/signout";
+import { createClient } from "@/lib/supabase/server";
+import { User } from "@supabase/auth-js";
+import { UserIcon } from "lucide-react";
+
+const getUserApplicationStatus = async (user: User) => {
+  const supabase = createClient();
+  const { error, data } = await supabase
+    .from("users")
+    .select("application_status")
+    .eq("user_id", user.id);
+
+  if (error) {
+    console.error(error);
+  }
+
+  return data?.[0]?.application_status;
+};
 
 export default async function Header() {
   const userInfo = await getUserInfo();
+  const userApplicationStatus = userInfo
+    ? await getUserApplicationStatus(userInfo)
+    : undefined;
 
   const DropDown = () => (
     <div className="dropdown">
@@ -32,16 +55,10 @@ export default async function Header() {
         <MenuItems />
         <li className="mt-2">
           {userInfo ? (
-            <form action={signout} className="inline-block p-0">
-              <Button
-                variant="outline"
-                className="w-full p-2 text-md"
-                type="submit"
-              >
-                <FaSignOutAlt className="mr-2" />
-                Sign Out
-              </Button>
-            </form>
+            <ProfileModal
+              user={userInfo}
+              application_status={userApplicationStatus || "<unknown>"}
+            />
           ) : (
             <form action={signInWithGithub} className="inline-block p-0">
               <Button
@@ -64,7 +81,9 @@ export default async function Header() {
       <div className="navbar sticky top-0 bg-primary text-neutral h-[52px]">
         <div className="navbar-start">
           <DropDown />
-          <Image className="max-h-10 w-auto" src={Logo} alt="MRUHacks Logo" />
+          <Link href="/">
+            <Image className="max-h-10 w-auto" src={Logo} alt="MRUHacks Logo" />
+          </Link>
         </div>
 
         <div className="navbar-end hidden  lg:flex">
@@ -72,16 +91,10 @@ export default async function Header() {
             <MenuItems />
             <li>
               {userInfo ? (
-                <form action={signout} className="inline-block p-0">
-                  <Button
-                    variant="outline"
-                    className="p-2 text-md"
-                    type="submit"
-                  >
-                    <FaSignOutAlt className="mr-2" />
-                    Sign Out
-                  </Button>
-                </form>
+                <ProfileModal
+                  user={userInfo}
+                  application_status={userApplicationStatus || "<unknown>"}
+                />
               ) : (
                 <SignInModal />
               )}
@@ -138,6 +151,64 @@ const SignInModal = () => {
             >
               <FaGithub className="mr-2" />
               Sign in with Github
+            </Button>
+          </form>
+        </div>
+      </PopoverContent>
+    </Popover>
+  );
+};
+
+const ProfileModal = ({
+  user,
+  application_status,
+}: {
+  user: User | null;
+  application_status: string | null;
+}) => {
+  return (
+    <Popover>
+      <PopoverTrigger asChild>
+        <Button variant="outline" className="p-2 text-md">
+          <UserIcon />
+          Profile
+        </Button>
+      </PopoverTrigger>
+      <PopoverContent className="w-80 bg-white">
+        <div className="grid gap-4">
+          <div className="flex flex-row items-center justify-left">
+            {/*eslint-disable-next-line @next/next/no-img-element*/}
+            <img
+              src={user?.user_metadata?.avatar_url}
+              className="w-12 h-12 rounded-full mr-2"
+              alt="User Avatar"
+            />
+            <div>
+              <h4 className="font-bold leading-none text-md mb-1">
+                {user?.user_metadata?.full_name}
+              </h4>
+              <p className="text-muted text-md">
+                Application Status: {application_status}
+              </p>
+            </div>
+          </div>
+          <Link href="/apply" className="w-full">
+            <Button
+              variant="outline"
+              className="p-2 text-md justify-start pl-4 w-full"
+            >
+              <FaBookOpen className="mr-2" />
+              Edit Application
+            </Button>
+          </Link>
+          <form action={signout} className="grid gap-2">
+            <Button
+              variant="outline"
+              className="flex flex-row align-middle justify-start pl-4 text-md"
+              type="submit"
+            >
+              <FaSignOutAlt className="mr-2" />
+              Sign Out
             </Button>
           </form>
         </div>
