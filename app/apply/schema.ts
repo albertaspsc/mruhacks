@@ -1,4 +1,6 @@
-import { z } from "zod";
+import { IsObject } from "@/lib/utils";
+import { assert } from "console";
+import { record, z } from "zod";
 
 // This is ugly, but zod requires this type
 type MinLengthArray = [string, ...string[]];
@@ -56,7 +58,7 @@ export const options = {
   ethnicity: ["Hispanic or Latino", "Not Hispanic or Latino"] as MinLengthArray,
 };
 
-export const applicationSchema = z.object({
+const formSchema = z.object({
   first_name: z.string().min(1),
   last_name: z.string().min(1),
   email: z.string().email(),
@@ -83,3 +85,17 @@ export const applicationSchema = z.object({
   personalSite: z.string().optional(),
   sponsorConsent: z.enum(["Yes", "No"]).optional(),
 });
+
+export const partialApplicationSchema = formSchema.partial();
+
+export const applicationSchema = z.preprocess(
+  // Cast all nullish types to `undefined`
+  (x) => {
+    if (!IsObject(x)) return x;
+    return Object.keys(x).reduce((acc: Record<string, unknown>, key) => {
+      acc[key] = x[key] ?? undefined;
+      return acc;
+    }, {});
+  },
+  formSchema,
+);

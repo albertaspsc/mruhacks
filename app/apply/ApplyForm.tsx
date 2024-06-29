@@ -1,6 +1,7 @@
 "use client";
 
-import { applicationSchema, options } from "./schema";
+import { useRouter } from "next/navigation";
+import { applicationSchema, options, partialApplicationSchema } from "./schema";
 import { universities } from "./universities";
 import { majors } from "./majors";
 import { Check, ChevronsUpDown, LucideLoader2 } from "lucide-react";
@@ -301,12 +302,14 @@ export default function ApplyForm({
   onSubmit: server_submit_handler,
   previousResponses,
 }: {
-  onSubmit: (values: z.infer<typeof applicationSchema>) => void;
-  previousResponses?: { data: z.infer<typeof applicationSchema>[] };
+  onSubmit: (values: z.infer<typeof applicationSchema>) => Promise<boolean>;
+  previousResponses?: z.infer<typeof partialApplicationSchema>;
 }) {
   const { toast } = useToast();
   const [loading, setLoading] = useState(false);
-  let defaultValues = previousResponses ? previousResponses.data[0] : {};
+  const router = useRouter();
+
+  let defaultValues = previousResponses ?? {};
 
   const form = useForm<z.infer<typeof applicationSchema>>({
     resolver: zodResolver(applicationSchema),
@@ -315,16 +318,24 @@ export default function ApplyForm({
 
   async function onSubmit(values: z.infer<typeof applicationSchema>) {
     setLoading(true);
-    await server_submit_handler(values);
+    const success = await server_submit_handler(values);
 
-    toast({
-      title: "Application submitted!",
-      description: "Your application has been submitted.",
-    });
+    toast(
+      success
+        ? {
+            title: "Application submitted!",
+            description: "Your application has been submitted.",
+          }
+        : {
+            title: "Something went wrong...",
+            description:
+              "Please try submitting again, if the issue persists contact the MRUHacks Team",
+          },
+    );
+
+    if (success) router.push("/");
 
     setLoading(false);
-
-    window.location.href = "/";
   }
 
   return (
