@@ -88,7 +88,7 @@ export default async function Header() {
                     lg:relative lg:left-auto lg:translate-x-0"
         >
           <Image
-            className="max-h-[52px] w-auto"
+            className="max-h-[52px] w-auto p-1"
             src={Logo}
             alt="MRUHacks Logo"
           />
