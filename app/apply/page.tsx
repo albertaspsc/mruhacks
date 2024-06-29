@@ -5,11 +5,18 @@ import getUserInfo from "@/lib/auth/getUserInfo";
 import { z } from "zod";
 import { redirect } from "next/navigation";
 import { mergeObjects } from "@/lib/utils";
+import { get } from "@vercel/edge-config";
 
 async function update_form(
   user: z.infer<typeof applicationSchema>,
 ): Promise<boolean> {
   "use server";
+
+  if (!get("allow_apply") ?? true) {
+    console.warn("Applying is disabled ");
+    return false;
+  }
+
   const supabase = createClient();
   const userInfo = await getUserInfo();
 
@@ -38,11 +45,13 @@ async function update_form(
 export default async function Register() {
   const userInfo = await getUserInfo();
 
+  if (!(await get("allow_apply")) ?? true) {
+    return <p>Applications are currently closed, check back soon!</p>;
+  }
+
   if (!userInfo) {
     return redirect("/");
   }
-
-  userInfo.user_metadata;
 
   const supabase = createClient();
   const { error, data } = await supabase
