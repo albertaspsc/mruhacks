@@ -59,13 +59,13 @@ export default async function Register() {
 
   const database_info = applicationSchema.safeParse(data?.[0]).data ?? {};
   const meta_data = {
-    first_name: regex.exec(userInfo.user_metadata.name)?.[1] ?? "",
-    last_name: regex.exec(userInfo.user_metadata.name)?.[2] ?? "",
+    first_name: regex.exec(userInfo.user_metadata.name ?? "")?.[1] ?? "",
+    last_name: regex.exec(userInfo.user_metadata.name ?? "")?.[2] ?? "",
     email: userInfo.user_metadata.email,
   };
 
   const prefill = partialApplicationSchema.safeParse(
-    mergeObjects(database_info, meta_data),
+    mergeObjects(meta_data, {}),
   ).data;
 
   return <ApplyForm onSubmit={update_form} previousResponses={prefill} />;
