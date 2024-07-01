@@ -6,7 +6,7 @@ import { z } from "zod";
 import { redirect } from "next/navigation";
 import { mergeObjects } from "@/lib/utils";
 import { get } from "@vercel/edge-config";
-import { send_confirmation } from "../mailer";
+import send_confirmation from "../mailer";
 
 async function update_form(
   user: z.infer<typeof applicationSchema>,
