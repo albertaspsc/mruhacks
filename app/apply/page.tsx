@@ -5,7 +5,6 @@ import getUserInfo from "@/lib/auth/getUserInfo";
 import { z } from "zod";
 import { redirect } from "next/navigation";
 import { mergeObjects } from "@/lib/utils";
-import { get } from "@vercel/edge-config";
 import send_confirmation from "../mailer";
 
 async function update_form(
@@ -47,8 +46,6 @@ async function update_form(
     if (response.rejected.length !== 0) {
       console.warn(response);
     }
-
-    console.log(response);
   }
 
   return ok;
