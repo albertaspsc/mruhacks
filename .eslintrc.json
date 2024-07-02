@@ -7,7 +7,7 @@
     "no-console": [
       "warn",
       {
-        "allow": ["warn", "error", "trace"]
+        "allow": ["warn", "error", "trace", "debug"]
       }
     ]
   }

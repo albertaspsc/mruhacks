@@ -5,49 +5,54 @@ import getUserInfo from "@/lib/auth/getUserInfo";
 import { z } from "zod";
 import { redirect } from "next/navigation";
 import { mergeObjects } from "@/lib/utils";
-import { get } from "@vercel/edge-config";
+import send_confirmation from "../mailer";
 
 async function update_form(
   user: z.infer<typeof applicationSchema>,
 ): Promise<boolean> {
   "use server";
 
-  if (!get("allow_apply") ?? true) {
-    console.warn("Applying is disabled ");
-    return false;
-  }
-
   const supabase = createClient();
   const userInfo = await getUserInfo();
 
   let userId = userInfo?.id;
 
-  return Promise.all([
+  const { ok, did_insert } = await Promise.all([
     supabase.from("registrations").upsert({ id: userId, ...user }),
     supabase
       .from("users")
       .update({ application_status: "Applied" })
       .eq("user_id", userId),
   ]).then((results) => {
-    let was_successful = true;
+    let ok = true;
 
     results.map((result) => {
       if (result.error || Math.floor(result.status / 100) != 2) {
         console.error(result);
-        was_successful &&= false;
+        ok &&= false;
       }
     });
 
-    return was_successful;
+    return {
+      ok,
+      did_insert: results?.[0].statusText === "Created" ?? false,
+    };
   });
+
+  // Only send a confirmation on the first submission
+  if (ok && did_insert && userInfo?.email) {
+    const response = await send_confirmation(userInfo?.email);
+
+    if (response.rejected.length !== 0) {
+      console.warn(response);
+    }
+  }
+
+  return ok;
 }
 
 export default async function Register() {
   const userInfo = await getUserInfo();
-
-  if (!(await get("allow_apply")) ?? true) {
-    return <p>Applications are currently closed, check back soon!</p>;
-  }
 
   if (!userInfo) {
     return redirect("/");

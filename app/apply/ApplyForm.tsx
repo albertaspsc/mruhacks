@@ -45,7 +45,6 @@ import { z } from "zod";
 import { cn } from "@/lib/utils";
 import { useToast } from "@/components/ui/use-toast";
 import { useState } from "react";
-import { redirect } from "next/navigation";
 
 type ApplicationField = keyof z.infer<typeof applicationSchema>;
 
