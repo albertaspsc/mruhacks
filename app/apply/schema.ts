@@ -83,7 +83,7 @@ const formSchema = z.object({
   github: z.string().optional(),
   linkedin: z.string().optional(),
   personalSite: z.string().optional(),
-  sponsorConsent: z.enum(["Yes", "No"]).optional(),
+  sponsorConsent: z.enum(["Yes", "No"]),
 });
 
 export const partialApplicationSchema = formSchema.partial();
