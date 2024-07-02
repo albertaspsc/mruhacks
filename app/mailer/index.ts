@@ -6,7 +6,7 @@ import SMTPTransport from "nodemailer/lib/smtp-transport";
 const options: SMTPTransport.Options = {
   host: process.env.SMTP_HOST,
   port: Number(process.env.SMTP_PORT),
-  secure: false,
+  secure: true,
   auth: {
     user: process.env.SMTP_USER,
     pass: process.env.SMTP_PASSWORD,
@@ -16,12 +16,6 @@ const options: SMTPTransport.Options = {
 const transporter = nodemailer.createTransport(options);
 
 export default async function send_confirmation(email: string) {
-  const message = {
-    from: "hello@mruhacks.ca",
-    to: email,
-    subject: "Your MRUHacks 2024 Application",
-  };
-
   const html = (
     await readFile("app/mailer/registration_conf.md.html")
   ).toString();
