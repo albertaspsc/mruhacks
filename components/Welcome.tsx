@@ -58,9 +58,16 @@ export default async function Welcome() {
   const userInfo = await getUserInfo();
 
   return (
-    <div className="hero min-h-screen bg-opacity-60 bg-auto" id="home">
-      <Image src={background} alt="" className="hero-overlay object-cover" />
-      <div className="hero-content text-center text-white flex-col">
+    <div
+      className="min-h-screen bg-opacity-60 bg-auto flex flex-col justify-center"
+      id="home"
+    >
+      <Image
+        src={background}
+        alt=""
+        className="absolute object-cover min-h-screen -z-10"
+      />
+      <div className="flex flex-col items-center  text-center text-white absolute -z-9">
         <Image className="w-1/2" src={logo} alt="MRUHacks" />
         <p className="mb-5 font-semibold p-4">
           24 Hours of Collaboration, Coding, and Connections

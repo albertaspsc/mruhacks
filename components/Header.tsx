@@ -91,7 +91,7 @@ export default async function Header() {
 
   return (
     <nav className="w-full z-30">
-      <div className="flex flex-row items-center bg-primary justify-between text-base-100 h-[60px]">
+      <div className="flex flex-row items-center bg-primary justify-between text-base-100 h-[60px] ">
         <div className="lg:hidden flex flex-row items-center ">
           <DropDown />
         </div>
