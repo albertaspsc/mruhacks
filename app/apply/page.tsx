@@ -47,6 +47,8 @@ async function update_form(
     if (response.rejected.length !== 0) {
       console.warn(response);
     }
+
+    console.log(response);
   }
 
   return ok;
