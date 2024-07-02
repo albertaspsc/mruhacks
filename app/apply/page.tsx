@@ -65,7 +65,7 @@ export default async function Register() {
   };
 
   const prefill = partialApplicationSchema.safeParse(
-    mergeObjects(meta_data, {}),
+    mergeObjects(meta_data, database_info),
   ).data;
 
   return <ApplyForm onSubmit={update_form} previousResponses={prefill} />;
