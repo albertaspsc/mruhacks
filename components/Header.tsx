@@ -4,6 +4,7 @@ import {
   FaBars,
   FaBookOpen,
   FaGithub,
+  FaGoogle,
   FaSignInAlt,
   FaSignOutAlt,
 } from "react-icons/fa";
@@ -16,6 +17,7 @@ import signout from "@/lib/auth/signout";
 import { createClient } from "@/lib/supabase/server";
 import { User } from "@supabase/auth-js";
 import { UserIcon } from "lucide-react";
+import signInWithGoogle from "@/lib/auth/signInWithGoogle";
 
 const getUserApplicationStatus = async (user: User) => {
   const supabase = createClient();
@@ -59,16 +61,28 @@ export default async function Header() {
               application_status={userApplicationStatus || "<unknown>"}
             />
           ) : (
-            <form action={signInWithGithub}>
-              <Button
-                variant="outline"
-                className="w-full p-2 text-md mt-4"
-                type="submit"
-              >
-                <FaGithub className="mr-2" />
-                Sign In
-              </Button>
-            </form>
+            <div>
+              <form action={signInWithGithub}>
+                <Button
+                  variant="outline"
+                  className="w-full p-2 text-md mt-4"
+                  type="submit"
+                >
+                  <FaGithub className="mr-2" />
+                  Sign In With Github
+                </Button>
+              </form>
+              <form action={signInWithGoogle}>
+                <Button
+                  variant="outline"
+                  className="w-full p-2 text-md mt-4"
+                  type="submit"
+                >
+                  <FaGoogle className="mr-2" />
+                  Sign In With Google
+                </Button>
+              </form>
+            </div>
           )}
         </div>
       </PopoverContent>
@@ -100,6 +114,7 @@ export default async function Header() {
           <Link href="/#fLinkq">FAQs</Link>
           <Link href="/#community">Our Community</Link>
           <Link href="/#sponsors">Sponsors</Link>
+          <hr />
           {userInfo ? (
             <ProfileModal
               user={userInfo}
@@ -143,6 +158,16 @@ const SignInModal = () => {
               Sign in with Github
             </Button>
           </form>
+          <form action={signInWithGoogle}>
+            <Button
+              variant="outline"
+              className="w-full p-2 text-md"
+              type="submit"
+            >
+              <FaGoogle className="mr-2" />
+              Sign In With Google
+            </Button>
+          </form>
         </div>
       </PopoverContent>
     </Popover>
@@ -167,12 +192,16 @@ const ProfileModal = ({
       <PopoverContent className="w-80 bg-white">
         <div className="grid gap-4">
           <div className="flex flex-row items-center justify-left">
-            {/*eslint-disable-next-line @next/next/no-img-element*/}
-            <img
-              src={user?.user_metadata?.avatar_url}
-              className="w-12 h-12 rounded-full mr-2"
-              alt="User Avatar"
-            />
+            {user?.user_metadata.avatar_url ? (
+              /*eslint-disable-next-line @next/next/no-img-element*/
+              <img
+                src={user?.user_metadata?.avatar_url}
+                className="w-12 h-12 rounded-full mr-2"
+                alt="User Avatar"
+              />
+            ) : (
+              <></>
+            )}
             <div>
               <h4 className="font-bold leading-none text-md mb-1">
                 {user?.user_metadata?.full_name}
