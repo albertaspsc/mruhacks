@@ -88,6 +88,8 @@ const formSchema = z.object({
 
 export const partialApplicationSchema = formSchema.partial();
 
+export type Application = typeof formSchema._output;
+
 export const applicationSchema = z.preprocess(
   // Cast all nullish types to `undefined`
   (x) => {

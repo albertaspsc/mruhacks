@@ -18,6 +18,7 @@ import { createClient } from "@/lib/supabase/server";
 import { User } from "@supabase/auth-js";
 import { UserIcon } from "lucide-react";
 import signInWithGoogle from "@/lib/auth/signInWithGoogle";
+import AdminLink from "./AdminLink";
 
 const getUserApplicationStatus = async (user: User) => {
   const supabase = createClient();
@@ -50,6 +51,7 @@ export default async function Header() {
       </PopoverTrigger>
       <PopoverContent className="bg-secondary w-min outline-none border-none m-1 mt-0">
         <div className="flex flex-col bg-secondary [&>*]:text-nowrap text-base-100 space-y-1">
+          <AdminLink />
           <Link href="/#home">Home</Link>
           <Link href="/#about">About MRUHacks</Link>
           <Link href="/#fLinkq">FAQs</Link>
@@ -108,7 +110,7 @@ export default async function Header() {
           />
         </Link>
         <div className="hidden lg:flex flex-row items-center space-x-5">
-          <MenuItems />
+          <AdminLink />
           <Link href="/#home">Home</Link>
           <Link href="/#about">About MRUHacks</Link>
           <Link href="/#fLinkq">FAQs</Link>
@@ -128,8 +130,6 @@ export default async function Header() {
     </nav>
   );
 }
-
-const MenuItems = () => [];
 
 const SignInModal = () => {
   return (
