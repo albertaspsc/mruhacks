@@ -1,9 +1,8 @@
 import { createClient } from "../supabase/server";
 import getUserInfo from "./getUserInfo";
 
-const supabase = createClient();
-
 export async function is_admin() {
+  const supabase = createClient();
   const { count } = await supabase
     .from("permissions")
     .select("", { count: "exact", head: true });
@@ -12,6 +11,7 @@ export async function is_admin() {
 }
 
 export async function get_perms() {
+  const supabase = createClient();
   const userInfo = await getUserInfo();
 
   if (!userInfo) return null;
