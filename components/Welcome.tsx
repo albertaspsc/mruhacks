@@ -6,9 +6,7 @@ import Link from "next/link";
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogHeader,
-  DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
 import signInWithGithub from "@/lib/auth/signInWithGithub";
@@ -16,12 +14,36 @@ import { Button } from "./ui/button";
 import { FaGithub, FaGoogle } from "react-icons/fa";
 import signInWithGoogle from "@/lib/auth/signInWithGoogle";
 import getUserInfo from "@/lib/auth/getUserInfo";
+import { createClient } from "@/lib/supabase/server";
+import { Suspense } from "react";
+
+const RegisterText = () => {
+  const get_text = async () => {
+    const supabase = createClient();
+
+    // RLS means we only get the current user here
+    const { error, data } = await supabase
+      .from("users")
+      .select("application_status")
+      .limit(1);
+
+    if (error) console.error(error);
+
+    const application_status = data?.[0]?.application_status ?? undefined;
+
+    if (application_status == "Applied") return "Edit Application";
+
+    return "Register Now!";
+  };
+
+  return <Suspense fallback="Register Now!">{get_text()}</Suspense>;
+};
 
 const SignInDialog = () => (
   <Dialog>
     <DialogTrigger asChild>
       <Button variant="secondary" className="h-16 min-h-16 px-5 text-lg">
-        Register Now!
+        <RegisterText />
       </Button>
     </DialogTrigger>
     <DialogContent className="bg-white">
@@ -80,7 +102,9 @@ export default async function Welcome() {
       </p>
       {userInfo ? (
         <Button variant="secondary" className="h-16 min-h-16 px-5 text-lg">
-          <Link href="/apply">Register Now!</Link>
+          <Link href="/apply">
+            <RegisterText />
+          </Link>
         </Button>
       ) : (
         <SignInDialog />
