@@ -6,12 +6,9 @@ export default function Question({
   answer: string;
 }) {
   return (
-    <details className="collapse collapse-arrow join-item p-4 my-4 border border-accent-100 bg-primary text-neutral">
-      <input type="checkbox" name="faq" className="hidden" />
-      <summary className="collapse-title font-bold text-lg">{question}</summary>
-      <div className="collapse-content ">
-        <p>{answer}</p>
-      </div>
+    <details className="bg-primary rounded-xl text-base-100 p-4 my-4 ">
+      <summary className="font-bold text-lg list-none">{question}</summary>
+      <p className="pt-4">{answer}</p>
     </details>
   );
 }
