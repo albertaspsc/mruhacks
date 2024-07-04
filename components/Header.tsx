@@ -107,14 +107,13 @@ export default async function Header() {
             alt="MRUHacks Logo"
           />
         </Link>
-        <div className="hidden lg:flex flex-row items-center space-x-5">
+        <div className="hidden lg:flex flex-row items-center *:px-2 pr-2">
           <AdminLink />
           <Link href="/#home">Home</Link>
           <Link href="/#about">About MRUHacks</Link>
           <Link href="/#fLinkq">FAQs</Link>
           <Link href="/#community">Our Community</Link>
           <Link href="/#sponsors">Sponsors</Link>
-          <hr />
           {userInfo ? (
             <ProfileModal
               user={userInfo}
@@ -182,7 +181,7 @@ const ProfileModal = ({
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <Button variant="outline" className="p-2 text-md">
+        <Button variant="outline" className="text-md">
           <UserIcon />
           Profile
         </Button>
