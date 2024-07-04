@@ -19,6 +19,8 @@ import { User } from "@supabase/auth-js";
 import { UserIcon } from "lucide-react";
 import signInWithGoogle from "@/lib/auth/signInWithGoogle";
 import AdminLink from "./AdminLink";
+import missing_profile from "@/assets/missing_profile.png";
+import FallbackImage from "./FallbackImage";
 
 const getUserApplicationStatus = async (user: User) => {
   const supabase = createClient();
@@ -189,16 +191,16 @@ const ProfileModal = ({
       <PopoverContent className="w-80 bg-white">
         <div className="grid gap-4">
           <div className="flex flex-row items-center justify-left">
-            {user?.user_metadata.avatar_url ? (
-              /*eslint-disable-next-line @next/next/no-img-element*/
-              <img
-                src={user?.user_metadata?.avatar_url}
-                className="w-12 h-12 rounded-full mr-2"
-                alt="User Avatar"
-              />
-            ) : (
-              <></>
-            )}
+            {/*eslint-disable-next-line @next/next/no-img-element*/}
+            <FallbackImage
+              src={user?.user_metadata?.avatar_url}
+              fallback={missing_profile}
+              className="rounded-full mr-2"
+              width={48}
+              height={48}
+              alt="User Avatar"
+              unoptimized
+            />
             <div>
               <h4 className="font-bold leading-none text-md mb-1">
                 {user?.user_metadata?.full_name}
