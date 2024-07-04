@@ -42,12 +42,10 @@ export default async function Header() {
 
   const DropDown = () => (
     <Popover>
-      <PopoverTrigger
-        tabIndex={0}
-        role="button"
-        className="btn btn-primary text-base-100"
-      >
-        <FaBars />
+      <PopoverTrigger asChild>
+        <Button>
+          <FaBars />
+        </Button>
       </PopoverTrigger>
       <PopoverContent className="bg-secondary w-min outline-none border-none m-1 mt-0">
         <div className="flex flex-col bg-secondary [&>*]:text-nowrap text-base-100 space-y-1">
