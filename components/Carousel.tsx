@@ -13,15 +13,15 @@ import {
 type CarouselImageTakes = ArrayElement<typeof carousel_items>;
 const CarouselImage = ({ ...props }: CarouselImageTakes) => {
   return (
-    <CarouselItem
-      className="flex justify-center items-center flex-col 
-                            basis-[50vh] max-w-[100vw]
-                            overflow-visible
-                            "
-    >
+    <CarouselItem className="basis-[50vh]">
       {/*This is actually passed eslint is just stupid here*/}
       {/* eslint-disable-next-line jsx-a11y/alt-text */}
-      <Image {...props} className=" rounded-2xl " />
+      <Image
+        {...props}
+        className="rounded-2xl"
+        loading="lazy"
+        placeholder="blur"
+      />
       <p className="text-center px-10 pt-5">{props.legend}</p>
     </CarouselItem>
   );
