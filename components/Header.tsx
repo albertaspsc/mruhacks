@@ -191,7 +191,6 @@ const ProfileModal = ({
       <PopoverContent className="w-80 bg-white">
         <div className="grid gap-4">
           <div className="flex flex-row items-center justify-left">
-            {/*eslint-disable-next-line @next/next/no-img-element*/}
             <FallbackImage
               src={user?.user_metadata?.avatar_url}
               fallback={missing_profile}

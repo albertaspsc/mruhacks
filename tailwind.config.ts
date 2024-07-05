@@ -25,23 +25,30 @@ const config: Config = {
         normal: "400",
         bold: "700",
       },
-    },
-  },
-  plugins: [require("daisyui")],
-  daisyui: {
-    themes: [
-      {
-        mruhacks: {
-          primary: "#002766",
-          "primary-content": "#581188",
-          secondary: "#0062ff",
-          accent: "#ff00ff",
-          neutral: "#f2f2f2",
-          // Background Color
-          "base-100": "#e4e4e7",
+      colors: {
+        primary: "#002766",
+        "primary-content": "#581188",
+        secondary: "#0062ff",
+        accent: "#ff00ff",
+        neutral: "#f2f2f2",
+        // Background Color
+        "base-100": "#e4e4e7",
+      },
+      keyframes: {
+        "accordion-down": {
+          from: { height: "0" },
+          to: { height: "var(--radix-accordion-content-height)" },
+        },
+        "accordion-up": {
+          from: { height: "var(--radix-accordion-content-height)" },
+          to: { height: "0" },
         },
       },
-    ],
+      animation: {
+        "accordion-down": "accordion-down 0.2s ease-out",
+        "accordion-up": "accordion-up 0.2s ease-out",
+      },
+    },
   },
 };
 export default config;

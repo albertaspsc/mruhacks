@@ -1,6 +1,8 @@
 import { createClient } from "@/lib/supabase/server";
 import { columns } from "./columns";
 import { DataTable } from "./data-table";
+import { DataTableViewOptions } from "./column_toggle";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 export default async function Table() {
   const supabase = createClient();
@@ -9,7 +11,14 @@ export default async function Table() {
 
   return (
     <div className="container mx-auto py-10">
-      <DataTable columns={columns} data={data ?? []} />
+      <Card x-chunk="dashboard-06-chunk-0">
+        <CardHeader>
+          <CardTitle>Applicants</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <DataTable columns={columns} data={data ?? []} />
+        </CardContent>
+      </Card>
     </div>
   );
 }
