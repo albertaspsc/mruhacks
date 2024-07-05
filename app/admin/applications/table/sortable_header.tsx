@@ -20,12 +20,14 @@ interface DataTableColumnHeaderProps<TData, TValue>
   extends React.HTMLAttributes<HTMLDivElement> {
   column: Column<TData, TValue>;
   title: string;
+  searchable?: boolean;
 }
 
 export function DataTableColumnHeader<TData, TValue>({
   column,
   title,
   className,
+  searchable,
 }: DataTableColumnHeaderProps<TData, TValue>) {
   if (!column.getCanSort()) {
     return <div className={cn(className)}>{title}</div>;
@@ -65,12 +67,16 @@ export function DataTableColumnHeader<TData, TValue>({
             Hide
           </DropdownMenuItem>
         </DropdownMenuContent>
-        <Input
-          placeholder="Filter Names"
-          value={(column.getFilterValue() as string) ?? ""}
-          onChange={(event) => column.setFilterValue(event.target.value)}
-          className=""
-        />
+        {searchable ? (
+          <Input
+            placeholder={`Filter ${title}`}
+            value={(column.getFilterValue() as string) ?? ""}
+            onChange={(event) => column.setFilterValue(event.target.value)}
+            className=""
+          />
+        ) : (
+          <></>
+        )}
       </DropdownMenu>
     </div>
   );

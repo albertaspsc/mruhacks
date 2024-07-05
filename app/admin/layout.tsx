@@ -4,14 +4,10 @@ import { is_admin } from "@/lib/auth/getPerms";
 import getUserInfo from "@/lib/auth/getUserInfo";
 import { ReactNode } from "react";
 
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import React from "react";
-import { Card, CardHeader } from "@/components/ui/card";
+import Link from "next/link";
 
-export default async function Layout(props: {
-  children: ReactNode;
-  applications: React.ReactNode;
-}) {
+export default async function Layout(props: { children: ReactNode }) {
   const userInfo = await getUserInfo();
 
   if (!userInfo) {
@@ -27,19 +23,24 @@ export default async function Layout(props: {
   }
 
   return (
-    <div className="">
-      <Tabs defaultValue="application">
-        <Card>
-          <TabsList>
-            <TabsTrigger value="application">Applications</TabsTrigger>
-            <TabsTrigger value="check_in">Check In</TabsTrigger>
-          </TabsList>
-          <TabsContent value="application" asChild>
-            {props.applications}
-          </TabsContent>
-          <TabsContent value="check_in">TODO</TabsContent>
-        </Card>
-      </Tabs>
+    <div className="flex flex-row flex-grow px-10">
+      <div id="menu" className="pt-10 pr-20 [&>ul]:pl-1">
+        <h2 className="text-xl font-bold pb-5">Admin Menu</h2>
+        <ul>
+          <li className="pb-2">
+            <Link href="/admin/applications">Applications</Link>
+          </li>
+          <ul className="pl-4">
+            <li>
+              <Link href="/admin/applications/table">Table</Link>
+            </li>
+            <li>
+              <Link href="/admin/applications/stats">Stats</Link>
+            </li>
+          </ul>
+        </ul>
+      </div>
+      <div className="flex-grow mt-20">{props.children}</div>
     </div>
   );
 }

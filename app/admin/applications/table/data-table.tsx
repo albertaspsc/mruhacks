@@ -21,7 +21,6 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import React from "react";
 import { DataTableViewOptions } from "./column_toggle";
 
@@ -39,6 +38,16 @@ export function DataTable<TData, TValue>({
   );
   const [sorting, setSorting] = React.useState<SortingState>([]);
 
+  const visible = {
+    ...columns.reduce((acc, x) => {
+      acc[x.accessorKey] = false;
+      return acc;
+    }, {}),
+    name: true,
+    email: true,
+    application_status: true,
+  };
+
   const table = useReactTable({
     data,
     columns,
@@ -51,6 +60,9 @@ export function DataTable<TData, TValue>({
     state: {
       sorting,
       columnFilters,
+    },
+    initialState: {
+      columnVisibility: visible,
     },
   });
 
