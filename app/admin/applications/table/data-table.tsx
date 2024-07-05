@@ -40,6 +40,7 @@ export function DataTable<TData, TValue>({
 
   const visible = {
     ...columns.reduce((acc, x) => {
+      // @ts-ignore
       acc[x.accessorKey] = false;
       return acc;
     }, {}),

@@ -1,8 +1,7 @@
-import { BarChart } from "@mantine/charts";
-
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ReactNode, Suspense } from "react";
 import { createClient } from "@/lib/supabase/server";
+import { GenderDemoGraphics } from "./charts";
 
 function StatsCard({
   title,
@@ -28,7 +27,7 @@ function StatsCard({
 
 export default async function Page() {
   const supabase = createClient();
-  const reg_count = supabase
+  const reg_count = await supabase
     .from("registrations")
     .select("count")
     .then(({ data, error }) => {
@@ -36,7 +35,7 @@ export default async function Page() {
       return data?.[0]?.count ?? undefined;
     });
 
-  const user_count = supabase
+  const user_count = await supabase
     .from("users")
     .select("count")
     .then(({ data, error }) => {
@@ -44,7 +43,7 @@ export default async function Page() {
       return data?.[0]?.count ?? undefined;
     });
 
-  const gender_demographics = supabase
+  const gender_demographics = await supabase
     .from("gender_demographics")
     .select()
     .then(({ data, error }) => {
@@ -54,21 +53,9 @@ export default async function Page() {
 
   return (
     <div className="grid grid-cols-2 gap-5">
-      <Suspense>
-        <StatsCard title="Total Users" value={user_count ?? "<Unknown>"} />
-        <StatsCard
-          title="Total Registrations"
-          value={reg_count ?? "<Unknown>"}
-        />
-      </Suspense>
-
-      <Suspense>
-        <BarChart
-          data={(await gender_demographics) ?? []}
-          dataKey="gender"
-          series={[{ name: "count" }]}
-        />
-      </Suspense>
+      <StatsCard title="Total Users" value={user_count ?? "<Unknown>"} />
+      <StatsCard title="Total Registrations" value={reg_count ?? "<Unknown>"} />
+      <GenderDemoGraphics gender_demographics={gender_demographics!} />
     </div>
   );
 }
