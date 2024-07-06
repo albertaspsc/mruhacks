@@ -2,10 +2,13 @@ import { createClient } from "../supabase/server";
 import getUserInfo from "./getUserInfo";
 
 export async function is_admin() {
+  const userInfo = await getUserInfo();
   const supabase = createClient();
+
   const { count } = await supabase
     .from("permissions")
-    .select("", { count: "exact", head: true });
+    .select("", { count: "exact", head: true })
+    .eq("user_id", userInfo?.id);
 
   return !!count && count > 0;
 }
