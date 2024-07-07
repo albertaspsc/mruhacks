@@ -18,6 +18,9 @@ import { createClient } from "@/lib/supabase/server";
 import { User } from "@supabase/auth-js";
 import { UserIcon } from "lucide-react";
 import signInWithGoogle from "@/lib/auth/signInWithGoogle";
+import AdminLink from "./AdminLink";
+import missing_profile from "@/assets/missing_profile.png";
+import FallbackImage from "./FallbackImage";
 
 const getUserApplicationStatus = async (user: User) => {
   const supabase = createClient();
@@ -41,15 +44,14 @@ export default async function Header() {
 
   const DropDown = () => (
     <Popover>
-      <PopoverTrigger
-        tabIndex={0}
-        role="button"
-        className="btn btn-primary text-base-100"
-      >
-        <FaBars />
+      <PopoverTrigger asChild>
+        <Button>
+          <FaBars />
+        </Button>
       </PopoverTrigger>
       <PopoverContent className="bg-secondary w-min outline-none border-none m-1 mt-0">
         <div className="flex flex-col bg-secondary [&>*]:text-nowrap text-base-100 space-y-1">
+          <AdminLink />
           <Link href="/#home">Home</Link>
           <Link href="/#about">About MRUHacks</Link>
           <Link href="/#fLinkq">FAQs</Link>
@@ -107,14 +109,13 @@ export default async function Header() {
             alt="MRUHacks Logo"
           />
         </Link>
-        <div className="hidden lg:flex flex-row items-center space-x-5">
-          <MenuItems />
+        <div className="hidden lg:flex flex-row items-center *:px-2 pr-2">
+          <AdminLink />
           <Link href="/#home">Home</Link>
           <Link href="/#about">About MRUHacks</Link>
           <Link href="/#fLinkq">FAQs</Link>
           <Link href="/#community">Our Community</Link>
           <Link href="/#sponsors">Sponsors</Link>
-          <hr />
           {userInfo ? (
             <ProfileModal
               user={userInfo}
@@ -128,8 +129,6 @@ export default async function Header() {
     </nav>
   );
 }
-
-const MenuItems = () => [];
 
 const SignInModal = () => {
   return (
@@ -184,7 +183,7 @@ const ProfileModal = ({
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <Button variant="outline" className="p-2 text-md">
+        <Button variant="outline" className="text-md">
           <UserIcon />
           Profile
         </Button>
@@ -192,16 +191,15 @@ const ProfileModal = ({
       <PopoverContent className="w-80 bg-white">
         <div className="grid gap-4">
           <div className="flex flex-row items-center justify-left">
-            {user?.user_metadata.avatar_url ? (
-              /*eslint-disable-next-line @next/next/no-img-element*/
-              <img
-                src={user?.user_metadata?.avatar_url}
-                className="w-12 h-12 rounded-full mr-2"
-                alt="User Avatar"
-              />
-            ) : (
-              <></>
-            )}
+            <FallbackImage
+              src={user?.user_metadata?.avatar_url}
+              fallback={missing_profile}
+              className="rounded-full mr-2"
+              width={48}
+              height={48}
+              alt="User Avatar"
+              unoptimized
+            />
             <div>
               <h4 className="font-bold leading-none text-md mb-1">
                 {user?.user_metadata?.full_name}

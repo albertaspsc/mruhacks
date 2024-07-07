@@ -95,7 +95,7 @@ const TextInput = ({
               {...field}
               placeholder={label}
               className="bg-white"
-              required={required}
+              // required={required}
             />
           ) : number ? (
             <Input
@@ -103,15 +103,9 @@ const TextInput = ({
               type="number"
               placeholder={label}
               className="bg-white"
-              required={required}
             />
           ) : (
-            <Input
-              {...field}
-              placeholder={label}
-              className="bg-white"
-              required={required}
-            />
+            <Input {...field} placeholder={label} className="bg-white" />
           )}
         </FormControl>
         <FormDescription className="text-gray-500 text-md">
@@ -252,8 +246,10 @@ const ComboBoxInput = ({
 
 const DietaryRestrictions = ({
   form,
+  disabled,
 }: {
   form: UseFormReturn<z.infer<typeof applicationSchema>>;
+  disabled: boolean;
 }) => {
   return (
     <FormField
@@ -273,6 +269,7 @@ const DietaryRestrictions = ({
                 <FormItem className="flex flex-row items-center space-x-3 space-y-0">
                   <FormControl>
                     <Checkbox
+                      disabled={disabled}
                       checked={field.value?.includes(
                         item as (typeof field.value)[number],
                       )}
@@ -308,6 +305,8 @@ export default function ApplyForm({
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
+  router.prefetch("/");
+
   let defaultValues = previousResponses ?? {};
 
   const form = useForm<z.infer<typeof applicationSchema>>({
@@ -332,16 +331,26 @@ export default function ApplyForm({
           },
     );
 
-    if (success) router.push("/");
-
-    setLoading(false);
+    if (success) {
+      router.push("/");
+    } else {
+      setLoading(false);
+    }
   }
+
+  const loading_disable = loading
+    ? `
+        [&_button]:pointer-events-none [&_button]:opacity-50
+        [&_input]:pointer-events-none [&_input]:opacity-50
+        [&_textarea]:pointer-events-none [&_textarea]:opacity-50
+       `
+    : "";
 
   return (
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="pt-24 mx-auto px-4 max-w-screen-md"
+        className={`pt-24 mx-auto px-4 max-w-screen-md ${loading_disable}`}
       >
         <FormSection
           title="Personal Information"
@@ -377,7 +386,7 @@ export default function ApplyForm({
             options={options.ethnicity}
             required
           />
-          <DietaryRestrictions form={form} />
+          <DietaryRestrictions form={form} disabled={loading} />
           <TextInput
             label="Additional Information"
             name="additional"
@@ -454,11 +463,11 @@ export default function ApplyForm({
           <Button
             role="submit"
             type="submit"
-            className="text-white font-bold float-right mb-12"
+            className="text-white font-bold float-right mb-12 opacity-100"
             disabled
           >
-            <LucideLoader2 className="animate-spin mr-2" />
-            Submit
+            <LucideLoader2 className="animate-spin mr-2 opacity-100" />
+            Submit Application
           </Button>
         ) : (
           <Button
@@ -466,7 +475,7 @@ export default function ApplyForm({
             type="submit"
             className="text-white font-bold float-right mb-12"
           >
-            Submit
+            Submit Application
           </Button>
         )}
       </form>

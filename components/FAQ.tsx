@@ -9,7 +9,7 @@ export default function FAQs() {
       <h1 className="text-xl font-bold text-center text-primary-content">
         Frequently Asked Questions
       </h1>
-      <div className="-mx-4 flex flex-wrap pt-4">
+      <div className="flex flex-wrap pt-4">
         <div className="w-full px-4 lg:w-1/2">
           {left.map((f, key) => (
             <Question key={key} {...f}></Question>

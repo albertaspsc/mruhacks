@@ -5,6 +5,7 @@ import { FaLinkedinIn, FaDiscord, FaInstagram } from "react-icons/fa";
 
 import groupPicture from "../public/group_image_vlad4.jpg";
 import Link from "next/link";
+import { Button } from "./ui/button";
 
 export default async function Community() {
   const socials = {
@@ -22,17 +23,20 @@ export default async function Community() {
   const Socials = () =>
     Object.entries(socials).map(([name, props], key) => {
       return (
-        <Link
+        <Button
           key={key}
-          href={props.href}
-          target="_blank" /* Open in new tab */
-          rel="noopener noreferrer"
-          className="btn btn-link font-medium text-primary-content text-base sm:text-lg"
+          className="text-md space-x-1 flex-wrap"
+          variant="link"
         >
-          {/* I hate this more than you know but it works soooo*/}
           <props.icon />
-          {name}
-        </Link>
+          <Link
+            rel="noopener noreferrer"
+            href={props.href}
+            target="_blank" /* Open in new tab */
+          >
+            {name}
+          </Link>
+        </Button>
       );
     });
 

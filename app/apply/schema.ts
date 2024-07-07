@@ -59,8 +59,8 @@ export const options = {
 };
 
 const formSchema = z.object({
-  first_name: z.string().min(1),
-  last_name: z.string().min(1),
+  first_name: z.string().min(1, { message: "Required Field" }),
+  last_name: z.string().min(1, { message: "Required Field" }),
   email: z.string().email(),
   age: z.coerce
     .number({ message: "Invalid Age" })
@@ -87,6 +87,8 @@ const formSchema = z.object({
 });
 
 export const partialApplicationSchema = formSchema.partial();
+
+export type Application = typeof formSchema._output;
 
 export const applicationSchema = z.preprocess(
   // Cast all nullish types to `undefined`
