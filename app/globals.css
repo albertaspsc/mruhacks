@@ -4,6 +4,15 @@
 
 @layer base {
   :root {
+    --chart-1: #b33dc6;
+    --chart-2: #27aeef;
+    --chart-3: #87bc45;
+    --chart-4: #bdcf32;
+    --chart-5: #ede15b;
+    --chart-6: #edbf33;
+    --chart-7: #ef9b20;
+    --chart-8: #f46a9b;
+    --chart-9: #ea5545;
   }
 
   .dark {

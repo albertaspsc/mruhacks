@@ -7,9 +7,11 @@ import {
   useReactTable,
   getPaginationRowModel,
   getFilteredRowModel,
+  getFacetedUniqueValues,
   ColumnFiltersState,
   SortingState,
   getSortedRowModel,
+  getFacetedRowModel,
 } from "@tanstack/react-table";
 
 import {
@@ -23,6 +25,7 @@ import {
 import { Button } from "@/components/ui/button";
 import React from "react";
 import { DataTableViewOptions } from "./column_toggle";
+import { DataTableSearchColumns } from "./column_search";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -45,7 +48,7 @@ export function DataTable<TData, TValue>({
       return acc;
     }, {}),
     name: true,
-    email: true,
+    // email: true,
     application_status: true,
   };
 
@@ -58,6 +61,7 @@ export function DataTable<TData, TValue>({
     getFilteredRowModel: getFilteredRowModel(),
     onSortingChange: setSorting,
     getSortedRowModel: getSortedRowModel(),
+    getFacetedUniqueValues: getFacetedUniqueValues(),
     state: {
       sorting,
       columnFilters,
@@ -69,7 +73,13 @@ export function DataTable<TData, TValue>({
 
   return (
     <div>
-      <DataTableViewOptions table={table} />
+      <div className="flex flex-row">
+        <DataTableSearchColumns
+          table={table}
+          exclude={["application_status"]}
+        />
+        <DataTableViewOptions table={table} />
+      </div>
       <div className="rounded-md border mt-2">
         <Table>
           <TableHeader>

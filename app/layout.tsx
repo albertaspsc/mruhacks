@@ -5,6 +5,7 @@ import "./globals.css";
 
 import Header from "@/components/Header";
 import { Toaster } from "@/components/ui/toaster";
+import { ThemeProvider } from "@/components/theme-provider";
 
 const dm_sans = DM_Sans({
   subsets: ["latin"],
@@ -24,9 +25,16 @@ export default function RootLayout({
     <html lang="en" data-theme="mruhacks">
       <meta name="theme-color" content="#002766" />
       <body className={dm_sans.className}>
-        <Header />
-        {children}
-        <Toaster />
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <Header />
+          {children}
+          <Toaster />
+        </ThemeProvider>
       </body>
     </html>
   );

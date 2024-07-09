@@ -24,23 +24,15 @@ export default async function Layout(props: { children: ReactNode }) {
 
   return (
     <div className="flex flex-row flex-grow px-10">
-      <div id="menu" className="pt-10 pr-20 [&>ul]:pl-1">
+      <div id="menu" className="pt-10 text-nowrap pr-20 [&>ul]:pl-1">
         <h2 className="text-xl font-bold pb-5">Admin Menu</h2>
         <ul>
           <li className="pb-2">
             <Link href="/admin/applications">Applications</Link>
           </li>
-          <ul className="pl-4">
-            <li>
-              <Link href="/admin/applications/table">Table</Link>
-            </li>
-            <li>
-              <Link href="/admin/applications/stats">Stats</Link>
-            </li>
-          </ul>
         </ul>
       </div>
-      <div className="flex-grow mt-20">{props.children}</div>
+      <div className="flex-grow mt-20 overflow-auto">{props.children}</div>
     </div>
   );
 }

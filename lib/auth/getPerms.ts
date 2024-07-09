@@ -1,3 +1,4 @@
+import { error } from "console";
 import { createClient } from "../supabase/server";
 import getUserInfo from "./getUserInfo";
 
@@ -17,7 +18,7 @@ export async function get_perms() {
   const supabase = createClient();
   const userInfo = await getUserInfo();
 
-  if (!userInfo) return null;
+  if (!userInfo) return { data: null, error: "Failed to get user info" };
 
   return await supabase.from("permissions").select().eq("user_id", userInfo.id);
 }

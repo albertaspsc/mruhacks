@@ -33,6 +33,10 @@ const config: Config = {
         neutral: "#f2f2f2",
         // Background Color
         "base-100": "#e4e4e7",
+        inp: "rgba(0, 0, 255, 0.3)",
+        apr: "rgba(0, 128, 0, 0.3)",
+        den: "rgba(255, 0, 0, 0.3)",
+        apl: "rgba(255, 255, 0, 0.3)",
       },
       keyframes: {
         "accordion-down": {
