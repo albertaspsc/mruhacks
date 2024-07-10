@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import logo from "@/public/mru_title_light.png";
 import { Logout } from "../logout";
+import Profile from "../profile";
 
 export default function Nav() {
   return (

@@ -5,6 +5,7 @@ import { MenuItem } from "./menu_item";
 import { DashboardIcon } from "@radix-ui/react-icons";
 import { get_perms } from "@/lib/auth/getPerms";
 import { memoize } from "lodash";
+import Profile from "../profile";
 
 const MenuHeader = ({ children }: { children: ReactNode }) => (
   <li className="last:hidden block text-white font-bold">
@@ -31,6 +32,7 @@ const Items = async () => {
 
   return (
     <div className="pt-4 space-y-5">
+      <Profile />
       <div className="flex items-center justify-center w-full md:hidden">
         <Logout />
       </div>

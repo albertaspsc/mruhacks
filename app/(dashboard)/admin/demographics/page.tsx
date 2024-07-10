@@ -1,4 +1,4 @@
-import { Demographics } from "../applications/stats";
+import { Demographics } from "../stats";
 
 export default function Page() {
   return <Demographics />;

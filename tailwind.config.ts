@@ -34,6 +34,8 @@ const config: Config = {
         "base-100": "var(--base-100)",
         foreground: "var(--text)",
         background: "var(--background)",
+        popover: "var(--background)",
+        "primary-foreground": "var(--text)",
         inp: "var(--inp)",
         apr: "var(--inp)",
         den: "var(--den)",

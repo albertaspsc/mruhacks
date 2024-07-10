@@ -58,7 +58,6 @@ export default async function Header() {
           <Link href="/#fLinkq">FAQs</Link>
           <Link href="/#community">Our Community</Link>
           <Link href="/#sponsors">Sponsors</Link>
-          <ModeToggle />
           {userInfo ? (
             <ProfileModal
               user={userInfo}
@@ -187,7 +186,7 @@ const ProfileModal = ({
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <Button variant="outline" className="text-md">
+        <Button variant="outline" className="text-md bg-inherit">
           <UserIcon />
           Profile
         </Button>
