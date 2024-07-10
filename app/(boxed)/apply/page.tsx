@@ -5,7 +5,7 @@ import getUserInfo from "@/lib/auth/getUserInfo";
 import { z } from "zod";
 import { redirect } from "next/navigation";
 import { mergeObjects } from "@/lib/utils";
-import send_confirmation from "../mailer";
+import send_confirmation from "@/app/mailer";
 
 async function update_form(
   user: z.infer<typeof applicationSchema>,

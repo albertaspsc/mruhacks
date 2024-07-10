@@ -6,6 +6,8 @@ import "./globals.css";
 import Header from "@/components/Header";
 import { Toaster } from "@/components/ui/toaster";
 import { ThemeProvider } from "@/components/theme-provider";
+import Link from "next/link";
+import { ReactNode } from "react";
 
 const dm_sans = DM_Sans({
   subsets: ["latin"],
@@ -18,8 +20,10 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
+  modal,
 }: Readonly<{
-  children: React.ReactNode;
+  children: ReactNode;
+  modal: ReactNode;
 }>) {
   return (
     <html lang="en" data-theme="mruhacks">
@@ -31,7 +35,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <Header />
+          {modal}
           {children}
           <Toaster />
         </ThemeProvider>

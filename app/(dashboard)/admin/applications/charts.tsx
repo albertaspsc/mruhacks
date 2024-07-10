@@ -1,14 +1,6 @@
 "use client";
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import {
-  Legend,
-  Tooltip,
-  PieChart,
-  Pie,
-  ResponsiveContainer,
-  Label,
-} from "recharts";
+import { Legend, Tooltip, PieChart, Pie, ResponsiveContainer } from "recharts";
 
 export function DemographicChart({
   data,
@@ -21,8 +13,7 @@ export function DemographicChart({
   const color_data = data.map((x, key) => ({ ...x, fill: COLORS[key] }));
 
   return (
-    <ResponsiveContainer width={250} height={300}>
-      <h3 className="capitalize">{nameKey.replaceAll(/_/g, " ")}</h3>
+    <ResponsiveContainer width={250} minHeight={300}>
       <PieChart>
         <Pie dataKey="count" nameKey={nameKey} data={color_data} />
         <Tooltip />

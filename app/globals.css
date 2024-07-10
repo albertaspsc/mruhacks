@@ -13,9 +13,28 @@
     --chart-7: #ef9b20;
     --chart-8: #f46a9b;
     --chart-9: #ea5545;
+
+    --primary: #002766;
+    --primary-content: #581188;
+    --secondary: #0062ff;
+    --accent: #ff00ff;
+    --neutral: #f2f2f2;
+    --base-100: #e4e4e7;
+    --background: #ffffff;
+    --inp: rgba(0, 0, 255, 0.3);
+    --apr: rgba(0, 128, 0, 0.3);
+    --den: rgba(255, 0, 0, 0.3);
+    --apl: rgba(255, 255, 0, 0.3);
   }
 
   .dark {
+    --text: #eae9fc;
+    --background: #010104;
+    --primary: #002766;
+    --secondary: #0062ff;
+    --accent: #ff00ff;
+
+    --foreground: #000000;
   }
 
   .popover-width-trigger {

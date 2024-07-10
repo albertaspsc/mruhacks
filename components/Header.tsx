@@ -192,7 +192,7 @@ const ProfileModal = ({
           Profile
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-80 bg-white">
+      <PopoverContent className="">
         <div className="grid gap-4">
           <div className="flex flex-row items-center justify-left">
             <FallbackImage

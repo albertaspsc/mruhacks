@@ -5,8 +5,8 @@ import { ScrollToTop } from "@/components/ScrollToTop";
 import { Footer } from "@/components/Footer";
 import Section from "@/components/Section";
 
-import welcomeImage from "../public/welcome.jpg";
-import aboutImage from "../public/matts_pretty_wheel.jpg";
+import welcomeImage from "@/public/welcome.jpg";
+import aboutImage from "@/public/matts_pretty_wheel.jpg";
 import Sponsors from "@/components/Sponsors";
 import Carousel from "@/components/Carousel";
 

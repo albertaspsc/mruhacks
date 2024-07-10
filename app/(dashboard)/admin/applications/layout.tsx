@@ -16,7 +16,7 @@ export default async function Applications({
   const supabase = createClient();
 
   return (
-    <div className="">
+    <div className="space-y-10">
       <Card>
         <CardHeader>
           <CardTitle>Applications</CardTitle>

@@ -16,8 +16,11 @@ import signInWithGoogle from "@/lib/auth/signInWithGoogle";
 import getUserInfo from "@/lib/auth/getUserInfo";
 import { createClient } from "@/lib/supabase/server";
 import { Suspense } from "react";
+import { DialogTitle } from "@radix-ui/react-dialog";
 
-const RegisterText = () => {
+import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
+
+export const RegisterText = () => {
   const get_text = async () => {
     const supabase = createClient();
 
@@ -49,6 +52,9 @@ const SignInDialog = () => (
     <DialogContent className="bg-white">
       <DialogHeader className="flex flex-row items-center space-x-2 pb-4">
         <Image className="h-10 w-auto" src={dark_logo} alt="MRUHacks" />
+        <VisuallyHidden>
+          <DialogTitle>Login or Signup</DialogTitle>
+        </VisuallyHidden>
         <p className="text-primary-content">|</p>
         <h2 className="text-primary-content font-bold">Login or Signup</h2>
       </DialogHeader>
@@ -91,23 +97,29 @@ export default async function Welcome() {
         alt=""
         loading="eager"
         placeholder="blur"
-        sizes="100vw"
         quality={100}
         fill
-        className="object-cover -z-10"
+        className="object-cover -z-10 max-h-screen"
       />
       <Image className="w-1/2" src={logo} alt="MRUHacks" />
       <p className="mb-5 font-semibold p-4">
         24 Hours of Collaboration, Coding, and Connections
       </p>
+
       {userInfo ? (
-        <Button variant="secondary" className="h-16 min-h-16 px-5 text-lg">
+        <Button
+          variant="secondary"
+          className="h-16 min-h-16 px-5 text-lg"
+          asChild
+        >
           <Link href="/apply">
             <RegisterText />
           </Link>
         </Button>
       ) : (
-        <SignInDialog />
+        <Button variant="secondary" className="h-16 min-h-16 px-5 text-lg">
+          <Link href="/login">Login</Link>
+        </Button>
       )}
     </div>
   );

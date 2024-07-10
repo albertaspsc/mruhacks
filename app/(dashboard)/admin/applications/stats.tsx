@@ -1,17 +1,16 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { ReactNode, Suspense } from "react";
 import { createClient } from "@/lib/supabase/server";
-import { DemographicChart, DonutGraph } from "./charts";
+import { DemographicChart } from "./charts";
 import { get_perms } from "@/lib/auth/getPerms";
 
 async function MapToChart({
   supabase,
   name,
-  displayName,
+  key,
 }: {
   supabase: ReturnType<typeof createClient>;
   name: string;
-  displayName: string;
+  key?: number;
 }) {
   let data = await supabase
     .from(name)
@@ -22,7 +21,7 @@ async function MapToChart({
     });
 
   return (
-    <Card>
+    <Card key={key}>
       <CardContent>
         <DemographicChart data={data} />
       </CardContent>
@@ -45,20 +44,22 @@ export const Demographics = async () => {
   const demographic_views =
     super_admin || can_view_demographics
       ? [
-          { name: "gender_demographics", displayName: "Gender Demographics" },
-          { name: "race_demographics", displayName: "Race Demographics" },
-          { name: "ethnicity_count", displayName: "Ethnicity" },
+          { name: "gender_demographics" },
+          { name: "race_demographics" },
+          { name: "ethnicity_count" },
         ]
       : [];
 
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Applications at a glance</CardTitle>
+        <CardTitle>Demographics</CardTitle>
       </CardHeader>
-      <CardContent className="flex flex-row flex-wrap overflow-auto">
+      <CardContent className="flex flex-wrap justify-evenly h-full ">
         {await Promise.all(
-          demographic_views.map((props) => MapToChart({ ...props, supabase })),
+          demographic_views.map((props, key) =>
+            MapToChart({ ...props, supabase, key }),
+          ),
         )}
       </CardContent>
     </Card>
@@ -80,10 +81,10 @@ export async function AggView() {
   const agg_views =
     super_admin || can_view_agg_stats || can_view_user_details
       ? [
-          { name: "applications_by_status", displayName: "Applcaition Status" },
-          { name: "university_count", displayName: "University" },
-          { name: "study_year", displayName: "Study Year" },
-          { name: "dietary_needs", displayName: "Dietary Needs" },
+          { name: "applications_by_status" },
+          { name: "university_count" },
+          { name: "study_year" },
+          { name: "dietary_needs" },
         ]
       : [];
 

@@ -22,7 +22,7 @@ const CarouselImage = ({ ...props }: CarouselImageTakes) => {
         loading="lazy"
         placeholder="blur"
       />
-      <p className="text-center px-10 pt-5">{props.legend}</p>
+      <p className="text-center px-10 pt-5 text-foreground">{props.legend}</p>
     </CarouselItem>
   );
 };
@@ -33,7 +33,7 @@ export default function Home() {
       <h1 className="text-xl font-bold text-center text-primary-content">
         Image Gallery
       </h1>
-      <p className="text-center text-black/70 mt-2">
+      <p className="text-center text-foreground/70 mt-2">
         Take a look at some of the images from our previous events!
       </p>
       <Carousel
