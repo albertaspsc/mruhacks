@@ -25,8 +25,6 @@ export function DataTableSearchColumns<TData>({
           className="capitalize h-8"
           placeholder={"Search by " + col.id.replaceAll(/_/g, " ")}
           onChange={(e) => {
-            console.log(e);
-            console.log(col);
             col.setFilterValue(e.target.value);
           }}
         />

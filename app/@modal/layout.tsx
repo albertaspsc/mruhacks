@@ -8,7 +8,6 @@ export default function AuthLayout({ children }: { children: ReactNode }) {
   const [open, setOpen] = useState(true);
   const router = useRouter();
 
-  console.log(" render");
   useEffect(() => {
     if (!open) router.back();
   }, [open, router]);

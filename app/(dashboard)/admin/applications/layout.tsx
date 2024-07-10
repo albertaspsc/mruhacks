@@ -13,19 +13,16 @@ export default async function Applications({
   children: ReactNode;
   table: React.ReactNode;
 }) {
-  const supabase = createClient();
-
   return (
     <div className="space-y-10">
       <Card>
         <CardHeader>
           <CardTitle>Applications</CardTitle>
         </CardHeader>
-        <CardContent>{table}</CardContent>
+        <CardContent>
+          <Suspense fallback={<ApplicantsSkeleton />}>{table}</Suspense>
+        </CardContent>
       </Card>
-      <div className="w-full">
-        <AggView />
-      </div>
     </div>
   );
 }

@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import logo from "@/public/mru_title_light.png";
+import { Logout } from "../logout";
 
 export default function Nav() {
   return (
@@ -18,6 +19,7 @@ export default function Nav() {
             alt="MRUHacks Logo"
           />
         </Link>
+        <Logout className="hidden md:block" />
       </div>
     </nav>
   );

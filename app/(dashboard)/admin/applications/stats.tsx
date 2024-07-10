@@ -6,10 +6,12 @@ import { get_perms } from "@/lib/auth/getPerms";
 async function MapToChart({
   supabase,
   name,
+  displayName,
   key,
 }: {
   supabase: ReturnType<typeof createClient>;
   name: string;
+  displayName?: string;
   key?: number;
 }) {
   let data = await supabase
@@ -22,6 +24,7 @@ async function MapToChart({
 
   return (
     <Card key={key}>
+      {displayName}
       <CardContent>
         <DemographicChart data={data} />
       </CardContent>
@@ -81,10 +84,9 @@ export async function AggView() {
   const agg_views =
     super_admin || can_view_agg_stats || can_view_user_details
       ? [
-          { name: "applications_by_status" },
-          { name: "university_count" },
-          { name: "study_year" },
-          { name: "dietary_needs" },
+          { name: "applications_by_status", displayName: "Application Status" },
+          { name: "university_count", displayName: "University" },
+          { name: "study_year", displayName: "Study Year" },
         ]
       : [];
 
@@ -92,11 +94,13 @@ export async function AggView() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>At A Glance</CardTitle>
+        <CardTitle>Application Break Down</CardTitle>
       </CardHeader>
       <CardContent className="flex flex-wrap justify-evenly ">
         {await Promise.all(
-          agg_views.map((props) => MapToChart({ ...props, supabase })),
+          agg_views.map((props, key) =>
+            MapToChart({ ...props, supabase, key }),
+          ),
         )}
       </CardContent>
     </Card>

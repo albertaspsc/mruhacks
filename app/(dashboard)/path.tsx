@@ -15,10 +15,8 @@ function getURLSegments(url: string) {
 
 import {
   Breadcrumb,
-  BreadcrumbItem,
   BreadcrumbLink,
   BreadcrumbList,
-  BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { zip } from "lodash";
