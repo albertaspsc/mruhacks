@@ -7,7 +7,7 @@ import Header from "@/components/Header";
 import { Toaster } from "@/components/ui/toaster";
 import { ThemeProvider } from "@/components/theme-provider";
 import Link from "next/link";
-import { ReactNode } from "react";
+import { ReactNode, Suspense } from "react";
 
 const dm_sans = DM_Sans({
   subsets: ["latin"],
@@ -35,7 +35,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          {modal}
+          <Suspense>{modal}</Suspense>
           {children}
           <Toaster />
         </ThemeProvider>
