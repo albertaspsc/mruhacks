@@ -58,8 +58,10 @@ const FormSection = ({
   children: React.ReactNode;
 }) => (
   <div className="mb-8">
-    <p className="text-2xl font-bold text-gray-900">{title}</p>
-    {description && <p className="text-lg text-gray-500 mb-8">{description}</p>}
+    <p className="text-2xl font-bold ">{title}</p>
+    {description && (
+      <p className="text-lg dark:dark:text-gray-500 mb-8">{description}</p>
+    )}
     {children}
   </div>
 );
@@ -86,7 +88,7 @@ const TextInput = ({
     name={name}
     render={({ field }) => (
       <FormItem className="mb-8">
-        <FormLabel className="text-xl font-bold text-gray-900">
+        <FormLabel className="text-xl font-bold ">
           {label} {required && <span className="text-red-500">*</span>}
         </FormLabel>
         <FormControl>
@@ -94,21 +96,16 @@ const TextInput = ({
             <Textarea
               {...field}
               placeholder={label}
-              className="bg-white"
+              className=""
               // required={required}
             />
           ) : number ? (
-            <Input
-              {...field}
-              type="number"
-              placeholder={label}
-              className="bg-white"
-            />
+            <Input {...field} type="number" placeholder={label} className="" />
           ) : (
-            <Input {...field} placeholder={label} className="bg-white" />
+            <Input {...field} placeholder={label} className="" />
           )}
         </FormControl>
-        <FormDescription className="text-gray-500 text-md">
+        <FormDescription className="dark:text-gray-500 text-md">
           {description}
         </FormDescription>
         <FormMessage className="text-red-500 text-md" />
@@ -137,19 +134,19 @@ const SelectInput = ({
     name={name}
     render={({ field }) => (
       <FormItem className="mb-8">
-        <FormLabel className="text-xl font-bold text-gray-900">
+        <FormLabel className="text-xl font-bold ">
           {label} {required && <span className="text-red-500">*</span>}
         </FormLabel>
         <Select
           onValueChange={field.onChange}
           defaultValue={field.value?.toString()}
         >
-          <FormControl className="bg-white">
+          <FormControl className="">
             <SelectTrigger>
               <SelectValue placeholder={label} />
             </SelectTrigger>
           </FormControl>
-          <SelectContent className="bg-white">
+          <SelectContent className="">
             {options
               // Normalize to the label-value pair
               .map((t) => (typeof t === "string" ? { label: t, value: t } : t))
@@ -189,7 +186,7 @@ const ComboBoxInput = ({
       name={name}
       render={({ field }) => (
         <FormItem className="mb-8 min-w-screen-md">
-          <FormLabel className="text-xl font-bold text-gray-900">
+          <FormLabel className="text-xl font-bold ">
             {label}
             <span className="text-red-500">*</span>
           </FormLabel>
@@ -200,7 +197,7 @@ const ComboBoxInput = ({
                   variant="outline"
                   role="combobox"
                   className={cn(
-                    "min-w-full bg-white justify-between hover:bg-white text-md",
+                    "min-w-full  justify-between hover: text-md",
                     !field.value && "text-muted-foreground",
                   )}
                 >
@@ -209,7 +206,7 @@ const ComboBoxInput = ({
                 </Button>
               </FormControl>
             </PopoverTrigger>
-            <PopoverContent className="w-[--radix-popover-trigger-width] bg-white p-0">
+            <PopoverContent className="w-[--radix-popover-trigger-width]  p-0">
               <Command>
                 <CommandInput placeholder="Search majors..." />
                 <CommandEmpty>No major found.</CommandEmpty>
@@ -257,7 +254,7 @@ const DietaryRestrictions = ({
       name="dietary"
       render={() => (
         <FormItem className="mb-8">
-          <FormLabel className="text-xl font-bold text-gray-900">
+          <FormLabel className="text-xl font-bold ">
             Dietary Restrictions
           </FormLabel>
           {options.dietary.map((item, id) => (

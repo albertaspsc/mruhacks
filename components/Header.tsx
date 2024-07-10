@@ -117,8 +117,7 @@ export default async function Header() {
           <Link href="/#fLinkq">FAQs</Link>
           <Link href="/#community">Our Community</Link>
           <Link href="/#sponsors">Sponsors</Link>
-
-          <ModeToggle />
+          {/* <ModeToggle /> */}
           {userInfo ? (
             <ProfileModal
               user={userInfo}
@@ -142,7 +141,7 @@ const SignInModal = () => {
           Sign In
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-80 bg-white">
+      <PopoverContent className="w-80">
         <div className="grid gap-4">
           <div className="space-y-2">
             <h4 className="font-medium leading-none">Register for MRUHacks</h4>

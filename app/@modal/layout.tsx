@@ -14,7 +14,7 @@ export default function AuthLayout({ children }: { children: ReactNode }) {
 
   return (
     <Dialog open={open} onOpenChange={setOpen} defaultOpen>
-      <DialogContent className="bg-white">{children}</DialogContent>
+      <DialogContent>{children}</DialogContent>
     </Dialog>
   );
 }

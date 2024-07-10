@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import logo from "@/public/mru_title_light.png";
 import { Logout } from "../logout";
-import Profile from "../profile";
+import { ModeToggle } from "@/components/theme-select";
 
 export default function Nav() {
   return (
@@ -21,6 +21,7 @@ export default function Nav() {
           />
         </Link>
         <Logout className="hidden md:block" />
+        <ModeToggle />
       </div>
     </nav>
   );

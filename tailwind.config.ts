@@ -1,6 +1,7 @@
 import type { Config } from "tailwindcss";
 
 const config: Config = {
+  darkMode: "selector",
   content: [
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
@@ -35,7 +36,7 @@ const config: Config = {
         foreground: "var(--text)",
         background: "var(--background)",
         popover: "var(--background)",
-        "primary-foreground": "var(--text)",
+        "popover-foreground": "var(--text)",
         inp: "var(--inp)",
         apr: "var(--inp)",
         den: "var(--den)",
