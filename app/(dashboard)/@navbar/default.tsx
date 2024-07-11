@@ -20,8 +20,10 @@ export default function Nav() {
             alt="MRUHacks Logo"
           />
         </Link>
-        <Logout className="hidden md:block" />
-        <ModeToggle />
+        <div className="flex flex-row gap-4">
+          <ModeToggle />
+          <Logout className="hidden md:block" />
+        </div>
       </div>
     </nav>
   );

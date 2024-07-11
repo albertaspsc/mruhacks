@@ -6,11 +6,13 @@ export default function Loading() {
     <Card>
       <CardHeader>
         <CardTitle>
-          <Skeleton className="w-30 h-8" />
+          <Skeleton className="w-48 h-10" />
         </CardTitle>
       </CardHeader>
-      <CardContent>
-        <Skeleton className="w-full h-[50vh]" />
+      <CardContent className="flex flex-row justify-evenly">
+        <Skeleton className="w-[20%] h-[50vh]" />
+        <Skeleton className="w-[20%] h-[50vh]" />
+        <Skeleton className="w-[20%] h-[50vh]" />
       </CardContent>
     </Card>
   );

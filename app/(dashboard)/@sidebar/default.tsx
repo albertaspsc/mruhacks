@@ -1,4 +1,4 @@
-import { ReactNode, useMemo } from "react";
+import { ReactNode, Suspense, useMemo } from "react";
 import { FaChartPie, FaPeopleArrows, FaWpforms } from "react-icons/fa";
 import { Logout } from "../logout";
 import { MenuItem } from "./menu_item";
@@ -32,7 +32,9 @@ const Items = async () => {
 
   return (
     <div className="pt-4 space-y-5">
-      <Profile />
+      <Suspense>
+        <Profile />
+      </Suspense>
       <div className="flex items-center justify-center w-full md:hidden">
         <Logout />
       </div>
@@ -74,7 +76,9 @@ const Mobile = () => {};
 
 const Desktop = () => (
   <div className="pl-3 pr-10  bg-primary h-full hidden md:block min-h-screen">
-    <Items />
+    <Suspense>
+      <Items />
+    </Suspense>
   </div>
 );
 

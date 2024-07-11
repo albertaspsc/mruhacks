@@ -11,7 +11,6 @@ import {
   ColumnFiltersState,
   SortingState,
   getSortedRowModel,
-  getFacetedRowModel,
 } from "@tanstack/react-table";
 
 import {

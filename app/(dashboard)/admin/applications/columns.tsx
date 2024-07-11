@@ -2,8 +2,10 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { DataTableColumnHeader } from "./sortable_header";
 import { Badge } from "@/components/ui/badge";
-import { Filter, ListFilter } from "lucide-react";
+import { ListFilter, MoreHorizontal } from "lucide-react";
 import {
+  DropdownMenuItem,
+  DropdownMenuSeparator,
   DropdownMenu,
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
@@ -11,8 +13,6 @@ import {
 } from "@radix-ui/react-dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { DropdownMenuLabel } from "@/components/ui/dropdown-menu";
-import { createClient } from "@/lib/supabase/client";
-import getUserInfo from "@/lib/auth/getUserInfo";
 
 type Application = {
   id: string;
@@ -142,5 +142,33 @@ export const columns: ColumnDef<Application>[] = [
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Time Submitted" />
     ),
+  },
+  {
+    id: "actions",
+    cell: ({ row }) => {
+      const payment = row.original;
+
+      return (
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="ghost" className="h-8 w-8 p-0">
+              <span className="sr-only">Open menu</span>
+              <MoreHorizontal className="h-4 w-4" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            <DropdownMenuLabel>Actions</DropdownMenuLabel>
+            <DropdownMenuItem
+              onClick={() => navigator.clipboard.writeText(payment.id)}
+            >
+              Copy payment ID
+            </DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem>View customer</DropdownMenuItem>
+            <DropdownMenuItem>View payment details</DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      );
+    },
   },
 ];
