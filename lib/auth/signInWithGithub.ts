@@ -11,7 +11,7 @@ export default async function signInWithGithub() {
     provider: "github",
     options: {
       // passes the desired redirect as a new param
-      redirectTo: getCallbackUrl("apply"),
+      redirectTo: getCallbackUrl("dashboard/apply"),
     },
   });
 

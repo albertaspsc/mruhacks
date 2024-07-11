@@ -211,7 +211,7 @@ const ProfileModal = ({
               </p>
             </div>
           </div>
-          <Link href="/apply" className="w-full">
+          <Link href="/dashboard/apply" className="w-full">
             <Button
               variant="outline"
               className="p-2 text-md justify-start pl-4 w-full"

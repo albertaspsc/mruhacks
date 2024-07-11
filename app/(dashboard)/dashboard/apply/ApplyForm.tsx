@@ -347,7 +347,7 @@ export default function ApplyForm({
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className={`pt-24 mx-auto px-4 max-w-screen-md ${loading_disable}`}
+        className={`block h-full ${loading_disable}`}
       >
         <FormSection
           title="Personal Information"

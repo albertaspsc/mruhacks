@@ -1,5 +1,12 @@
 import { ReactNode, Suspense, useMemo } from "react";
-import { FaChartPie, FaPeopleArrows, FaWpforms } from "react-icons/fa";
+import {
+  FaAddressBook,
+  FaChartPie,
+  FaFile,
+  FaPeopleArrows,
+  FaScroll,
+  FaWpforms,
+} from "react-icons/fa";
 import { Logout } from "../logout";
 import { MenuItem } from "./menu_item";
 import { DashboardIcon } from "@radix-ui/react-icons";
@@ -44,6 +51,10 @@ const Items = async () => {
           <DashboardIcon />
           Dashboard
         </MenuItem>
+        <MenuItem href="/dashboard/apply">
+          <FaAddressBook />
+          Application
+        </MenuItem>
         <span>
           <MenuHeader>Admin</MenuHeader>
           {/* These don't control perms!! if the user navigates to here 
@@ -75,7 +86,7 @@ const Items = async () => {
 const Mobile = () => {};
 
 const Desktop = () => (
-  <div className="pl-3 pr-10  bg-primary h-full hidden md:block min-h-screen">
+  <div className="pl-3 pr-10 bg-primary h-full hidden md:block">
     <Suspense>
       <Items />
     </Suspense>

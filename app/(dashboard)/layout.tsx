@@ -9,11 +9,11 @@ export default function Layout(props: {
   navbar: ReactNode;
 }) {
   return (
-    <div className="h-screen">
+    <div className="h-screen max-h-screen flex flex-col overflow-hidden">
       {props.navbar}
-      <div className="flex flex-row flex-grow">
+      <div className="flex flex-row flex-1 max-h-screen overflow-y-hidden">
         {props.sidebar}
-        <div className="flex-grow overflow-auto px-5 overflow-y-scroll">
+        <div className="flex-1 h-auto px-4 overflow-y-auto">
           <Path />
           {props.children}
           <div className="last first-of-type:visible invisible flex items-center justify-center pt-20">

@@ -37,10 +37,10 @@ async function _Profile() {
         unoptimized
       />
       <div>
-        <h4 className="font-bold leading-none text-md mb-1">
+        <h4 className="font-bold leading-none text-md mb-1 text-white">
           {user?.user_metadata?.full_name}
         </h4>
-        <p className="text-muted text-md">
+        <p className="text-muted text-md text-white">
           <ApplicationStatus />
         </p>
       </div>

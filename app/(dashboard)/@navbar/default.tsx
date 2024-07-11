@@ -7,7 +7,7 @@ import { ModeToggle } from "@/components/theme-select";
 export default function Nav() {
   return (
     <nav className="">
-      <div className="flex flex-row items-center bg-primary justify-between text-base-100 h-[60px] pl-4 ">
+      <div className="flex flex-row items-center bg-primary justify-between text-base-100 h-[60px] pl-4 z-50">
         <Link
           href="/"
           className="h-10 mb-2
@@ -20,7 +20,7 @@ export default function Nav() {
             alt="MRUHacks Logo"
           />
         </Link>
-        <div className="flex flex-row gap-4">
+        <div className="flex flex-row gap-4 mr-4">
           <ModeToggle />
           <Logout className="hidden md:block" />
         </div>

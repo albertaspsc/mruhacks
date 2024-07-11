@@ -112,7 +112,7 @@ export default async function Welcome() {
           className="h-16 min-h-16 px-5 text-lg"
           asChild
         >
-          <Link href="/apply">
+          <Link href="/dashboard/apply">
             <RegisterText />
           </Link>
         </Button>

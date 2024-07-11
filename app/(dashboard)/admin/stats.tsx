@@ -24,7 +24,7 @@ async function MapToChart({
 
   return (
     <Card key={key}>
-      {displayName}
+      <p className="p-4 w-full text-center">{displayName}</p>
       <CardContent>
         <DemographicChart data={data} />
       </CardContent>
@@ -94,7 +94,7 @@ export async function AggView() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Application Break Down</CardTitle>
+        <CardTitle className="p-4">Application Break Down</CardTitle>
       </CardHeader>
       <CardContent className="flex flex-wrap justify-evenly ">
         {await Promise.all(
