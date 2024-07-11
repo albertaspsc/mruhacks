@@ -263,7 +263,7 @@ const DietaryRestrictions = ({
               control={form.control}
               name="dietary"
               render={({ field }) => (
-                <FormItem className="flex flex-row items-center space-x-3 space-y-0">
+                <FormItem className="flex flex-row items-center space-x-3 space-y-0 overflow-hidden relative">
                   <FormControl>
                     <Checkbox
                       disabled={disabled}
