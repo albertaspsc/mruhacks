@@ -13,10 +13,8 @@ export default function AuthLayout({ children }: { children: ReactNode }) {
   }, [open, router]);
 
   return (
-    <Dialog open={open} onOpenChange={setOpen} defaultOpen modal>
-      <DialogContent onInteractOutside={(e) => e.preventDefault()}>
-        {children}
-      </DialogContent>
+    <Dialog open={open} onOpenChange={setOpen} defaultOpen>
+      {children}
     </Dialog>
   );
 }

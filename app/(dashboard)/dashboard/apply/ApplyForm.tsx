@@ -48,7 +48,7 @@ import { useState } from "react";
 
 type ApplicationField = keyof z.infer<typeof applicationSchema>;
 
-const FormSection = ({
+export const FormSection = ({
   title,
   description,
   children,

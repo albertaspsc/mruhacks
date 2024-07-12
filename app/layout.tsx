@@ -5,7 +5,6 @@ import "./globals.css";
 
 import Header from "@/components/Header";
 import { Toaster } from "@/components/ui/toaster";
-import { ThemeProvider } from "@/components/theme-provider";
 import Link from "next/link";
 import { ReactNode, Suspense } from "react";
 
@@ -28,17 +27,10 @@ export default function RootLayout({
   return (
     <html lang="en" data-theme="mruhacks">
       <meta name="theme-color" content="#002766" />
-      <body className={dm_sans.className}>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <Suspense>{modal}</Suspense>
-          {children}
-          <Toaster />
-        </ThemeProvider>
+      <body className={dm_sans.className + " bg-background"}>
+        <Suspense>{modal}</Suspense>
+        {children}
+        <Toaster />
       </body>
     </html>
   );

@@ -5,10 +5,12 @@ export default function Layout({ children }: { children: ReactNode }) {
   return (
     <div className="space-y-10">
       <Card>
-        <CardHeader>
-          <CardTitle>Applications</CardTitle>
-        </CardHeader>
-        <CardContent>{children}</CardContent>
+        <CardContent>
+          <CardHeader className="pl-0">
+            <CardTitle>Applications</CardTitle>
+          </CardHeader>
+          {children}
+        </CardContent>
       </Card>
     </div>
   );

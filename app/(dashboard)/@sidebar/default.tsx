@@ -13,7 +13,6 @@ import { DashboardIcon } from "@radix-ui/react-icons";
 import { get_perms } from "@/lib/auth/getPerms";
 import { memoize } from "lodash";
 import Profile from "../profile";
-import { ModeToggle } from "@/components/theme-select";
 import Link from "next/link";
 import Image from "next/image";
 import logo from "@/public/mru_title_dark.png";
@@ -91,12 +90,11 @@ const Items = async () => {
           </span>
         </ul>
       </div>
-      <div className="flex flex-col py-4">
+      <div className="flex flex-col pt-4">
         <Suspense>
           <Profile />
         </Suspense>
         <div className="flex items-center space-x-4 py-4 border-t mt-4">
-          <ModeToggle />
           <Logout className="flex-1 w-full" />
         </div>
       </div>

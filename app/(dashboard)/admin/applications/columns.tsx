@@ -2,7 +2,7 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { DataTableColumnHeader } from "./sortable_header";
 import { Badge } from "@/components/ui/badge";
-import { ListFilter, MoreHorizontal } from "lucide-react";
+import { Check, ListFilter, MoreHorizontal } from "lucide-react";
 import {
   DropdownMenuItem,
   DropdownMenuSeparator,
@@ -10,12 +10,14 @@ import {
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
   DropdownMenuTrigger,
-} from "@radix-ui/react-dropdown-menu";
+} from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { DropdownMenuLabel } from "@/components/ui/dropdown-menu";
+import { Checkbox } from "@radix-ui/react-checkbox";
+import Link from "next/link";
 
 type Application = {
-  id: string;
+  user_id: string;
   first_name: string;
   last_name: string;
 };
@@ -42,13 +44,14 @@ export const columns: ColumnDef<Application>[] = [
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="ghost">
-              <ListFilter className="h-3 pr-2" />
+            <Button variant="ghost" className="data-[state=open]:bg-accent">
               Application Status
+              <ListFilter className="h-3 pl-2 my-2 " />
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="w-[150px] bg-white">
+          <DropdownMenuContent align="start" className="w-[150px] ">
             <DropdownMenuLabel>Select Filter</DropdownMenuLabel>
+            <DropdownMenuSeparator />
             {keys.map((key, index) => (
               <DropdownMenuCheckboxItem
                 key={index}
@@ -146,28 +149,39 @@ export const columns: ColumnDef<Application>[] = [
   {
     id: "actions",
     cell: ({ row }) => {
-      const payment = row.original;
-
       return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
-              <MoreHorizontal className="h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(payment.id)}
-            >
-              Copy payment ID
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>View customer</DropdownMenuItem>
-            <DropdownMenuItem>View payment details</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+        <div className="flex flex-row justify-end items-center">
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button
+                variant="ghost"
+                className="h-8 w-8 p-0 data-[state=open]:bg-accent "
+              >
+                <span className="sr-only">Open menu</span>
+                <MoreHorizontal className="h-4 w-4" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="">
+              <DropdownMenuLabel>Actions</DropdownMenuLabel>
+              <DropdownMenuItem
+                onClick={() => {
+                  // @todo
+                }}
+              >
+                Approve
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem>
+                <Link
+                  prefetch={false}
+                  href={"/admin/applications/" + row.original.user_id}
+                >
+                  View Application
+                </Link>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
       );
     },
   },
