@@ -77,8 +77,6 @@ export const updateSession = async (request: NextRequest) => {
       if (user) url.searchParams.set("modal", "unauthorized");
       else url.pathname = "/unauthorized";
 
-      console.log("redirect admin : ", url);
-
       return NextResponse.redirect(url);
     }
   }

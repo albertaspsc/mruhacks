@@ -1,7 +1,6 @@
-import { ReactNode, Suspense } from "react";
+import { ReactNode } from "react";
 import React from "react";
 import Path from "./path";
-import styles from "./dark_mode.css";
 
 export default function Layout(props: {
   children: ReactNode;
