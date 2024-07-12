@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import small_logo from "@/public/mruhacks.png";
+import small_logo from "@/public/mru_title_dark.png";
 
 function getURLSegments(url: string) {
   const segments = url.split("/");
