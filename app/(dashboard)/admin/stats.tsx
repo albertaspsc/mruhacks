@@ -58,7 +58,7 @@ export const Demographics = async () => {
       <CardHeader>
         <CardTitle>Demographics</CardTitle>
       </CardHeader>
-      <CardContent className="flex flex-wrap justify-evenly h-max">
+      <CardContent className="flex flex-wrap justify-evenly h-max space-y-4 md:space-y-0">
         {await Promise.all(
           demographic_views.map((props, key) =>
             MapToChart({ ...props, supabase, key }),
@@ -96,7 +96,7 @@ export async function AggView() {
       <CardHeader>
         <CardTitle className="p-4">Application Break Down</CardTitle>
       </CardHeader>
-      <CardContent className="flex flex-wrap justify-evenly ">
+      <CardContent className="flex flex-wrap justify-evenly space-y-4 md:space-y-0">
         {await Promise.all(
           agg_views.map((props, key) =>
             MapToChart({ ...props, supabase, key }),

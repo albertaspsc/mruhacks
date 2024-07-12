@@ -1,4 +1,3 @@
-import Logo from "@/components/themed_logo";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -10,12 +9,14 @@ import signInWithGithub from "@/lib/auth/signInWithGithub";
 import signInWithGoogle from "@/lib/auth/signInWithGoogle";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { FaGithub, FaGoogle } from "react-icons/fa";
+import Logo from "@/public/mru_title_dark.png";
+import Image from "next/image";
 
 export default function Page() {
   return (
     <>
       <DialogHeader className="flex flex-row items-center space-x-2 pb-4">
-        <Logo className="h-10 w-auto" />
+        <Image src={Logo} alt="MRUHacks Logo" />
         <VisuallyHidden>
           <DialogTitle>Login or Signup</DialogTitle>
         </VisuallyHidden>

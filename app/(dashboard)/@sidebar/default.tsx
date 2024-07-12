@@ -2,11 +2,14 @@ import { ReactNode, Suspense, useMemo } from "react";
 import {
   FaAddressBook,
   FaChartPie,
-  FaFile,
+  FaHome,
   FaPeopleArrows,
-  FaScroll,
+  FaQq,
+  FaQrcode,
+  FaShieldAlt,
   FaWpforms,
 } from "react-icons/fa";
+import { FiGrid } from "react-icons/fi";
 import { Logout } from "../logout";
 import { MenuItem } from "./menu_item";
 import { DashboardIcon } from "@radix-ui/react-icons";
@@ -16,6 +19,7 @@ import Profile from "../profile";
 import Link from "next/link";
 import Image from "next/image";
 import logo from "@/public/mru_title_dark.png";
+import small_logo from "@/public/mruhacks.png";
 
 const MenuHeader = ({ children }: { children: ReactNode }) => (
   <li className="last:hidden mt-4 block text-primary font-bold">{children}</li>
@@ -44,7 +48,7 @@ const Items = async () => {
           href="/"
           className="h-10 mb-2
                     absolute left-[50%] translate-x-[-50%]
-                    lg:relative lg:left-auto lg:translate-x-0"
+                    md:relative md:left-auto lg:translate-x-0"
         >
           <Image
             className="max-h-[52px] w-auto p-1"
@@ -102,7 +106,31 @@ const Items = async () => {
   );
 };
 
-const Mobile = () => {};
+const Mobile = async () => {
+  const has_perms = !!((await get_perms()).data?.length ?? 0 > 0);
+
+  return (
+    <div className="bg-background md:hidden flex flex-row p-4 border mb-0">
+      <Suspense>
+        <div className="w-full flex flex-row justify-between items-center">
+          <div className="flex-1 h-full flex flex-row space-x-4 justify-around items-center text-xl">
+            <Link href="/dashboard">
+              <FaHome />
+            </Link>
+            <Link href="/dashboard/apply">
+              <FaAddressBook />
+            </Link>
+            {has_perms ? (
+              <Link href="/admin">
+                <FaShieldAlt />
+              </Link>
+            ) : null}
+          </div>
+        </div>
+      </Suspense>
+    </div>
+  );
+};
 
 const Desktop = () => (
   <div className="px-4 bg-background h-full hidden md:block border-r">
@@ -114,8 +142,9 @@ const Desktop = () => (
 
 export default function Sidebar() {
   return (
-    <div className="">
+    <>
       <Desktop />
-    </div>
+      <Mobile />
+    </>
   );
 }

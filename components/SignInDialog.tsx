@@ -3,8 +3,9 @@ import { Button } from "./ui/button";
 import { FaGithub, FaGoogle } from "react-icons/fa";
 import signInWithGoogle from "@/lib/auth/signInWithGoogle";
 import { ReactNode } from "react";
-import Logo from "./themed_logo";
+import Logo from "@/public/mru_title_dark.png";
 import { Card, CardContent, CardHeader } from "./ui/card";
+import Image from "next/image";
 
 const SignInForm = ({ children }: { children?: ReactNode }) => (
   <div className="flex flex-col items-center  space-y-2 w-full">
@@ -34,7 +35,7 @@ const SignInForm = ({ children }: { children?: ReactNode }) => (
 export const SignInPage = ({ children }: { children?: ReactNode }) => (
   <Card className="lg:max-w-[30vw] mx-auto mt-10">
     <CardHeader className="flex flex-col items-center justify-center">
-      <Logo className="flex-none" />
+      <Image src={Logo} alt="MRUHacks Logo" />
       <h2 className="text-primary-content font-bold">Login or Signup</h2>
       <div className="text-center py-4">{children}</div>
     </CardHeader>

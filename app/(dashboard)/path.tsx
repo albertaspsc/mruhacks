@@ -1,5 +1,8 @@
 "use client";
 
+import Image from "next/image";
+import small_logo from "@/public/mruhacks.png";
+
 function getURLSegments(url: string) {
   const segments = url.split("/");
   const hrefs: string[] = [];
@@ -22,6 +25,7 @@ import {
 import { zip } from "lodash";
 import { usePathname } from "next/navigation";
 import { ReactNode } from "react";
+import Link from "next/link";
 
 export default function Path() {
   const path = usePathname();
@@ -50,7 +54,14 @@ export default function Path() {
     .flat()
     .filter((x) => !!x);
   return (
-    <Breadcrumb className="text-lg p-4 my-4 bg-background z-10 rounded-md border">
+    <Breadcrumb className="text-lg p-4 my-4 bg-background z-10 rounded-md border flex flex-row">
+      <Link href="/">
+        <Image
+          className="h-10 w-auto mr-4 md:hidden"
+          src={small_logo}
+          alt="MRUHacks Logo"
+        />
+      </Link>
       <BreadcrumbList>{b}</BreadcrumbList>
     </Breadcrumb>
   );
