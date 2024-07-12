@@ -21,7 +21,6 @@ import signInWithGoogle from "@/lib/auth/signInWithGoogle";
 import AdminLink from "./AdminLink";
 import missing_profile from "@/assets/missing_profile.png";
 import FallbackImage from "./FallbackImage";
-import { ModeToggle } from "./theme-select";
 
 const getUserApplicationStatus = async (user: User) => {
   const supabase = createClient();
@@ -117,7 +116,6 @@ export default async function Header() {
           <Link href="/#fLinkq">FAQs</Link>
           <Link href="/#community">Our Community</Link>
           <Link href="/#sponsors">Sponsors</Link>
-          {/* <ModeToggle /> */}
           {userInfo ? (
             <ProfileModal
               user={userInfo}
