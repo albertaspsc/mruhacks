@@ -22,3 +22,9 @@ export async function get_perms() {
 
   return await supabase.from("permissions").select().eq("user_id", userInfo.id);
 }
+
+export async function get_perms_by_user_id(user_id: string) {
+  const supabase = createClient();
+
+  return await supabase.from("permissions").select().eq("user_id", user_id);
+}

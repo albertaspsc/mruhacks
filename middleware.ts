@@ -1,37 +1,22 @@
+import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
-import { createClient } from "./lib/supabase/server";
 import { get_perms } from "./lib/auth/getPerms";
+import { updateSession } from "@/lib/supabase/middleware";
 
 export async function middleware(request: NextRequest) {
-  let response = NextResponse.next({ request });
-  const { pathname, origin, searchParams } = request.nextUrl;
-
-  // Too improve load time we don't bother checking auth on static resources
-  // or images
-  if (
-    pathname.startsWith("/_next/static") ||
-    pathname.startsWith("/_next/image") ||
-    pathname === "/favicon.ico"
-  ) {
-    return response;
-  }
-  const supabase = createClient();
-
-  // Verify that the user is valid
-  await supabase.auth.getUser();
-
-  if (pathname.startsWith("/admin") && !searchParams.get("modal")) {
-    const has_perms = !!((await get_perms()).data?.length ?? 0 > 0);
-
-    const unauth = new URL("/admin", origin);
-    unauth.searchParams.set("modal", "login");
-
-    if (!has_perms) {
-      return NextResponse.redirect(unauth);
-    }
-  }
-
-  return response;
+  return await updateSession(request);
 }
 
-export const config = {};
+export const config = {
+  matcher: [
+    /*
+     * Match all request paths except:
+     * - _next/static (static files)
+     * - _next/image (image optimization files)
+     * - favicon.ico (favicon file)
+     * - images - .svg, .png, .jpg, .jpeg, .gif, .webp
+     * Feel free to modify this pattern to include more paths.
+     */
+    "/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
+  ],
+};

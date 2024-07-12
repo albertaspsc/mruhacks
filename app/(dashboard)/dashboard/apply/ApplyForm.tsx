@@ -133,7 +133,7 @@ const SelectInput = ({
     control={form.control}
     name={name}
     render={({ field }) => (
-      <FormItem className="mb-8">
+      <FormItem className="mb-8 relative">
         <FormLabel className="text-xl font-bold ">
           {label} {required && <span className="text-red-500">*</span>}
         </FormLabel>
