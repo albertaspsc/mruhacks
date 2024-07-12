@@ -27,35 +27,30 @@ function StatsCard({
 
 export default async function Page() {
   const supabase = createClient();
-  const reg_count = await supabase
-    .from("registrations")
-    .select("count")
-    .then(({ data, error }) => {
-      if (error) console.error(error);
-      return data?.[0]?.count ?? undefined;
-    });
+  const { data, error } = await supabase
+    .from("applications_by_status")
+    .select();
 
-  const user_count = await supabase
-    .from("users")
-    .select("count")
-    .then(({ data, error }) => {
-      if (error) console.error(error);
-      return data?.[0]?.count ?? undefined;
-    });
+  if (error) console.error(error);
 
-  const gender_demographics = await supabase
-    .from("gender_demographics")
-    .select()
-    .then(({ data, error }) => {
-      if (error) console.error(error);
-      return data;
-    });
+  if (!data) {
+    return "Failed to get user counts";
+  }
+
+  console.log(data?.[0] ?? []);
 
   return (
-    <div className="grid grid-cols-2 gap-5">
-      <StatsCard title="Total Users" value={user_count ?? "<Unknown>"} />
-      <StatsCard title="Total Registrations" value={reg_count ?? "<Unknown>"} />
-      <GenderDemoGraphics gender_demographics={gender_demographics!} />
-    </div>
+    <Card>
+      <CardContent>
+        <CardHeader>
+          <CardTitle>Applications By Status</CardTitle>
+        </CardHeader>
+        <div className="grid grid-cols-4 gap-5">
+          {data.map((x, key) => (
+            <StatsCard key={key} title={x.application_status} value={x.count} />
+          ))}
+        </div>
+      </CardContent>
+    </Card>
   );
 }
