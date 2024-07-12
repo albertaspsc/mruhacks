@@ -6,6 +6,11 @@ import Link from "next/link";
 const getApplicationStatus = async () => {
   const supabase = createClient();
   const userInfo = await getUserInfo();
+
+  if (!userInfo) {
+    return null;
+  }
+
   const { data, error } = await supabase
     .from("users")
     .select("application_status")

@@ -3,9 +3,9 @@ import ApplyForm from "./ApplyForm";
 import { createClient } from "@/lib/supabase/server";
 import getUserInfo from "@/lib/auth/getUserInfo";
 import { z } from "zod";
-import { redirect } from "next/navigation";
 import { mergeObjects } from "@/lib/utils";
 import send_confirmation from "@/app/mailer";
+import Loading from "./loading";
 
 async function update_form(
   user: z.infer<typeof applicationSchema>,
@@ -16,6 +16,11 @@ async function update_form(
   const userInfo = await getUserInfo();
 
   let userId = userInfo?.id;
+
+  if (!userId) {
+    console.warn("No user");
+    return false;
+  }
 
   const { ok, did_insert } = await Promise.all([
     supabase.from("registrations").upsert({ id: userId, ...user }),
@@ -55,7 +60,7 @@ export default async function Register() {
   const userInfo = await getUserInfo();
 
   if (!userInfo) {
-    return redirect("/");
+    return <Loading />;
   }
 
   const supabase = createClient();
@@ -79,7 +84,7 @@ export default async function Register() {
   };
 
   const prefill = partialApplicationSchema.safeParse(
-    mergeObjects(meta_data, database_info),
+    mergeObjects(database_info, meta_data),
   ).data;
 
   return <ApplyForm onSubmit={update_form} previousResponses={prefill} />;

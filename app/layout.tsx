@@ -28,7 +28,7 @@ export default function RootLayout({
   return (
     <html lang="en" data-theme="mruhacks">
       <meta name="theme-color" content="#002766" />
-      <body className={dm_sans.className}>
+      <body className={dm_sans.className + " bg-background"}>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"

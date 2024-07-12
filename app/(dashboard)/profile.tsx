@@ -6,9 +6,14 @@ import assert from "assert";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Suspense } from "react";
 
-const ApplicationStatus = async () => {
+const applicationStatus = async () => {
   const supabase = createClient();
   const userInfo = await getUserInfo();
+
+  if (!userInfo) {
+    return "<Unknown>";
+  }
+
   const { data, error } = await supabase
     .from("users")
     .select("application_status")
@@ -20,11 +25,18 @@ const ApplicationStatus = async () => {
     assert(data.length === 1);
   }
 
-  return data?.[0]?.application_status ?? "<Unknown>";
+  const status: string | undefined = data?.[0]?.application_status ?? undefined;
+  return status;
 };
 
 async function _Profile() {
   const user = await getUserInfo();
+  const application_status = await applicationStatus();
+
+  if (!(user && application_status)) {
+    return <ProfileLoading />;
+  }
+
   return (
     <div className="flex flex-row items-center justify-left">
       <FallbackImage
@@ -38,11 +50,9 @@ async function _Profile() {
       />
       <div>
         <h4 className="font-bold leading-none text-md mb-1 text-white">
-          {user?.user_metadata?.full_name}
+          {user.user_metadata?.full_name ?? "<Unknown>"}
         </h4>
-        <p className="text-muted text-md text-white">
-          <ApplicationStatus />
-        </p>
+        <p className="text-muted text-md text-white">{application_status}</p>
       </div>
     </div>
   );

@@ -60,17 +60,6 @@ export const updateSession = async (request: NextRequest) => {
     data: { user },
   } = await supabase.auth.getUser();
 
-  if (
-    !user &&
-    !request.nextUrl.pathname.startsWith("/login") &&
-    !request.nextUrl.searchParams.has("modal") &&
-    request.nextUrl.pathname !== "/"
-  ) {
-    const url = request.nextUrl.clone();
-    url.searchParams.set("modal", "login");
-    return NextResponse.redirect(url);
-  }
-
   if (request.nextUrl.pathname.startsWith("/admin")) {
     const isAdmin = !!(
       (await get_perms_by_user_id(user?.id as string)).data?.length ?? 0 > 0
@@ -81,6 +70,21 @@ export const updateSession = async (request: NextRequest) => {
       url.pathname = "/unauthorized";
       return NextResponse.redirect(url);
     }
+  }
+
+  if (
+    !user &&
+    request.nextUrl.pathname !== "/" &&
+    // These both mean we are already on a login screen and a redirect is not needed
+    !(
+      request.nextUrl.pathname.startsWith("/login") ||
+      request.nextUrl.pathname.startsWith("/unauthorized") ||
+      request.nextUrl.searchParams.get("modal") === "login"
+    )
+  ) {
+    const url = request.nextUrl.clone();
+    url.searchParams.set("modal", "login");
+    return NextResponse.redirect(url);
   }
 
   return response;
