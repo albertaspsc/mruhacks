@@ -30,7 +30,7 @@ export default async function Dashboard() {
   const userName = await getUserName();
 
   return (
-    <div className="flex flex-col px-4">
+    <div className="flex flex-col p-4 bg-background rounded-md border flex-1">
       <h1 className="text-3xl font-bold text-primary">{userName}</h1>
       <ApplicationStatus applicationStatus={applicationStatus} />
     </div>
@@ -57,13 +57,15 @@ function ApplicationStatus({
         </Link>
       );
     case "Applied":
-      <div className="rounded-full p-4 border border-muted-foreground flex items-center w-max">
-        <div className="rounded-full w-4 h-4 flex flex-col items-center justify-center bg-blue-200 text-white mr-2">
-          <div className="rounded-full w-2 h-2 bg-blue-500"></div>
+      return (
+        <div className="rounded-full p-4 border border-muted-foreground flex items-center w-max">
+          <div className="rounded-full w-4 h-4 flex flex-col items-center justify-center bg-blue-200 text-white mr-2">
+            <div className="rounded-full w-2 h-2 bg-blue-500"></div>
+          </div>
+          <p className="text-lg text-muted-foreground mr-2">
+            Application Submitted
+          </p>
         </div>
-        <p className="text-lg text-muted-foreground mr-2">
-          Application Submitted
-        </p>
-      </div>;
+      );
   }
 }

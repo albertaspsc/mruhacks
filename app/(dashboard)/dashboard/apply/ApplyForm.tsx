@@ -347,7 +347,7 @@ export default function ApplyForm({
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className={`block h-full ${loading_disable}`}
+        className={`block p-4 bg-background border rounded-md ${loading_disable}`}
       >
         <FormSection
           title="Personal Information"
@@ -470,7 +470,7 @@ export default function ApplyForm({
           <Button
             role="submit"
             type="submit"
-            className="text-white font-bold float-right mb-12"
+            className="text-white font-bold float-right"
           >
             Submit Application
           </Button>

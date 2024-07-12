@@ -6,7 +6,7 @@ import { ModeToggle } from "@/components/theme-select";
 
 export default function Nav() {
   return (
-    <nav className="">
+    <nav>
       <div className="flex flex-row items-center bg-primary justify-between text-base-100 h-[60px] pl-4 z-50">
         <Link
           href="/"

@@ -15,7 +15,7 @@ export const MenuItem = ({
       <Link
         {...props}
         className={cn(
-          `hover:text-accent text-base-100 font-medium px-3 my-2 flex flex-row items-center gap-2 ${selected ? "underline" : ""}`,
+          `hover:border-primary hover:bg-muted/10 border border-background font-medium px-4 py-2 rounded-md my-2 flex flex-row items-center gap-2 ${selected ? "bg-primary text-white font-bold hover:bg-blue-900" : ""} transition`,
           className,
         )}
       >

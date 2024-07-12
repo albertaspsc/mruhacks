@@ -36,11 +36,11 @@ async function _Profile() {
         alt="User Avatar"
         unoptimized
       />
-      <div>
-        <h4 className="font-bold leading-none text-md mb-1 text-white">
+      <div className="flex flex-col justify-center">
+        <h4 className="font-bold leading-none text-md mb-1 text-primary">
           {user?.user_metadata?.full_name}
         </h4>
-        <p className="text-muted text-md text-white">
+        <p className="text-md text-muted-foreground">
           <ApplicationStatus />
         </p>
       </div>

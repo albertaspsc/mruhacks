@@ -71,7 +71,7 @@ export function DataTable<TData, TValue>({
   });
 
   return (
-    <div>
+    <div className="flex-1">
       <div className="flex flex-row">
         <DataTableSearchColumns
           table={table}
@@ -80,7 +80,7 @@ export function DataTable<TData, TValue>({
         <DataTableViewOptions table={table} />
       </div>
       <div className="rounded-md border mt-2">
-        <Table>
+        <Table className="bg-background">
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>

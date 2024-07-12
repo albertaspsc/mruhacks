@@ -7,7 +7,7 @@ export const Logout = async ({ className }: { className?: string }) => {
     <form action={signout} className={className}>
       <Button
         variant="outline"
-        className="flex flex-row align-middle justify-start text-md bg-inherit text-white "
+        className="flex flex-1 w-full flex-row align-middle justify-center text-md bg-inherit text-text hover:border-primary"
         type="submit"
       >
         <FaSignOutAlt className="mr-2" />

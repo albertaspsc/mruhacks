@@ -3,7 +3,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 export default function Loading() {
   return (
-    <Card>
+    <Card className="bg-background ">
       <CardHeader>
         <CardTitle>
           <Skeleton className="w-30 h-8" />

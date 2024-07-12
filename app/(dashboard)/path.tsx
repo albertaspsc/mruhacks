@@ -50,7 +50,7 @@ export default function Path() {
     .flat()
     .filter((x) => !!x);
   return (
-    <Breadcrumb className="text-lg p-4 sticky top-0 left-0 right-0 bg-background z-10">
+    <Breadcrumb className="text-lg p-4 my-4 bg-background z-10 rounded-md border">
       <BreadcrumbList>{b}</BreadcrumbList>
     </Breadcrumb>
   );

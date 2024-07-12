@@ -30,7 +30,6 @@ const config: Config = {
         primary: "var(--primary)",
         "primary-content": "var(--primary-content)",
         secondary: "var(--secondary)",
-        accent: "var(--accent)",
         neutral: "var(--neutral)",
         "base-100": "var(--base-100)",
         foreground: "var(--text)",
@@ -41,6 +40,22 @@ const config: Config = {
         apr: "var(--inp)",
         den: "var(--den)",
         apl: "var(--apl)",
+        destructive: {
+          DEFAULT: "hsl(var(--destructive))",
+          foreground: "hsl(var(--destructive-foreground))",
+        },
+        muted: {
+          DEFAULT: "hsl(var(--muted))",
+          foreground: "hsl(var(--muted-foreground))",
+        },
+        accent: {
+          DEFAULT: "hsl(var(--accent))",
+          foreground: "hsl(var(--accent-foreground))",
+        },
+        card: {
+          DEFAULT: "hsl(var(--card))",
+          foreground: "hsl(var(--card-foreground))",
+        },
       },
       keyframes: {
         "accordion-down": {

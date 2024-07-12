@@ -54,11 +54,11 @@ export const Demographics = async () => {
       : [];
 
   return (
-    <Card>
+    <Card className="flex-1">
       <CardHeader>
         <CardTitle>Demographics</CardTitle>
       </CardHeader>
-      <CardContent className="flex flex-wrap justify-evenly h-full ">
+      <CardContent className="flex flex-wrap justify-evenly h-max">
         {await Promise.all(
           demographic_views.map((props, key) =>
             MapToChart({ ...props, supabase, key }),
@@ -92,7 +92,7 @@ export async function AggView() {
 
   // Executat all of the queries in parelell
   return (
-    <Card>
+    <Card className="flex-1">
       <CardHeader>
         <CardTitle className="p-4">Application Break Down</CardTitle>
       </CardHeader>

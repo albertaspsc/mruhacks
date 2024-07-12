@@ -10,7 +10,7 @@ export default async function Table() {
   if (error) console.error(error);
 
   return (
-    <div className=" mx-auto ">
+    <div className="flex-1">
       <DataTable columns={columns} data={data ?? []} />
     </div>
   );
