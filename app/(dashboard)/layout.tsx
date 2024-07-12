@@ -1,7 +1,6 @@
-import { ReactNode, Suspense } from "react";
+import { ReactNode } from "react";
 import React from "react";
 import Path from "./path";
-import { Skeleton } from "@/components/ui/skeleton";
 
 export default function Layout(props: {
   children: ReactNode;
