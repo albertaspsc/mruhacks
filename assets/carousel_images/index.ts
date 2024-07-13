@@ -2,14 +2,13 @@ import type { StaticImageData } from "next/image";
 
 // Yay vim macros I hate writing code, there is not really a good way of doing
 // this without codegen sorry
+import img0 from "./carousel_image_0.jpg";
+import img1 from "./carousel_image_1.jpg";
+import img2 from "./carousel_image_2.jpg";
 import img3 from "./carousel_image_3.jpg";
+import img4 from "./carousel_image_4.jpg";
 import img5 from "./carousel_image_5.jpg";
 import img6 from "./carousel_image_6.jpg";
-import img7 from "./carousel_image_7.jpg";
-import img8 from "./carousel_image_8.jpg";
-import img9 from "./carousel_image_9.jpg";
-import img11 from "./carousel_image_11.jpg";
-import img12 from "./carousel_image_12.jpg";
 
 export interface CarouselItem {
   src: StaticImageData;
@@ -19,36 +18,32 @@ export interface CarouselItem {
 
 const carouselItems: CarouselItem[] = [
   {
+    src: img0,
+    alt: "<Image 0 Alt Text>",
+  },
+  {
+    src: img1,
+    alt: "<Image 1 Alt Text>",
+  },
+  {
+    src: img2,
+    alt: "<Image 2 Alt Text>",
+  },
+  {
     src: img3,
-    alt: "The Showpass CEO presenting the opening keynote to participants.",
+    alt: "<Image 3 Alt Text>",
+  },
+  {
+    src: img4,
+    alt: "<Image 4 Alt Text>",
   },
   {
     src: img5,
-    alt: "A hackathon team pitching their project to the judges.",
+    alt: "<Image 5 Alt Text>",
   },
   {
     src: img6,
-    alt: "A proud team of hackathon participants posing with their project.",
-  },
-  {
-    src: img7,
-    alt: "The MRUHacks 2023 winning team posing with their project.",
-  },
-  {
-    src: img8,
-    alt: "A group of hackathon participants posing with their project.",
-  },
-  {
-    src: img9,
-    alt: "The MRUHacks 2023 final presentations taking place.",
-  },
-  {
-    src: img11,
-    alt: "MRUHacks 2023 participants waiting for the final results.",
-  },
-  {
-    src: img12,
-    alt: "Some happy hackathon participants posing with their prizes.",
+    alt: "<Image 6 Alt Text>",
   },
 ].map((x) => ({ ...x, legend: x.alt }));
 
