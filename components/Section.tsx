@@ -27,7 +27,7 @@ export default function Section({
         alt=""
         className={`rounded-2xl shadow-2xl h-auto ${image_side_style}`}
       />
-      <div className="p-5 rounded-xl h-min text-neutral">
+      <div className="p-5 rounded-xl h-min text-foreground">
         <h1 className="font-bold text-2xl sm:text-2xl lg:text-3xl text-primary-content">
           {title}
         </h1>
