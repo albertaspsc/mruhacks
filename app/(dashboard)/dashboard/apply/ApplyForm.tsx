@@ -302,8 +302,6 @@ export default function ApplyForm({
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
-  router.prefetch("/");
-
   let defaultValues = previousResponses ?? {};
 
   const form = useForm<z.infer<typeof applicationSchema>>({
@@ -329,7 +327,7 @@ export default function ApplyForm({
     );
 
     if (success) {
-      router.push("/");
+      router.push("/dashboard");
     } else {
       setLoading(false);
     }
