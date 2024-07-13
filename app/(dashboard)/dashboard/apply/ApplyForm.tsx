@@ -427,6 +427,7 @@ export default function ApplyForm({
           />
           <SelectInput
             label="Software Experience"
+            description="Rate your experience in software development."
             name="software_exp"
             form={form}
             options={options.experience_level}
