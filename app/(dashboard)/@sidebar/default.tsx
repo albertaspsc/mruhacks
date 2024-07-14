@@ -20,6 +20,7 @@ import Link from "next/link";
 import Image from "next/image";
 import logo from "@/public/mru_title_dark.png";
 import small_logo from "@/public/mruhacks.png";
+import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 
 const MenuHeader = ({ children }: { children: ReactNode }) => (
   <li className="last:hidden mt-4 block text-primary font-bold">{children}</li>
@@ -116,13 +117,16 @@ const Mobile = async () => {
           <div className="flex-1 h-full flex flex-row space-x-4 justify-around items-center text-xl">
             <Link href="/dashboard">
               <FaHome />
+              <VisuallyHidden>Dashboard</VisuallyHidden>
             </Link>
             <Link href="/dashboard/apply">
               <FaAddressBook />
+              <VisuallyHidden>Application</VisuallyHidden>
             </Link>
             {has_perms ? (
               <Link href="/admin">
                 <FaShieldAlt />
+                <VisuallyHidden>Admin</VisuallyHidden>
               </Link>
             ) : null}
           </div>

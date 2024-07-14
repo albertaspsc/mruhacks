@@ -16,12 +16,14 @@ export default function Page() {
   return (
     <>
       <DialogHeader className="flex flex-row items-center space-x-2 pb-4">
-        <Image src={Logo} alt="MRUHacks Logo" />
+        <Image src={Logo} alt="MRUHacks Logo" className="w-20" />
         <VisuallyHidden>
           <DialogTitle>Login or Signup</DialogTitle>
         </VisuallyHidden>
         <p className="text-primary-content">|</p>
-        <h2 className="text-primary-content font-bold">Login or Signup</h2>
+        <h2 className="text-primary-content font-bold text-nowrap">
+          Login or Signup
+        </h2>
       </DialogHeader>
       <div className="flex flex-col items-center  space-y-2">
         <form action={signInWithGithub} className="w-full">
