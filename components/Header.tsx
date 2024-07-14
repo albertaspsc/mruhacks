@@ -1,46 +1,20 @@
 import Image from "next/image";
 import Link from "next/link";
-import {
-  FaBars,
-  FaBookOpen,
-  FaGithub,
-  FaGoogle,
-  FaSignInAlt,
-  FaSignOutAlt,
-} from "react-icons/fa";
+import { FaBars } from "react-icons/fa";
 import Logo from "../public/mru_title_light.png";
-import getUserInfo from "@/lib/auth/getUserInfo";
 import { Button } from "./ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
-import signInWithGithub from "@/lib/auth/signInWithGithub";
-import signout from "@/lib/auth/signout";
-import { createClient } from "@/lib/supabase/server";
-import { User } from "@supabase/auth-js";
-import { UserIcon } from "lucide-react";
-import signInWithGoogle from "@/lib/auth/signInWithGoogle";
 import AdminLink from "./AdminLink";
-import missing_profile from "@/assets/missing_profile.png";
-import FallbackImage from "./FallbackImage";
-
-const getUserApplicationStatus = async (user: User) => {
-  const supabase = createClient();
-  const { error, data } = await supabase
-    .from("users")
-    .select("application_status")
-    .eq("user_id", user.id);
-
-  if (error) {
-    console.error(error);
-  }
-
-  return data?.[0]?.application_status;
-};
+import { createClient } from "@/lib/supabase/server";
 
 export default async function Header() {
-  const userInfo = await getUserInfo();
-  const userApplicationStatus = userInfo
-    ? await getUserApplicationStatus(userInfo)
-    : undefined;
+  const client = createClient();
+  const getSession = async () => {
+    const session = await client.auth.getSession();
+    return session;
+  };
+
+  const isLoggedIn = (await getSession()).data.session !== null;
 
   const DropDown = () => (
     <Popover>
@@ -57,34 +31,26 @@ export default async function Header() {
           <Link href="/#fLinkq">FAQs</Link>
           <Link href="/#community">Our Community</Link>
           <Link href="/#sponsors">Sponsors</Link>
-          {userInfo ? (
-            <ProfileModal
-              user={userInfo}
-              application_status={userApplicationStatus || "<unknown>"}
-            />
+          {isLoggedIn ? (
+            <Link href="/dashboard">
+              <Button
+                variant="outline"
+                className="w-full p-2 text-md mt-4"
+                type="submit"
+              >
+                Dashboard
+              </Button>
+            </Link>
           ) : (
-            <div>
-              <form action={signInWithGithub}>
-                <Button
-                  variant="outline"
-                  className="w-full p-2 text-md mt-4"
-                  type="submit"
-                >
-                  <FaGithub className="mr-2" />
-                  Sign In With Github
-                </Button>
-              </form>
-              <form action={signInWithGoogle}>
-                <Button
-                  variant="outline"
-                  className="w-full p-2 text-md mt-4"
-                  type="submit"
-                >
-                  <FaGoogle className="mr-2" />
-                  Sign In With Google
-                </Button>
-              </form>
-            </div>
+            <Link href="/login">
+              <Button
+                variant="outline"
+                className="w-full p-2 text-md mt-4"
+                type="submit"
+              >
+                Log In / Sign Up
+              </Button>
+            </Link>
           )}
         </div>
       </PopoverContent>
@@ -116,120 +82,29 @@ export default async function Header() {
           <Link href="/#fLinkq">FAQs</Link>
           <Link href="/#community">Our Community</Link>
           <Link href="/#sponsors">Sponsors</Link>
-          {userInfo ? (
-            <ProfileModal
-              user={userInfo}
-              application_status={userApplicationStatus || "<unknown>"}
-            />
+          {isLoggedIn ? (
+            <Link href="/dashboard">
+              <Button
+                variant="outline"
+                className="w-full p-2 text-md"
+                type="submit"
+              >
+                Dashboard
+              </Button>
+            </Link>
           ) : (
-            <SignInModal />
+            <Link href="/login">
+              <Button
+                variant="outline"
+                className="w-full p-2 text-md"
+                type="submit"
+              >
+                Log In / Sign Up
+              </Button>
+            </Link>
           )}
         </div>
       </div>
     </nav>
   );
 }
-
-const SignInModal = () => {
-  return (
-    <Popover>
-      <PopoverTrigger asChild>
-        <Button variant="outline" className="p-2 text-md">
-          <FaSignInAlt className="mr-2" />
-          Sign In
-        </Button>
-      </PopoverTrigger>
-      <PopoverContent className="w-80">
-        <div className="grid gap-4">
-          <div className="space-y-2">
-            <h4 className="font-medium leading-none">Register for MRUHacks</h4>
-            <p className="text-sm text-muted-foreground">
-              Log in or sign up to register for MRUHacks
-            </p>
-          </div>
-          <form action={signInWithGithub} className="grid gap-2">
-            <Button
-              variant="outline"
-              className="flex flex-row align-middle justify-left text-md"
-              type="submit"
-            >
-              <FaGithub className="mr-2" />
-              Sign in with Github
-            </Button>
-          </form>
-          <form action={signInWithGoogle}>
-            <Button
-              variant="outline"
-              className="w-full p-2 text-md"
-              type="submit"
-            >
-              <FaGoogle className="mr-2" />
-              Sign In With Google
-            </Button>
-          </form>
-        </div>
-      </PopoverContent>
-    </Popover>
-  );
-};
-
-const ProfileModal = ({
-  user,
-  application_status,
-}: {
-  user: User | null;
-  application_status: string | null;
-}) => {
-  return (
-    <Popover>
-      <PopoverTrigger asChild>
-        <Button variant="outline" className="text-md bg-inherit">
-          <UserIcon />
-          Profile
-        </Button>
-      </PopoverTrigger>
-      <PopoverContent className="">
-        <div className="grid gap-4">
-          <div className="flex flex-row items-center justify-left">
-            <FallbackImage
-              src={user?.user_metadata?.avatar_url}
-              fallback={missing_profile}
-              className="rounded-full mr-2"
-              width={48}
-              height={48}
-              alt="User Avatar"
-              unoptimized
-            />
-            <div>
-              <h4 className="font-bold leading-none text-md mb-1">
-                {user?.user_metadata?.full_name}
-              </h4>
-              <p className="text-muted text-md">
-                Application Status: {application_status}
-              </p>
-            </div>
-          </div>
-          <Link href="/dashboard/apply" className="w-full">
-            <Button
-              variant="outline"
-              className="p-2 text-md justify-start pl-4 w-full"
-            >
-              <FaBookOpen className="mr-2" />
-              Edit Application
-            </Button>
-          </Link>
-          <form action={signout} className="grid gap-2">
-            <Button
-              variant="outline"
-              className="flex flex-row align-middle justify-start pl-4 text-md"
-              type="submit"
-            >
-              <FaSignOutAlt className="mr-2" />
-              Sign Out
-            </Button>
-          </form>
-        </div>
-      </PopoverContent>
-    </Popover>
-  );
-};
