@@ -5,6 +5,7 @@ import { createClient } from "@/lib/supabase/server";
 import assert from "assert";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Suspense } from "react";
+import { Badge } from "@/components/ui/badge";
 
 const applicationStatus = async () => {
   const supabase = createClient();
@@ -37,6 +38,13 @@ async function _Profile() {
     return <ProfileLoading />;
   }
 
+  const colors: Record<string, { outer: string; inner: string }> = {
+    "In Progress": { outer: "bg-orange-500/10", inner: "bg-orange-500/80" },
+    Approved: { outer: "bg-green-500/10", inner: "bg-green-500/80" },
+    Denied: { outer: "bg-red-500/10", inner: "bg-red-500/80" },
+    Applied: { outer: "bg-blue-500/30", inner: "bg-blue-500" },
+  };
+
   return (
     <div className="flex flex-row items-center justify-left">
       <FallbackImage
@@ -52,7 +60,21 @@ async function _Profile() {
         <h4 className="font-bold leading-none text-md mb-1 text-primary">
           {user?.user_metadata?.full_name}
         </h4>
-        <p className="text-md text-muted-foreground">{application_status}</p>
+        <div className="flex flex-row items-center">
+          <div>
+            <div
+              className={`h-4 w-4 rounded-full ${colors[application_status].outer} flex items-center justify-center
+                  `}
+            >
+              <div
+                className={`animate-pulse h-2 w-2 rounded-full ${colors[application_status].inner} `}
+              />
+            </div>
+          </div>
+          <p className="ml-2 text-md text-muted-foreground">
+            {application_status}
+          </p>
+        </div>
       </div>
     </div>
   );

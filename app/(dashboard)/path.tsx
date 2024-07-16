@@ -27,7 +27,7 @@ import { usePathname } from "next/navigation";
 import { ReactNode } from "react";
 import Link from "next/link";
 
-export default function Path() {
+export default function Path({ children }: { children?: ReactNode }) {
   const path = usePathname();
 
   const segments = getURLSegments(path);
@@ -54,14 +54,8 @@ export default function Path() {
     .flat()
     .filter((x) => !!x);
   return (
-    <Breadcrumb className="text-lg p-4 my-4 bg-background z-10 rounded-md border flex flex-row">
-      <Link href="/">
-        <Image
-          className="h-10 w-auto mr-4 md:hidden"
-          src={small_logo}
-          alt="MRUHacks Logo"
-        />
-      </Link>
+    <Breadcrumb className="text-lg p-4 my-4 bg-background z-10 rounded-md border flex flex-row items-center space-x-5">
+      {children}
       <BreadcrumbList>{b}</BreadcrumbList>
     </Breadcrumb>
   );

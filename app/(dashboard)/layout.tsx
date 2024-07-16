@@ -9,10 +9,12 @@ export default function Layout(props: {
 }) {
   return (
     <div className="h-screen max-h-screen flex flex-col overflow-hidden bg-muted">
-      <div className="flex md:flex-row flex-col-reverse flex-1 max-h-screen overflow-y-hidden">
-        {props.sidebar}
+      <div className="flex flex-row">
+        <div className="md:block hidden">{props.sidebar}</div>
         <div className="flex-1 h-auto flex flex-col px-4 pb-4 overflow-y-auto">
-          <Path />
+          <Path>
+            <div className="md:hidden block">{props.sidebar}</div>
+          </Path>
           {props.children}
         </div>
       </div>
