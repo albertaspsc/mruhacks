@@ -404,7 +404,7 @@ function Nav() {
   return (
     <nav className="sticky top-0 w-full px-12 py-4 z-30 bg-white/50 backdrop-blur-sm flex flex-row items-center text-lg justify-between text-base space-x-4">
       <div className="flex flex-row items-center space-x-8">
-        <img src={mruhacks.src} alt="MRUHacks" className="w-16 h-auto -ml-4" />
+        {/* <img src={mruhacks.src} alt="MRUHacks" className="w-16 h-auto -ml-4" /> */}
         <a>Home</a>
         <a>About</a>
         <a>FAQs</a>
