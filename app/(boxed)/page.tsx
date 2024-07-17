@@ -19,7 +19,6 @@ import {
   FaArrowRight,
   FaBars,
   FaDiscord,
-  FaHamburger,
   FaInstagram,
   FaLinkedin,
 } from "react-icons/fa";
@@ -36,131 +35,210 @@ export default function Home() {
   return (
     <div className="relative w-full min-h-screen h-full wrapper bg-gradient-to-br from-blue-100 to-purple-100">
       <Nav />
-      <Parallax
-        pages={4}
-        className="w-full top-0 left-0 bottom-0"
-        innerStyle={{
-          height: "auto",
-          overflow: "hidden",
-        }}
-        id="parallax"
+      <div className="hidden md:block">
+        <Parallax
+          pages={4}
+          className="w-full top-0 left-0 bottom-0"
+          innerStyle={{
+            height: "auto",
+            overflow: "hidden",
+          }}
+          id="parallax"
+        >
+          <AboutLayer />
+          {/* yes, these are backwards. it's z-azis fuckery. i am sorry */}
+          <HeroLayer />
+          <ParallaxLayer offset={1.75} speed={0} factor={2}>
+            <FAQs />
+            <Sponsors />
+            <MadeBy />
+          </ParallaxLayer>
+        </Parallax>
+      </div>
+      <div className="block md:hidden">
+        <AnimatedWindow
+          startingScale={0.5}
+          delay={300}
+          config={{ duration: 1000, easing: easings.easeOutBack }}
+          bgOverride
+          className="mx-auto mt-16 mb-32 w-[90%] h-auto overflow-visible"
+        >
+          <div className="absolute top-0 left-0 w-full h-6 md:h-8 bg-white/100 rounded-t-md"></div>
+          <PopupButtons />
+          <div className="w-full h-full bg-gradient-to-br from-blue-400/70 to-purple-400 backdrop-blur-sm">
+            <img
+              src={logo.src}
+              alt="Welcome to MRUHacks"
+              className="h-full object-contain p-4 sm:p-16 pt-8 pb-0"
+            />
+
+            <p className="text-md sm:text-2xl pl-12 text-white font-bold pb-4 w-full">
+              October 5th-6th, 2024 • In-Person Event
+            </p>
+          </div>
+          <AnimatedWindow
+            endingRot={-2}
+            delay={750}
+            config={{ duration: 500, easing: easings.easeOutBack }}
+            className="absolute right-4 sm:right-16 -bottom-20 sm:-bottom-16 w-[75%] sm:w-[40%] max-w-[300px] flex flex-col justify-center items-center p-4 pt-12"
+          >
+            <Link
+              className="rounded-full bg-gradient-to-br from-blue-400 to-purple-400 text-white w-full p-2 sm:p-4 mt-2 text-lg xl:text-xl flex flex-row items-center justify-center hover:from-blue-500 hover:to-purple-500 transition"
+              href="/dashboard/apply"
+            >
+              Register Now
+              <FaArrowRight className="inline ml-2" />
+            </Link>
+          </AnimatedWindow>
+        </AnimatedWindow>
+
+        <div className="px-4 mb-8">
+          <p
+            className="text-primary font-bold text-3xl w-full text-center scroll-mt-24 leading-[4rem]"
+            id="about"
+          >
+            Welcome to MRUHacks
+          </p>
+          <p className="text-primary text-xl w-full text-center mb-4">
+            Dream, design, and develop your future!
+          </p>
+          <p className="text-text text-md w-full text-left px-2 leading-10 max-w-screen-sm mx-auto z-30 xl:max-w-screen-md">
+            This October, join up to 150 hackers in the Riddell Library and
+            Learning Center for a hackathon experience like no other. Discover a
+            community of like-minded designers, developers, programmers, and
+            tech enthusiasts. Connect and engage with experienced software
+            engineer industry mentors, and enjoy free food throughout the event.
+            At MRUHacks, the participant experience comes first. Experience
+            engaging workshops, exciting activities before and during the event,
+            and have the chance to network with not only companies but your
+            fellow hackers.
+          </p>
+        </div>
+        <FAQs />
+        <Sponsors />
+        <MadeBy />
+      </div>
+    </div>
+  );
+}
+
+function MadeBy() {
+  return (
+    <div className="relative p-4">
+      <p className="w-full text-center text-primary text-lg md:text-xl pt-12">
+        Made with ❤️ by the MRUHacks Team
+      </p>
+      <p className="w-full text-center text-text text-lg">
+        © 2024 MRUHacks. All rights reserved.
+      </p>
+    </div>
+  );
+}
+
+function Sponsors() {
+  return (
+    <div className="relative p-4 pt-16">
+      <p
+        className="text-3xl md:text-4xl font-bold text-primary w-full text-center py-8 scroll-mt-24"
+        id="sponsors"
       >
-        <AboutLayer />
-        {/* yes, these are backwards. it's z-azis fuckery. i am sorry */}
-        <HeroLayer />
-        <ParallaxLayer offset={1.75} speed={0} factor={2}>
-          <div className="relative">
-            <h2
-              className="text-3xl md:text-4xl font-bold text-primary w-full text-center pb-8 scroll-mt-24"
-              id="faqs"
-            >
-              FAQs
-            </h2>
-            <div className="flex flex-col lg:flex-row w-full px-4 md:px-16 gap-8 max-w-screen-2xl mx-auto">
-              <div className="flex flex-col flex-1 gap-8">
-                <DropdownWindow title="What is a Hackathon?">
-                  <p className="text-lg px-4">
-                    A hackathon can be thought of as an “invention marathon” or
-                    a “real time science fair”. Anyone who has an interest in
-                    technology and software attends a hackathon to learn, build
-                    & share their creations over the course of a weekend in a
-                    relaxed and welcoming atmosphere. Over the course of
-                    24-hours you will bring your crazy ideas to life through
-                    technology before showcasing them to a team of judges.
-                  </p>
-                </DropdownWindow>
-                <DropdownWindow title="When is MRUHacks?">
-                  <p className="text-lg px-4">
-                    MRUHacks will be held from October 5th - 6th, 2024, in the
-                    Riddell Library and Learning Centre. More details will be
-                    released closer to the event.
-                  </p>
-                </DropdownWindow>
-                <DropdownWindow title="Who can participate?">
-                  <p className="text-lg px-4">
-                    This year, MRUHacks is open to any and all post-secondary
-                    students! Just recently graduated? Don’t worry, you’re
-                    invited too! All attendees must be 18 years or older to
-                    participate.
-                  </p>
-                </DropdownWindow>
-                <DropdownWindow title="How many people can be on a team?">
-                  <p className="text-lg px-4">
-                    Hackers can form teams of up to five people. Feel free to
-                    team up with anyone, regardless of degree, school, or
-                    experience level. If you’re still looking for a team, come
-                    find one on our Discord.
-                  </p>
-                </DropdownWindow>
-              </div>
-              <div className="flex flex-col flex-1 gap-8">
-                <DropdownWindow title="How much does it cost to participate?">
-                  <p className="text-lg px-4">
-                    Absolutely nothing! We’ll also be providing food for the
-                    entire event, as well as a few goodies for hackers along the
-                    way.
-                  </p>
-                </DropdownWindow>
-                <DropdownWindow title="What if I've never hackathon'd before?">
-                  <p className="text-lg px-4">
-                    MRUHacks is open to everyone, regardless of skill level.
-                    Whether you’re new to coding, or a seasoned veteran, this is
-                    the place for you. Still worried? Stay tuned for a series of
-                    workshops that’ll help you brush up on your skills.
-                  </p>
-                </DropdownWindow>
-                <DropdownWindow title="When do applications open?">
-                  <p className="text-lg px-4">
-                    Applications are open right now! Visit mruhacks.ca to apply.
-                    Act fast, as we only have room for 150 hackers this year!
-                  </p>
-                </DropdownWindow>
-                <DropdownWindow title="Why should I participate in a hackathon?">
-                  <p className="text-lg px-4">
-                    Attending MRUHacks will give you a platform to learn new
-                    skills, collaborate with like-minded individuals, and build
-                    a sweet project. It&apos;s a great opportunity to solve
-                    real-world problems, win some prizes, and join a community
-                    of hackers.
-                  </p>
-                </DropdownWindow>
-              </div>
-            </div>
-          </div>
-          <div className="relative p-4 pt-16">
-            <p
-              className="text-3xl md:text-4xl font-bold text-primary w-full text-center py-8 scroll-mt-24"
-              id="sponsors"
-            >
-              Sponsors
+        Sponsors
+      </p>
+      <div className="flex flex-col lg:flex-row max-w-screen-lg mx-auto space-x-0 lg:space-x-8 pb-4 items-center">
+        <p className="text-text text-xl text-center lg:text-right leading-10 w-full mx-auto z-30 pb-4">
+          MRUHacks wouldn&apos;t be possible without the support of our
+          fantastic sponsors.
+        </p>
+        <Link
+          href="mailto:outreach@mruhacks.ca"
+          className="rounded-full bg-gradient-to-br from-blue-400 to-purple-400 text-white p-2 px-4 text-lg w-2/3 lg:min-w-64 flex flex-row items-center justify-center hover:from-blue-500 hover:to-purple-500 transition"
+        >
+          Become a sponsor
+          <FaArrowRight className="inline ml-2" />
+        </Link>
+        <Window className="relative mx-auto lg:w-[30%] w-2/3 h-auto mt-16">
+          <p className="text-center text-xl p-12">Coming soon!</p>
+        </Window>
+      </div>
+    </div>
+  );
+}
+
+function FAQs() {
+  return (
+    <div className="relative">
+      <h2
+        className="text-3xl md:text-4xl font-bold text-primary w-full text-center pb-8 scroll-mt-24"
+        id="faqs"
+      >
+        FAQs
+      </h2>
+      <div className="flex flex-col lg:flex-row w-full px-4 md:px-16 gap-8 max-w-screen-2xl mx-auto">
+        <div className="flex flex-col flex-1 gap-8">
+          <DropdownWindow title="What is a Hackathon?">
+            <p className="text-lg px-4">
+              A hackathon can be thought of as an “invention marathon” or a
+              “real time science fair”. Anyone who has an interest in technology
+              and software attends a hackathon to learn, build & share their
+              creations over the course of a weekend in a relaxed and welcoming
+              atmosphere. Over the course of 24-hours you will bring your crazy
+              ideas to life through technology before showcasing them to a team
+              of judges.
             </p>
-            <div className="flex flex-col lg:flex-row max-w-screen-lg mx-auto space-x-0 lg:space-x-8 pb-4 items-center">
-              <p className="text-text text-xl text-center lg:text-right leading-10 w-full mx-auto z-30 pb-4">
-                MRUHacks wouldn&apos;t be possible without the support of our
-                fantastic sponsors.
-              </p>
-              <Link
-                href="mailto:outreach@mruhacks.ca"
-                className="rounded-full bg-gradient-to-br from-blue-400 to-purple-400 text-white p-2 px-4 text-lg w-2/3 lg:min-w-64 flex flex-row items-center justify-center hover:from-blue-500 hover:to-purple-500 transition"
-              >
-                Become a sponsor
-                <FaArrowRight className="inline ml-2" />
-              </Link>
-            </div>
-          </div>
-          <Window className="relative mx-auto lg:w-[30%] w-1/2 h-auto">
-            <p className="text-center text-xl p-12">Coming soon!</p>
-          </Window>
-          <div className="relative p-4">
-            <p className="w-full text-center text-primary text-xl pt-24">
-              Made with ❤️ by the MRUHacks Team
+          </DropdownWindow>
+          <DropdownWindow title="When is MRUHacks?">
+            <p className="text-lg px-4">
+              MRUHacks will be held from October 5th - 6th, 2024, in the Riddell
+              Library and Learning Centre. More details will be released closer
+              to the event.
             </p>
-            <p className="w-full text-center text-text text-lg">
-              © 2024 MRUHacks. All rights reserved.
+          </DropdownWindow>
+          <DropdownWindow title="Who can participate?">
+            <p className="text-lg px-4">
+              This year, MRUHacks is open to any and all post-secondary
+              students! Just recently graduated? Don’t worry, you’re invited
+              too! All attendees must be 18 years or older to participate.
             </p>
-          </div>
-        </ParallaxLayer>
-      </Parallax>
+          </DropdownWindow>
+          <DropdownWindow title="How many people can be on a team?">
+            <p className="text-lg px-4">
+              Hackers can form teams of up to five people. Feel free to team up
+              with anyone, regardless of degree, school, or experience level. If
+              you’re still looking for a team, come find one on our Discord.
+            </p>
+          </DropdownWindow>
+        </div>
+        <div className="flex flex-col flex-1 gap-8">
+          <DropdownWindow title="How much does it cost to participate?">
+            <p className="text-lg px-4">
+              Absolutely nothing! We’ll also be providing food for the entire
+              event, as well as a few goodies for hackers along the way.
+            </p>
+          </DropdownWindow>
+          <DropdownWindow title="What if I've never hackathon'd before?">
+            <p className="text-lg px-4">
+              MRUHacks is open to everyone, regardless of skill level. Whether
+              you’re new to coding, or a seasoned veteran, this is the place for
+              you. Still worried? Stay tuned for a series of workshops that’ll
+              help you brush up on your skills.
+            </p>
+          </DropdownWindow>
+          <DropdownWindow title="When do applications open?">
+            <p className="text-lg px-4">
+              Applications are open right now! Visit mruhacks.ca to apply. Act
+              fast, as we only have room for 150 hackers this year!
+            </p>
+          </DropdownWindow>
+          <DropdownWindow title="Why should I participate in a hackathon?">
+            <p className="text-lg px-4">
+              Attending MRUHacks will give you a platform to learn new skills,
+              collaborate with like-minded individuals, and build a sweet
+              project. It&apos;s a great opportunity to solve real-world
+              problems, win some prizes, and join a community of hackers.
+            </p>
+          </DropdownWindow>
+        </div>
+      </div>
     </div>
   );
 }
@@ -168,154 +246,85 @@ export default function Home() {
 function HeroLayer() {
   return (
     <>
-      <div className="hidden lg:block">
-        <ParallaxLayer offset={0} speed={1.5} id="home">
-          <AnimatedWindow
-            startingScale={0.5}
-            endingRot={-6}
-            delay={300}
-            config={{ duration: 500, easing: easings.easeOutBack }}
-            className="absolute top-20 left-4 w-[35%] h-auto"
-          >
-            <img
-              src={welcomeImage.src}
-              alt="Welcome to MRUHacks"
-              className="w-full h-full object-fit"
-            />
-          </AnimatedWindow>
-        </ParallaxLayer>
-        <ParallaxLayer offset={0} speed={0.75}>
-          <AnimatedWindow
-            startingScale={0.5}
-            endingRot={12}
-            delay={200}
-            config={{ duration: 500, easing: easings.easeOutBack }}
-            className="absolute top-16 -right-4 w-[40%] h-auto"
-          >
-            <img
-              src={aboutImage.src}
-              alt="Welcome to MRUHacks"
-              className="w-full h-full object-fit"
-            />
-          </AnimatedWindow>
-        </ParallaxLayer>
-        <ParallaxLayer offset={0} speed={0.1}>
-          <AnimatedWindow
-            startingScale={0.5}
-            endingRot={-2}
-            delay={100}
-            config={{ duration: 500, easing: easings.easeOutBack }}
-            className="relative top-[60dvh] mx-auto w-[60%] h-auto"
-          >
-            <img src={groupImageVlad.src} alt="Welcome to MRUHacks" />
-          </AnimatedWindow>
-        </ParallaxLayer>
+      <ParallaxLayer offset={0} speed={1.5} id="home">
+        <AnimatedWindow
+          startingScale={0.5}
+          endingRot={-6}
+          delay={300}
+          config={{ duration: 500, easing: easings.easeOutBack }}
+          className="absolute top-20 left-4 w-[35%] h-auto"
+        >
+          <img
+            src={welcomeImage.src}
+            alt="Welcome to MRUHacks"
+            className="w-full h-full object-fit"
+          />
+        </AnimatedWindow>
+      </ParallaxLayer>
+      <ParallaxLayer offset={0} speed={0.75}>
+        <AnimatedWindow
+          startingScale={0.5}
+          endingRot={12}
+          delay={200}
+          config={{ duration: 500, easing: easings.easeOutBack }}
+          className="absolute top-16 -right-4 w-[40%] h-auto"
+        >
+          <img
+            src={aboutImage.src}
+            alt="Welcome to MRUHacks"
+            className="w-full h-full object-fit"
+          />
+        </AnimatedWindow>
+      </ParallaxLayer>
+      <ParallaxLayer offset={0} speed={0.1}>
+        <AnimatedWindow
+          startingScale={0.5}
+          endingRot={-2}
+          delay={100}
+          config={{ duration: 500, easing: easings.easeOutBack }}
+          className="relative top-[60dvh] mx-auto w-[80%] lg:w-[60%] h-auto"
+        >
+          <img src={groupImageVlad.src} alt="Welcome to MRUHacks" />
+        </AnimatedWindow>
+      </ParallaxLayer>
 
-        <ParallaxLayer offset={0} speed={1}>
-          <AnimatedWindow
-            startingScale={0.5}
-            delay={300}
-            config={{ duration: 1000, easing: easings.easeOutBack }}
-            bgOverride
-            className="relative mx-auto top-[20dvh] w-[70%] h-auto overflow-visible"
-          >
-            <div className="absolute top-0 left-0 w-full h-6 md:h-8 bg-gradient-to-br bg-white rounded-t-md"></div>
-            <PopupButtons />
-            <div className="w-full h-full bg-gradient-to-br from-blue-400/70 to-purple-400 backdrop-blur-sm">
-              <img
-                src={logo.src}
-                alt="Welcome to MRUHacks"
-                className="h-full object-contain p-16 pt-8 pb-0"
-              />
+      <ParallaxLayer offset={0} speed={1}>
+        <AnimatedWindow
+          startingScale={0.5}
+          delay={300}
+          config={{ duration: 1000, easing: easings.easeOutBack }}
+          bgOverride
+          className="relative mx-auto top-[20dvh] w-[70%] h-auto overflow-visible"
+        >
+          <div className="absolute top-0 left-0 w-full h-6 md:h-8 bg-white/100 rounded-t-md"></div>
+          <PopupButtons />
+          <div className="w-full h-full bg-gradient-to-br from-blue-400/70 to-purple-400 backdrop-blur-sm">
+            <img
+              src={logo.src}
+              alt="Welcome to MRUHacks"
+              className="h-full object-contain p-16 pt-8 pb-0"
+            />
 
-              <p className="text-2xl pl-12 text-white font-bold pb-4 max-w-[70%]">
-                October 5th-6th, 2024 • In-Person Event
-              </p>
-            </div>
-            <AnimatedWindow
-              endingRot={-4}
-              delay={750}
-              config={{ duration: 500, easing: easings.easeOutBack }}
-              className="absolute right-16 -bottom-16 lg:w-[18dvw] flex flex-col justify-center items-center p-4 pt-12"
+            <p className="text-2xl pl-12 text-white font-bold pb-4 max-w-[70%]">
+              October 5th-6th, 2024 • In-Person Event
+            </p>
+          </div>
+          <AnimatedWindow
+            endingRot={-4}
+            delay={750}
+            config={{ duration: 500, easing: easings.easeOutBack }}
+            className="absolute right-16 -bottom-16 w-[40%] max-w-[300px] flex flex-col justify-center items-center p-4 pt-12"
+          >
+            <Link
+              className="rounded-full bg-gradient-to-br from-blue-400 to-purple-400 text-white w-full p-4 mt-2 text-lg xl:text-xl flex flex-row items-center justify-center hover:from-blue-500 hover:to-purple-500 transition"
+              href="/dashboard/apply"
             >
-              <Link
-                className="rounded-full bg-gradient-to-br from-blue-400 to-purple-400 text-white w-full p-4 mt-2 text-xl flex flex-row items-center justify-center hover:from-blue-500 hover:to-purple-500 transition"
-                href="/dashboard/apply"
-              >
-                Register Now
-                <FaArrowRight className="inline ml-2" />
-              </Link>
-            </AnimatedWindow>
+              Register Now
+              <FaArrowRight className="inline ml-2" />
+            </Link>
           </AnimatedWindow>
-        </ParallaxLayer>
-      </div>
-      <div className="block lg:hidden">
-        <ParallaxLayer offset={0} speed={0.75}>
-          <AnimatedWindow
-            startingScale={0.5}
-            endingRot={4}
-            delay={100}
-            config={{ duration: 500, easing: easings.easeOutBack }}
-            className="relative top-16 mx-auto w-[90%] max-h-[30dvh] h-auto"
-          >
-            <img
-              src={aboutImage.src}
-              alt="Welcome to MRUHacks"
-              className="w-full h-full object-fit"
-            />
-          </AnimatedWindow>
-        </ParallaxLayer>
-        <ParallaxLayer offset={0} speed={0.1}>
-          <AnimatedWindow
-            startingScale={0.5}
-            endingRot={2}
-            delay={500}
-            config={{ duration: 500, easing: easings.easeOutBack }}
-            className="relative top-[60dvh] mx-auto w-[90%] h-auto"
-          >
-            <img src={groupImageVlad.src} alt="Welcome to MRUHacks" />
-          </AnimatedWindow>
-        </ParallaxLayer>
-
-        <ParallaxLayer offset={0} speed={0.5}>
-          <AnimatedWindow
-            startingScale={0.5}
-            endingRot={-2}
-            delay={250}
-            config={{ duration: 1000, easing: easings.easeOutBack }}
-            bgOverride
-            className="relative mx-auto top-[28dvh] w-[90%] h-auto overflow-visible"
-          >
-            <div className="absolute top-0 left-0 w-full h-6 md:h-8 bg-gradient-to-br bg-white rounded-t-md"></div>
-            <PopupButtons />
-            <div className="w-full h-full bg-gradient-to-br from-blue-400/70 to-purple-400 backdrop-blur-sm">
-              <img
-                src={logo.src}
-                alt="Welcome to MRUHacks"
-                className="h-full object-contain p-16 pt-8 pb-0"
-              />
-
-              <p className="text-lg md:text-2xl px-12 text-white font-bold pb-4 h-32">
-                October 5th-6th, 2024 • In-Person Event
-              </p>
-            </div>
-            <AnimatedWindow
-              endingRot={-4}
-              delay={750}
-              config={{ duration: 500, easing: easings.easeOutBack }}
-              className="absolute right-8 -bottom-16 lg:w-[24dvw] flex flex-col justify-center items-center p-4 pt-12"
-            >
-              <Link
-                className="rounded-full bg-gradient-to-br from-blue-400 to-purple-400 text-white w-full p-4 mt-2 text-xl flex flex-row items-center justify-center hover:from-blue-500 hover:to-purple-500 transition"
-                href="/dashboard/apply"
-              >
-                Register Now
-                <FaArrowRight className="inline ml-2" />
-              </Link>
-            </AnimatedWindow>
-          </AnimatedWindow>
-        </ParallaxLayer>
-      </div>
+        </AnimatedWindow>
+      </ParallaxLayer>
     </>
   );
 }
@@ -359,10 +368,10 @@ function AboutLayer() {
           />
         </Window>
       </ParallaxLayer>
-      <ParallaxLayer offset={1} speed={0} className="-mt-40 md:mt-0">
+      <ParallaxLayer offset={1} speed={0}>
         <div className="relative px-4">
           <p
-            className="text-primary font-bold text-3xl md:text-4xl w-full text-center scroll-mt-24 md:leading-[6rem]"
+            className="text-primary font-bold text-3xl md:text-4xl w-full text-center scroll-mt-24 leading-[4rem] md:leading-[6rem]"
             id="about"
           >
             Welcome to MRUHacks
@@ -370,7 +379,7 @@ function AboutLayer() {
           <p className="text-primary text-xl md:text-2xl w-full text-center mb-4">
             Dream, design, and develop your future!
           </p>
-          <p className="text-text text-md md:text-lg w-full text-left px-2 md:text-center leading-10 max-w-screen-sm mx-auto z-30 xl:max-w-screen-md">
+          <p className="text-text text-lg w-full text-left px-2 md:text-center leading-10 xl:leading-[2.75rem] max-w-screen-sm mx-auto z-30 xl:max-w-screen-md">
             This October, join up to 150 hackers in the Riddell Library and
             Learning Center for a hackathon experience like no other. Discover a
             community of like-minded designers, developers, programmers, and

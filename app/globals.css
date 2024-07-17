@@ -51,13 +51,15 @@
       max-height: var(--radix-popover-content-available-height);
     }
 
-    .wrapper > div > div {
-      overflow: visible !important;
-      height: auto !important;
-    }
+    @media (min-width: 768px) {
+      .wrapper > div > div > div {
+        overflow: visible !important;
+        height: auto !important;
+      }
 
-    .wrapper > div > div > div {
-      height: auto !important;
+      .wrapper > div > div > div > div {
+        height: auto !important;
+      }
     }
 
     * {
