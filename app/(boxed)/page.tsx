@@ -69,7 +69,7 @@ export default function Home() {
             <img
               src={logo.src}
               alt="Welcome to MRUHacks"
-              className="h-full object-contain p-4 sm:p-16 pt-8 pb-0"
+              className="w-full h-auto object-contain p-4 sm:p-16 pt-8 pb-0"
             />
 
             <p className="text-md sm:text-2xl pl-12 text-white font-bold pb-4 w-full">
