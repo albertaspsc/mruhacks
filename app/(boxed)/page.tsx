@@ -11,6 +11,7 @@ import photo6 from "@/assets/carousel_images/carousel_image_6.jpg";
 import { Parallax, ParallaxLayer } from "@react-spring/parallax";
 
 import logo from "@/public/mru_title_light.png";
+import logodark from "@/public/mru_title_dark.png";
 
 import { useSpring, animated, easings } from "@react-spring/web";
 
@@ -29,7 +30,15 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import {
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
+import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 
 export default function Home() {
   return (
@@ -63,9 +72,12 @@ export default function Home() {
           bgOverride
           className="mx-auto mt-16 mb-32 w-[90%] h-auto overflow-visible"
         >
-          <div className="absolute top-0 left-0 w-full h-6 md:h-8 bg-white/100 rounded-t-md"></div>
+          <div
+            className="absolute top-0 left-0 w-full h-6 md:h-8 bg-white/100 rounded-t-md"
+            id="hero"
+          ></div>
           <PopupButtons />
-          <div className="w-full h-full bg-gradient-to-br from-blue-400/70 to-purple-400 backdrop-blur-sm">
+          <div className="w-full h-full bg-gradient-to-br from-blue-400/70 to-purple-400 backdrop-blur-sm rounded-b-md overflow-hidden">
             <img
               src={logo.src}
               alt="Welcome to MRUHacks"
@@ -156,10 +168,10 @@ function Sponsors() {
           Become a sponsor
           <FaArrowRight className="inline ml-2" />
         </Link>
-        <Window className="relative mx-auto lg:w-[30%] w-2/3 h-auto mt-16">
-          <p className="text-center text-xl p-12">Coming soon!</p>
-        </Window>
       </div>
+      <Window className="relative mx-auto lg:w-[30%] w-2/3 h-auto mt-16">
+        <p className="text-center text-xl p-12">Coming soon!</p>
+      </Window>
     </div>
   );
 }
@@ -298,7 +310,7 @@ function HeroLayer() {
         >
           <div className="absolute top-0 left-0 w-full h-6 md:h-8 bg-white/100 rounded-t-md"></div>
           <PopupButtons />
-          <div className="w-full h-full bg-gradient-to-br from-blue-400/70 to-purple-400 backdrop-blur-sm">
+          <div className="w-full h-full bg-gradient-to-br from-blue-400/70 to-purple-400 backdrop-blur-sm rounded-b-md overflow-hidden">
             <img
               src={logo.src}
               alt="Welcome to MRUHacks"
@@ -553,7 +565,94 @@ function Nav() {
           Register Now <FaArrowRight className="inline ml-2" />
         </Link>
       </div>
-      <FaBars className="text-2xl lg:hidden text-muted-foreground" />
+      <Sheet>
+        <SheetTrigger className="lg:hidden block">
+          <FaBars className="text-2xl text-muted-foreground" />
+        </SheetTrigger>
+        <SheetContent
+          side="left"
+          onCloseAutoFocus={(event) => event.preventDefault()}
+        >
+          <VisuallyHidden>
+            <SheetTitle className="text-2xl font-bold">Menu</SheetTitle>
+          </VisuallyHidden>
+          <div className="flex flex-col justify-between h-full">
+            {/* <SheetClose asChild> */}
+            <div className="space-y-4 flex flex-col">
+              <img src={logodark.src} alt="MRUHacks" className="w-48" />
+              <SheetClose asChild>
+                <a
+                  href="#hero"
+                  className="text-muted-foreground hover:text-black transition block md:hidden"
+                >
+                  Home
+                </a>
+              </SheetClose>
+              <SheetClose asChild>
+                <a
+                  href="#home"
+                  className="text-muted-foreground hover:text-black transition hidden md:block"
+                >
+                  Home
+                </a>
+              </SheetClose>
+              <SheetClose asChild>
+                <a
+                  href="#about"
+                  className="text-muted-foreground hover:text-black transition"
+                >
+                  About
+                </a>
+              </SheetClose>
+              <SheetClose asChild>
+                <a
+                  href="#faqs"
+                  className="text-muted-foreground hover:text-black transition"
+                >
+                  FAQs
+                </a>
+              </SheetClose>
+              <SheetClose asChild>
+                <a
+                  href="#sponsors"
+                  className="text-muted-foreground hover:text-black transition"
+                >
+                  Sponsors
+                </a>
+              </SheetClose>
+            </div>
+            {/* </SheetClose> */}
+            <div className="space-y-4 pt-auto">
+              <div className="flex flex-row space-x-4">
+                <Link
+                  href="https://www.instagram.com/mruhacks"
+                  className="text-muted-foreground hover:text-black transition"
+                >
+                  <FaInstagram className="text-2xl" />
+                </Link>
+                <Link
+                  href="https://www.linkedin.com/company/mruhacks"
+                  className="text-muted-foreground hover:text-black transition"
+                >
+                  <FaLinkedin className="text-2xl" />
+                </Link>
+                <Link
+                  href="https://discord.gg/tRtW5phPQv"
+                  className="text-muted-foreground hover:text-black transition"
+                >
+                  <FaDiscord className="text-2xl" />
+                </Link>
+              </div>
+              <Link
+                href="/dashboard/apply"
+                className="rounded-full bg-gradient-to-br from-blue-400 to-purple-400 text-white p-2 px-4 flex flex-row items-center justify-center hover:from-blue-500 hover:to-purple-500 transition"
+              >
+                Register Now <FaArrowRight className="inline ml-2" />
+              </Link>
+            </div>
+          </div>
+        </SheetContent>
+      </Sheet>
     </nav>
   );
 }
