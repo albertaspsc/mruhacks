@@ -50,5 +50,18 @@
       width: var(--radix-popover-trigger-width);
       max-height: var(--radix-popover-content-available-height);
     }
+
+    .wrapper > div > div {
+      overflow: visible !important;
+      height: auto !important;
+    }
+
+    .wrapper > div > div > div {
+      height: auto !important;
+    }
+
+    * {
+      scroll-behavior: smooth;
+    }
   }
 }
