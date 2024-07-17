@@ -2,12 +2,7 @@ import { ReactNode, Suspense, useMemo } from "react";
 import {
   FaAddressBook,
   FaChartPie,
-  FaHamburger,
-  FaHome,
   FaPeopleArrows,
-  FaQq,
-  FaQrcode,
-  FaShieldAlt,
   FaWpforms,
 } from "react-icons/fa";
 import { Logout } from "../logout";
@@ -24,7 +19,6 @@ import Profile from "../profile";
 import Link from "next/link";
 import Image from "next/image";
 import logo from "@/public/mru_title_dark.png";
-import { MoreVertical } from "lucide-react";
 import { SheetTrigger, Sheet, SheetContent } from "@/components/ui/sheet";
 
 const MenuHeader = ({ children }: { children: ReactNode }) => (
