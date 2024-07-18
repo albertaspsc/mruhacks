@@ -1,7 +1,7 @@
 import { createServerClient, type CookieOptions } from "@supabase/ssr";
 import { type NextRequest, NextResponse } from "next/server";
 import { get_perms, get_perms_by_user_id } from "../auth/getPerms";
-import _ from "lodash";
+import { sum } from "lodash";
 
 export const updateSession = async (request: NextRequest) => {
   let response = NextResponse.next({
@@ -89,7 +89,7 @@ export const updateSession = async (request: NextRequest) => {
     request.nextUrl.pathname.startsWith("/dashboard") &&
     // These both mean we are already on a login screen and a redirect is not needed
     !(
-      _.sum(
+      sum(
         VALID_MODALS.map((url) => {
           return (
             request.nextUrl.pathname.startsWith(`/${url}`) ||
