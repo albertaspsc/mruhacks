@@ -1,6 +1,7 @@
 import { createServerClient, type CookieOptions } from "@supabase/ssr";
 import { type NextRequest, NextResponse } from "next/server";
 import { get_perms, get_perms_by_user_id } from "../auth/getPerms";
+import _ from "lodash";
 
 export const updateSession = async (request: NextRequest) => {
   let response = NextResponse.next({
@@ -55,6 +56,8 @@ export const updateSession = async (request: NextRequest) => {
     },
   );
 
+  const VALID_MODALS = ["unauthorized", "login"];
+
   // this will refresh session ONLY if expired
   const {
     data: { user },
@@ -63,8 +66,8 @@ export const updateSession = async (request: NextRequest) => {
   if (
     request.nextUrl.pathname.startsWith("/admin") &&
     !(
-      request.nextUrl.searchParams.get("modal") === "unauthorized" ||
-      request.nextUrl.searchParams.get("modal") === "login"
+      VALID_MODALS.indexOf(request.nextUrl.searchParams.get("modal") ?? "") !==
+      -1
     )
   ) {
     const isAdmin = !!(
@@ -86,10 +89,14 @@ export const updateSession = async (request: NextRequest) => {
     request.nextUrl.pathname.startsWith("/dashboard") &&
     // These both mean we are already on a login screen and a redirect is not needed
     !(
-      request.nextUrl.pathname.startsWith("/login") ||
-      request.nextUrl.pathname.startsWith("/unauthorized") ||
-      request.nextUrl.searchParams.get("modal") === "login" ||
-      request.nextUrl.searchParams.get("modal") === "unauthorized"
+      _.sum(
+        VALID_MODALS.map((url) => {
+          return (
+            request.nextUrl.pathname.startsWith(`/${url}`) ||
+            request.nextUrl.searchParams.get("modal") === url
+          );
+        }),
+      ) > 0
     )
   ) {
     const url = request.nextUrl.clone();

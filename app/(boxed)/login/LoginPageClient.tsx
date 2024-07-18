@@ -4,7 +4,6 @@ import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
 import {
-  Card,
   CardContent,
   CardDescription,
   CardHeader,
@@ -14,6 +13,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
 import { FaGithub, FaGoogle } from "react-icons/fa";
+import { useSearchParams } from "next/navigation";
+import { useState } from "react";
 
 export default function LoginClient({
   signInWithGithub,
@@ -22,11 +23,13 @@ export default function LoginClient({
 }: {
   signInWithGithub: () => void;
   signInWithGoogle: () => void;
-  signIn: (formData: FormData) => void;
+  signIn: (formData: FormData) => Promise<{ message?: string }>;
 }) {
+  const [message, setMessage] = useState("");
   const handleEmailSubmit = async (e: any) => {
     e.preventDefault();
-    await signIn(new FormData(e.target));
+    const data = await signIn(new FormData(e.target));
+    setMessage(data?.message ?? "");
   };
 
   return (
@@ -63,6 +66,7 @@ export default function LoginClient({
                 Forgot your password?
               </Link>
             </div>
+            <p className="text-sm">{message}</p>
             <Button type="submit" className="w-full text-white font-bold">
               Sign In
             </Button>
