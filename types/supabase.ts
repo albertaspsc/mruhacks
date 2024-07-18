@@ -107,6 +107,13 @@ export type Database = {
             foreignKeyName: "organizers_user_id_fkey";
             columns: ["user_id"];
             isOneToOne: true;
+            referencedRelation: "account_flags";
+            referencedColumns: ["user_id"];
+          },
+          {
+            foreignKeyName: "organizers_user_id_fkey";
+            columns: ["user_id"];
+            isOneToOne: true;
             referencedRelation: "application_status";
             referencedColumns: ["user_id"];
           },
@@ -155,6 +162,13 @@ export type Database = {
           user_id?: string;
         };
         Relationships: [
+          {
+            foreignKeyName: "permissions_user_id_fkey";
+            columns: ["user_id"];
+            isOneToOne: true;
+            referencedRelation: "account_flags";
+            referencedColumns: ["user_id"];
+          },
           {
             foreignKeyName: "permissions_user_id_fkey";
             columns: ["user_id"];
@@ -253,6 +267,13 @@ export type Database = {
             foreignKeyName: "registrations_id_fkey";
             columns: ["id"];
             isOneToOne: true;
+            referencedRelation: "account_flags";
+            referencedColumns: ["user_id"];
+          },
+          {
+            foreignKeyName: "registrations_id_fkey";
+            columns: ["id"];
+            isOneToOne: true;
             referencedRelation: "application_status";
             referencedColumns: ["user_id"];
           },
@@ -327,6 +348,22 @@ export type Database = {
       };
     };
     Views: {
+      account_flags: {
+        Row: {
+          is_organizer: boolean | null;
+          testing_account: boolean | null;
+          user_id: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "user_id_fkey";
+            columns: ["user_id"];
+            isOneToOne: true;
+            referencedRelation: "users";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
       application_status: {
         Row: {
           application_status: string | null;
@@ -451,6 +488,13 @@ export type Database = {
             columns: ["user_id"];
             isOneToOne: true;
             referencedRelation: "users";
+            referencedColumns: ["user_id"];
+          },
+          {
+            foreignKeyName: "permissions_user_id_fkey";
+            columns: ["user_id"];
+            isOneToOne: true;
+            referencedRelation: "account_flags";
             referencedColumns: ["user_id"];
           },
           {
