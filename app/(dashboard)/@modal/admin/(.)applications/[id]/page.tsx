@@ -37,7 +37,7 @@ async function Application({ id }: { id: string }) {
           </CardTitle>
           <CardDescription>
             {application.application_status} -{" "}
-            {new Date(application.timeSubmitted).toLocaleDateString()}
+            {new Date(application.timeSubmitted ?? "").toLocaleDateString()}
           </CardDescription>
         </div>
       </DialogHeader>
@@ -97,12 +97,12 @@ async function Application({ id }: { id: string }) {
               </a>
             </li>
           )}
-          {application.portfolio && (
+          {application.personalSite && (
             <li className="flex flex-col">
               <span className="text-muted-foreground text-sm">
                 Personal Site
               </span>
-              <a href={application.portfolio}>{application.portfolio}</a>
+              <a href={application.personalSite}>{application.personalSite}</a>
             </li>
           )}
         </ul>
