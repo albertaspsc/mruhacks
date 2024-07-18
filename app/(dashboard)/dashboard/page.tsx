@@ -5,15 +5,7 @@ import { ReactNode, Suspense, forwardRef } from "react";
 import { cn } from "@/lib/utils";
 import { createClient } from "@/lib/supabase/server";
 import getUserInfo from "@/lib/auth/getUserInfo";
-import _, { values } from "lodash";
-import { Badge } from "@/components/ui/badge";
-import {
-  Tooltip,
-  TooltipProvider,
-  TooltipTrigger,
-  TooltipContent,
-} from "@/components/ui/tooltip";
-import { QuestionMarkCircledIcon } from "@radix-ui/react-icons";
+import _ from "lodash";
 
 function SectionTitle({
   children,
@@ -94,61 +86,6 @@ async function Perms() {
   );
 }
 
-async function AccountFlags() {
-  const supabase = createClient();
-  const userInfo = await getUserInfo();
-  if (!userInfo) return null;
-
-  const { data, error } = await supabase
-    .from("users")
-    .select("user_id, testing_account, organizers ( user_id )")
-    .eq("user_id", userInfo.id)
-    .single();
-
-  const is_testing_account = !!data?.testing_account;
-
-  console.log(data);
-
-  const Flag = ({
-    className,
-    name,
-  }: {
-    className: string;
-    name: string;
-    children: ReactNode;
-  }) => (
-    <li>
-      <Badge className={className}>
-        {name}
-        <TooltipProvider>
-          <Tooltip>
-            <TooltipTrigger>
-              <QuestionMarkCircledIcon />
-            </TooltipTrigger>
-            <TooltipContent className="max-w-52"></TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
-      </Badge>
-    </li>
-  );
-
-  return (
-    <div>
-      The Following Flags Are Set This Account
-      <ul>
-        {is_testing_account ? (
-          <Flag name={"Testing Account"} className="bg-red-500/50">
-            This account has been marked as a testing account, these means it{" "}
-            <strong>will not</strong> be considered during the application
-            process. If you have been marked as a testing account, contact use
-            immediately!
-          </Flag>
-        ) : null}
-      </ul>
-    </div>
-  );
-}
-
 export default async function Page() {
   return (
     <Card>
@@ -156,19 +93,15 @@ export default async function Page() {
         <CardTitle>My Dashboard</CardTitle>
       </CardHeader>
       <CardContent>
-        <div className="p-5 flex flex-row space-x-5">
+        <div className="p-5 flex flex-row space-x-5 flex-wrap ">
           <Profile />
           <span className="w-[1px] my-10 bg-primary" />
           <Suspense>
             <Perms />
           </Suspense>
-          <span className="block last:hidden w-[1px] my-10 bg-primary" />
-          <Suspense>
-            <AccountFlags />
-          </Suspense>
         </div>
         <hr className="py-5" />
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5 ">
+        <div className="grid grid-cols-1 md:grid-cols-2  gap-5 ">
           <Section className="row-span-1">
             <SectionTitle>Upcoming Events</SectionTitle>
             <PlaceHolderCard />
@@ -177,11 +110,7 @@ export default async function Page() {
             <SectionTitle>Announcements</SectionTitle>
             <PlaceHolderCard />
           </Section>
-          <Section className="row-span-1">
-            <SectionTitle>Announcements</SectionTitle>
-            <PlaceHolderCard />
-          </Section>
-          <Section className="overflow-hidden">
+          <Section className="overflow-hidden justify-self-center">
             <SectionTitle>MRUHacks Starts In</SectionTitle>
             <Countdown />
           </Section>
