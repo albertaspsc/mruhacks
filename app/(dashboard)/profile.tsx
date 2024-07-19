@@ -4,8 +4,88 @@ import missing_profile from "@/assets/missing_profile.png";
 import { createClient } from "@/lib/supabase/server";
 import assert from "assert";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Suspense } from "react";
+import { ReactNode, Suspense } from "react";
 import { Badge } from "@/components/ui/badge";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { QuestionMarkCircledIcon } from "@radix-ui/react-icons";
+import { cn } from "@/lib/utils";
+import {
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+} from "@/components/ui/popover";
+
+export const Flag = ({
+  className,
+  name,
+  children,
+}: {
+  className?: string;
+  name: string;
+  children?: ReactNode;
+}) => (
+  <li className="pointer-events-auto">
+    <Popover>
+      <PopoverTrigger>
+        <Badge className={cn("pointer-events-auto text-nowrap", className)}>
+          {name}
+          <QuestionMarkCircledIcon />
+          <PopoverContent className="max-w-screen-sm">
+            {children}
+          </PopoverContent>
+        </Badge>
+      </PopoverTrigger>
+    </Popover>
+  </li>
+);
+
+async function AccountFlags() {
+  const supabase = createClient();
+  const userInfo = await getUserInfo();
+  if (!userInfo) return null;
+
+  const { data, error } = await supabase
+    .from("account_flags")
+    .select("*")
+    .eq("user_id", userInfo.id)
+    .single();
+
+  if (error || !data) {
+    // Not getting any data is not an error for use
+    if (error.code !== "PGRST116") {
+      console.error(error);
+    }
+    return null;
+  }
+
+  return (
+    <div>
+      <ul>
+        {data.testing_account && (
+          <Flag name="Testing Account" className="bg-red-500/50">
+            This account has been marked as a testing account, meaning your
+            application <strong>will not</strong> be considered. If you believe
+            this is an error, please contact us immediately!
+          </Flag>
+        )}
+
+        {data.is_organizer && (
+          <Flag name="Organizer" className="bg-purple-500/50">
+            This account has been set as an Organizer, meaning it{" "}
+            <strong>will not</strong> be considered during the application
+            process. If you believe this is an error, please contact us
+            immediately!
+          </Flag>
+        )}
+      </ul>
+    </div>
+  );
+}
 
 const applicationStatus = async () => {
   const supabase = createClient();
@@ -75,6 +155,7 @@ async function _Profile() {
             {application_status}
           </p>
         </div>
+        <AccountFlags />
       </div>
     </div>
   );

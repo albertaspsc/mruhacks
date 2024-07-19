@@ -18,7 +18,7 @@ export function Countdown() {
       .eq("id", "0a69bb7a-b24e-4e8a-a60a-3fc5cb91f062")
       .single()
       .then(({ data, error }) => {
-        setHackthonDate(DateTime.fromISO(data?.start)!);
+        setHackthonDate(DateTime.fromISO(data?.start ?? "")!);
 
         if (!data || error)
           console.error(
@@ -37,35 +37,25 @@ export function Countdown() {
   }, []);
 
   const difference = hackthon_date
-    ?.diff(now, [
-      "years",
-      "months",
-      "weeks",
-      "days",
-      "hours",
-      "minute",
-      "seconds",
-    ])
+    ?.diff(now, ["months", "weeks", "days", "hours", "minute"])
     .toObject();
 
   return (
-    <div className="flex  items-center flex-col p-5">
-      <div className="flex flex-row space-x-5">
-        {_.map(difference, (value, key) => {
-          if (value ?? 0 > 0)
-            return (
-              <div className="flex flex-col items-center" key={key}>
-                <div
-                  className="text-2xl font-bold text-primary-content font-mono"
-                  suppressHydrationWarning
-                >
-                  {String(Math.floor(value ?? 0)).padStart(2, "0")}
-                </div>
-                <div className="text-sm text-muted-foreground">{key}</div>
+    <div className="flex flex-row space-x-5 flex-wrap">
+      {_.map(difference, (value, key) => {
+        if (value ?? 0 > 0)
+          return (
+            <div className="flex flex-col items-center" key={key}>
+              <div
+                className="text-2xl font-semibold text-primary-content font-mono"
+                suppressHydrationWarning
+              >
+                {String(Math.floor(value ?? 0)).padStart(2, "0")}
               </div>
-            );
-        })}
-      </div>
+              <div className="text-sm text-muted-foreground">{key}</div>
+            </div>
+          );
+      })}
     </div>
   );
 }

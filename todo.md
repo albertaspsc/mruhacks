@@ -1,14 +1,23 @@
-# Today
+## Sunny's Stuff
 
-- Change "Mru Hacks" text in hero to the logo
-- Cropping photo of matthew holding wheel
-- FAQ's
-  - Add Padding
-  - Fix fucky animations
-  - Fix the jumping across columns issue
+- Count people currently checked in
+- People attending events, meals etc
+- Discord Activity
 
-# Latter
+## Judgeing
 
-- Carousel merge maybe
-- Amy says they need a Backend, what why, do we we need a database?
-- CMS in the future
+- Judge Signup/Magic Links
+
+## Annoucments
+
+- Queued of messages
+  - Edit in browser, send now etc.
+
+## Task Delegation
+
+- A list voulenteer for each event, who showed up etc.
+
+## Who is where
+
+- List of people and where they are
+- Breakdown of event, their attendance

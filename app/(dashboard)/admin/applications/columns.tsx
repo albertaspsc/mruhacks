@@ -15,11 +15,9 @@ import { Button } from "@/components/ui/button";
 import { DropdownMenuLabel } from "@/components/ui/dropdown-menu";
 import Link from "next/link";
 
-type Application = {
-  user_id: string;
-  first_name: string;
-  last_name: string;
-};
+import { Database } from "@/types/supabase";
+
+type Application = Database["public"]["Views"]["application_status"]["Row"];
 
 export const columns: ColumnDef<Application>[] = [
   {

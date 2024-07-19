@@ -2,6 +2,8 @@ import { ReactNode, Suspense, useMemo } from "react";
 import {
   FaAddressBook,
   FaChartPie,
+  FaEnvelope,
+  FaIdBadge,
   FaPeopleArrows,
   FaWpforms,
 } from "react-icons/fa";
@@ -20,6 +22,7 @@ import Link from "next/link";
 import Image from "next/image";
 import logo from "@/public/mru_title_dark.png";
 import { SheetTrigger, Sheet, SheetContent } from "@/components/ui/sheet";
+import { Mail } from "lucide-react";
 
 const MenuHeader = ({ children }: { children: ReactNode }) => (
   <li className="last:hidden mt-4 block text-primary font-bold">{children}</li>
@@ -42,7 +45,7 @@ const Items = async () => {
   } = super_admin ? {} : data?.[0] ?? {};
 
   return (
-    <div className="flex flex-col justify-start  h-screen">
+    <div className="flex flex-col justify-start  h-screen w-max">
       <Link href="/" className="h-10 mb-2 mt-4">
         <Image
           className="max-h-[52px] w-auto p-1"
@@ -50,7 +53,7 @@ const Items = async () => {
           alt="MRUHacks Logo"
         />
       </Link>
-      <div className="space-y-5 overflow-y-scroll pt-5">
+      <div className="space-y-5 overflow-y-auto pt-5 text-nowrap">
         <ul>
           <MenuHeader>My MRUHacks</MenuHeader>
           <MenuItem href="/dashboard">
@@ -83,6 +86,12 @@ const Items = async () => {
                 Stats
               </MenuItem>
             ) : null}
+            {super_admin && (
+              <MenuItem href="/admin/permissions">
+                <FaIdBadge />
+                Permissions
+              </MenuItem>
+            )}
           </span>
           <span>
             <MenuHeader>Useful Links</MenuHeader>
@@ -97,6 +106,10 @@ const Items = async () => {
             <MenuItem href="https://www.instagram.com/mruhacks/">
               <InstagramLogoIcon />
               Instagram
+            </MenuItem>
+            <MenuItem href="mailto:hello@mruhacks.ca">
+              <FaEnvelope />
+              Contact Us
             </MenuItem>
           </span>
         </ul>
