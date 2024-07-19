@@ -18,7 +18,7 @@ export function Countdown() {
       .eq("id", "0a69bb7a-b24e-4e8a-a60a-3fc5cb91f062")
       .single()
       .then(({ data, error }) => {
-        setHackthonDate(DateTime.fromISO(data?.start)!);
+        setHackthonDate(DateTime.fromISO(data?.start ?? "")!);
 
         if (!data || error)
           console.error(

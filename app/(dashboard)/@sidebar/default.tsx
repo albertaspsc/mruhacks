@@ -3,6 +3,7 @@ import {
   FaAddressBook,
   FaChartPie,
   FaEnvelope,
+  FaIdBadge,
   FaPeopleArrows,
   FaWpforms,
 } from "react-icons/fa";
@@ -85,6 +86,12 @@ const Items = async () => {
                 Stats
               </MenuItem>
             ) : null}
+            {super_admin && (
+              <MenuItem href="/admin/permissions">
+                <FaIdBadge />
+                Permissions
+              </MenuItem>
+            )}
           </span>
           <span>
             <MenuHeader>Useful Links</MenuHeader>

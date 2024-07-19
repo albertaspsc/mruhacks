@@ -436,7 +436,9 @@ export type Database = {
       named_users: {
         Row: {
           email: string | null
+          is_organizer: boolean | null
           name: string | null
+          testing_account: boolean | null
           user_id: string | null
         }
         Relationships: [

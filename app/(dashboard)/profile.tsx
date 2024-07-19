@@ -20,14 +20,14 @@ import {
   PopoverContent,
 } from "@/components/ui/popover";
 
-const Flag = ({
+export const Flag = ({
   className,
   name,
   children,
 }: {
-  className: string;
+  className?: string;
   name: string;
-  children: ReactNode;
+  children?: ReactNode;
 }) => (
   <li className="pointer-events-auto">
     <Popover>
