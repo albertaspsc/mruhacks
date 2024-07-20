@@ -1,6 +1,7 @@
 import type { Config } from "tailwindcss";
 
 const config: Config = {
+  darkMode: "selector",
   content: [
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
@@ -26,13 +27,35 @@ const config: Config = {
         bold: "700",
       },
       colors: {
-        primary: "#002766",
-        "primary-content": "#581188",
-        secondary: "#0062ff",
-        accent: "#ff00ff",
-        neutral: "#f2f2f2",
-        // Background Color
-        "base-100": "#e4e4e7",
+        primary: "var(--primary)",
+        "primary-content": "var(--primary-content)",
+        secondary: "var(--secondary)",
+        neutral: "var(--neutral)",
+        "base-100": "var(--base-100)",
+        foreground: "var(--text)",
+        background: "var(--background)",
+        popover: "var(--background)",
+        "popover-foreground": "var(--text)",
+        inp: "var(--inp)",
+        apr: "var(--inp)",
+        den: "var(--den)",
+        apl: "var(--apl)",
+        destructive: {
+          DEFAULT: "hsl(var(--destructive))",
+          foreground: "hsl(var(--destructive-foreground))",
+        },
+        muted: {
+          DEFAULT: "hsl(var(--muted))",
+          foreground: "hsl(var(--muted-foreground))",
+        },
+        accent: {
+          DEFAULT: "hsl(var(--accent))",
+          foreground: "hsl(var(--accent-foreground))",
+        },
+        card: {
+          DEFAULT: "hsl(var(--card))",
+          foreground: "hsl(var(--card-foreground))",
+        },
       },
       keyframes: {
         "accordion-down": {

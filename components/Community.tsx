@@ -25,7 +25,7 @@ export default async function Community() {
       return (
         <Button
           key={key}
-          className="text-md space-x-1 flex-wrap"
+          className="text-md space-x-1 flex-wrap dark:text-primary-content"
           variant="link"
         >
           <props.icon />

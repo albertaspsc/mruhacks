@@ -1,6 +1,7 @@
 import Image from "next/image";
 import blue_screen from "@/assets/blue_screen.png";
 import Link from "next/link";
+import { ReactNode } from "react";
 
 export default function Page() {
   return (
@@ -14,6 +15,9 @@ export default function Page() {
       <p>How dare you!</p>
       <Link href="/" className="underline">
         Go Home
+      </Link>
+      <Link href="/login" className="underline">
+        Login
       </Link>
     </div>
   );
