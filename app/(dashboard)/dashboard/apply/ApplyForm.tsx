@@ -367,20 +367,6 @@ export default function ApplyForm({
             options={options.gender}
             required
           />
-          <SelectInput
-            label="Race"
-            name="race"
-            form={form}
-            options={options.race}
-            required
-          />
-          <SelectInput
-            label="Ethnicity"
-            name="ethnicity"
-            form={form}
-            options={options.ethnicity}
-            required
-          />
           <DietaryRestrictions form={form} disabled={loading} />
           <TextInput
             label="Additional Information"

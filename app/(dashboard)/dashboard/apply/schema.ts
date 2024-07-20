@@ -6,16 +6,6 @@ import { record, z } from "zod";
 type MinLengthArray = [string, ...string[]];
 
 export const options = {
-  race: [
-    "Native American",
-    "Asian / Pacific Islander",
-    "Black or African American",
-    "Hispanic",
-    "White / Caucasian",
-    "Multiple / Other",
-    "Prefer not to answer",
-  ] as MinLengthArray,
-
   dietary: [
     "Halal",
     "Kosher",
@@ -54,8 +44,6 @@ export const options = {
     "Word of mouth",
     "Other",
   ] as MinLengthArray,
-
-  ethnicity: ["Hispanic or Latino", "Not Hispanic or Latino"] as MinLengthArray,
 };
 
 const formSchema = z.object({
@@ -66,8 +54,6 @@ const formSchema = z.object({
     .number({ message: "Invalid Age" })
     .pipe(z.number().gte(18, { message: "Must be 18 or older" })),
   gender: z.enum(options.gender),
-  race: z.enum(options.race),
-  ethnicity: z.enum(options.ethnicity),
   dietary: z.array(z.enum(options.dietary)).optional(),
   additional: z.string().optional(),
   university: z.string(),

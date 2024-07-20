@@ -45,7 +45,7 @@ async function update_form(
   });
 
   // Only send a confirmation on the first submission
-  if (ok && did_insert && userInfo?.email) {
+  if (true || (ok && did_insert && userInfo?.email)) {
     const response = await send_confirmation(userInfo?.email);
 
     if (response.rejected.length !== 0) {
