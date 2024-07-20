@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils";
 import { createClient } from "@/lib/supabase/server";
 import getUserInfo from "@/lib/auth/getUserInfo";
 import _ from "lodash";
+import Link from "next/link";
 
 function SectionTitle({
   children,

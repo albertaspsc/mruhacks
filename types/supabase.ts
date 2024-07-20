@@ -135,30 +135,33 @@ export type Database = {
       }
       permissions: {
         Row: {
-          can_modify_events: boolean | null
+          can_modify_account_flags: boolean
+          can_modify_events: boolean
           can_view_agg_stats: boolean | null
           can_view_demographics: boolean | null
-          can_view_user_details: boolean | null
+          can_view_user_details: boolean
           created_at: string
-          super_admin: boolean | null
+          super_admin: boolean
           user_id: string
         }
         Insert: {
-          can_modify_events?: boolean | null
+          can_modify_account_flags?: boolean
+          can_modify_events?: boolean
           can_view_agg_stats?: boolean | null
           can_view_demographics?: boolean | null
-          can_view_user_details?: boolean | null
+          can_view_user_details?: boolean
           created_at?: string
-          super_admin?: boolean | null
+          super_admin?: boolean
           user_id: string
         }
         Update: {
-          can_modify_events?: boolean | null
+          can_modify_account_flags?: boolean
+          can_modify_events?: boolean
           can_view_agg_stats?: boolean | null
           can_view_demographics?: boolean | null
-          can_view_user_details?: boolean | null
+          can_view_user_details?: boolean
           created_at?: string
-          super_admin?: boolean | null
+          super_admin?: boolean
           user_id?: string
         }
         Relationships: [
@@ -317,6 +320,87 @@ export type Database = {
         }
         Relationships: []
       }
+      user_flag_types: {
+        Row: {
+          id: number
+          name: string
+          user_help: string | null
+        }
+        Insert: {
+          id?: number
+          name: string
+          user_help?: string | null
+        }
+        Update: {
+          id?: number
+          name?: string
+          user_help?: string | null
+        }
+        Relationships: []
+      }
+      user_flags: {
+        Row: {
+          created_at: string
+          flag: number
+          id: string
+          removed: boolean
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          flag: number
+          id?: string
+          removed?: boolean
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          flag?: number
+          id?: string
+          removed?: boolean
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_flags_flag_fkey"
+            columns: ["flag"]
+            isOneToOne: false
+            referencedRelation: "user_flag_types"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "user_flags_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "account_flags"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "user_flags_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "application_status"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "user_flags_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "named_users"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "user_flags_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["user_id"]
+          },
+        ]
+      }
       users: {
         Row: {
           application_status: string
@@ -350,8 +434,10 @@ export type Database = {
     Views: {
       account_flags: {
         Row: {
-          is_organizer: boolean | null
-          testing_account: boolean | null
+          email: string | null
+          flag_ids: string[] | null
+          flags: number[] | null
+          name: string | null
           user_id: string | null
         }
         Relationships: [
@@ -436,9 +522,7 @@ export type Database = {
       named_users: {
         Row: {
           email: string | null
-          is_organizer: boolean | null
           name: string | null
-          testing_account: boolean | null
           user_id: string | null
         }
         Relationships: [
@@ -474,6 +558,8 @@ export type Database = {
       }
       user_permissions: {
         Row: {
+          can_modify_account_flags: boolean | null
+          can_modify_events: boolean | null
           can_view_agg_stats: boolean | null
           can_view_demographics: boolean | null
           can_view_user_details: boolean | null
@@ -572,6 +658,16 @@ export type Database = {
       is_super_admin: {
         Args: Record<PropertyKey, never>
         Returns: boolean
+      }
+      search_user: {
+        Args: {
+          search: string
+        }
+        Returns: {
+          user_id: string
+          name: string
+          email: string
+        }[]
       }
       set_limit: {
         Args: {

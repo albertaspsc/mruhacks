@@ -9,10 +9,11 @@ import _ from "lodash";
 import { EXCLUDE_COLS, ValidColumn } from "./lib";
 import { PermissionsRow } from "./table_perm_row";
 import { createClient } from "@/lib/supabase/server";
-import { Card } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { AddRow } from "./add_row";
+import { Suspense } from "react";
 
-export default async function Page() {
+const PermissionsTable = async () => {
   const supabase = createClient();
 
   const { data, error } = await supabase.from("user_permissions").select();
@@ -38,18 +39,29 @@ export default async function Page() {
     ));
 
   return (
-    <div>
-      <AddRow />
-      <Table>
-        <TableHeader>
-          <TableRow>{headers}</TableRow>
-        </TableHeader>
-        <TableBody>
-          {data.map((row) => (
-            <PermissionsRow row={row} key={row.user_id} />
-          ))}
-        </TableBody>
-      </Table>
-    </div>
+    <Table>
+      <TableHeader>
+        <TableRow>{headers}</TableRow>
+      </TableHeader>
+      <TableBody>
+        {data.map((row) => (
+          <PermissionsRow row={row} key={row.user_id} />
+        ))}
+      </TableBody>
+    </Table>
+  );
+};
+
+export default function Page() {
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle>Permissions</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <AddRow />
+        <PermissionsTable />
+      </CardContent>
+    </Card>
   );
 }

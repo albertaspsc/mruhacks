@@ -1,91 +1,101 @@
 "use client";
 
-import {
-  Select,
-  SelectItem,
-  SelectTrigger,
-  SelectContent,
-  SelectValue,
-} from "@/components/ui/select";
 import { createClient } from "@/lib/supabase/client";
-import { Flag } from "../../profile";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Plus } from "lucide-react";
-import { PlusIcon } from "@radix-ui/react-icons";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
+import { Database } from "@/types/supabase";
+import { throttle } from "lodash";
+import { Input } from "@/components/ui/input";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { Button } from "@/components/ui/button";
+import { PlusIcon } from "@radix-ui/react-icons";
 import { toast } from "@/components/ui/use-toast";
 
 export function AddRow() {
   const supasebase = createClient();
   const router = useRouter();
-  const [data, setData] = useState<
-    {
-      user_id: string | null;
-      email: string | null;
-      name: string | null;
-      is_organizer: boolean | null;
-      testing_account: boolean | null;
-    }[]
-  >();
-  const [user_id, setUserId] = useState<string>();
-  const [message, setMessage] = useState("");
+  const [data, setData] = useState<SearchResults>([]);
+  const [search, _setSearch] = useState("");
+  const [open, setOpen] = useState(false);
+
+  const setSearch = useMemo(() => {
+    return throttle(_setSearch, 1000);
+  }, [_setSearch]);
 
   useEffect(() => {
-    supasebase
-      .from("named_users")
-      .select("user_id, email, name, is_organizer, testing_account")
-      .then(({ data, error }) => {
-        if (data) setData(data);
-      });
-  }, [supasebase]);
+    supasebase.rpc("search_user", { search }).then(({ data: rows, error }) => {
+      if (error) console.error(error);
+      if (!rows) return;
+      setData(rows);
+      setOpen(rows.length > 0);
+    });
+  }, [search, supasebase]);
 
   return (
-    <div>
-      <div className="flex flex-row ">
-        <Select onValueChange={setUserId}>
-          <SelectTrigger className="w-[180px]">
-            <SelectValue placeholder="User..." />
-          </SelectTrigger>
-          <SelectContent>
-            {data?.map((row) => (
-              <SelectItem value={row.user_id!} key={row.user_id}>
-                {`${row.name ?? "<Unknown Name>"} <${row.email}>`}
-                {row.is_organizer && (
-                  <Badge className="bg-purple-500/50">Organizer</Badge>
-                )}
-                {row.testing_account && (
-                  <Badge className="bg-red-500/50">Testing Account</Badge>
-                )}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-        <Button
-          variant="outline"
-          onClick={() => {
-            if (!user_id) {
-              setMessage("Please Select User");
-              return;
-            }
-            supasebase
-              .from("permissions")
-              .upsert({ user_id })
-              .then(({ error }) => {
-                if (error) console.error(error);
-
-                toast({ title: "Added User", description: user_id });
-              });
-
-            router.refresh();
-          }}
+    <div className="flex-flex-row">
+      <Popover
+        open={open}
+        onOpenChange={(state) => {
+          setOpen(
+            (current_state) =>
+              (current_state && state) || (data.length > 0 && state),
+          );
+        }}
+      >
+        <PopoverTrigger>
+          <div className="text-left">
+            <h4 className="font-semibold cursor-default">Add New User</h4>
+            <Input
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder="Search by name or email"
+            />
+          </div>
+        </PopoverTrigger>
+        <PopoverContent
+          onOpenAutoFocus={(e) => e.preventDefault()}
+          align="start"
+          className="w-max"
         >
-          Add Row
-          <PlusIcon />
-        </Button>
-      </div>
-      <p className="pl-2 text-xs">{message}</p>
+          <ul>
+            {data.map((row) => (
+              <li
+                key={row.user_id}
+                className="flex flex-row flex-nowrap text-nowrap items-center"
+              >
+                {row.name} {row.email}
+                <span className="w-5" />
+                <Button
+                  className="ml-auto"
+                  variant="outline"
+                  onClick={() => {
+                    supasebase
+                      .from("permissions")
+                      .upsert({ user_id: row.user_id })
+                      .then((res) => {
+                        toast({
+                          title: res.error
+                            ? "An Error Occurred"
+                            : `Added ${row.name}`,
+                          description: res.error?.message || res.statusText,
+                        });
+                      });
+
+                    router.refresh();
+                  }}
+                >
+                  <PlusIcon />
+                </Button>
+              </li>
+            ))}
+          </ul>
+        </PopoverContent>
+      </Popover>
     </div>
   );
 }
+
+type SearchResults = Database["public"]["Functions"]["search_user"]["Returns"];

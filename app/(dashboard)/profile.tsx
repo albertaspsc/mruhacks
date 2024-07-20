@@ -6,41 +6,32 @@ import assert from "assert";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ReactNode, Suspense } from "react";
 import { Badge } from "@/components/ui/badge";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
 import { QuestionMarkCircledIcon } from "@radix-ui/react-icons";
 import { cn } from "@/lib/utils";
-import {
-  Popover,
-  PopoverTrigger,
-  PopoverContent,
-} from "@/components/ui/popover";
+import { get_color } from "@/lib/colors";
+import Link from "next/link";
 
 export const Flag = ({
   className,
   name,
-  children,
+  id,
 }: {
   className?: string;
   name: string;
-  children?: ReactNode;
+  id: number;
 }) => (
   <li className="pointer-events-auto">
-    <Popover>
-      <PopoverTrigger>
-        <Badge className={cn("pointer-events-auto text-nowrap", className)}>
-          {name}
-          <QuestionMarkCircledIcon />
-          <PopoverContent className="max-w-screen-sm">
-            {children}
-          </PopoverContent>
-        </Badge>
-      </PopoverTrigger>
-    </Popover>
+    <Link href={`/flag/${id}`}>
+      <Badge
+        style={{
+          backgroundColor: get_color(name ?? "")!,
+        }}
+        className={cn("pointer-events-auto text-nowrap", className)}
+      >
+        {name}
+        <QuestionMarkCircledIcon />
+      </Badge>
+    </Link>
   </li>
 );
 
@@ -50,10 +41,10 @@ async function AccountFlags() {
   if (!userInfo) return null;
 
   const { data, error } = await supabase
-    .from("account_flags")
-    .select("*")
-    .eq("user_id", userInfo.id)
-    .single();
+    .from("user_flags")
+    .select("flag, user_flag_types ( name )")
+    .eq("removed", false)
+    .eq("user_id", userInfo.id);
 
   if (error || !data) {
     // Not getting any data is not an error for use
@@ -66,22 +57,13 @@ async function AccountFlags() {
   return (
     <div>
       <ul>
-        {data.testing_account && (
-          <Flag name="Testing Account" className="bg-red-500/50">
-            This account has been marked as a testing account, meaning your
-            application <strong>will not</strong> be considered. If you believe
-            this is an error, please contact us immediately!
-          </Flag>
-        )}
-
-        {data.is_organizer && (
-          <Flag name="Organizer" className="bg-purple-500/50">
-            This account has been set as an Organizer, meaning it{" "}
-            <strong>will not</strong> be considered during the application
-            process. If you believe this is an error, please contact us
-            immediately!
-          </Flag>
-        )}
+        {data.map(({ flag, user_flag_types }) => (
+          <Flag
+            name={user_flag_types?.name ?? "<Unknown>"}
+            key={flag}
+            id={flag}
+          />
+        ))}
       </ul>
     </div>
   );
@@ -143,8 +125,7 @@ async function _Profile() {
         <div className="flex flex-row items-center">
           <div>
             <div
-              className={`h-4 w-4 rounded-full ${colors[application_status].outer} flex items-center justify-center
-                  `}
+              className={`h-4 w-4 rounded-full ${colors[application_status].outer} flex items-center justify-center`}
             >
               <div
                 className={`animate-pulse h-2 w-2 rounded-full ${colors[application_status].inner} `}

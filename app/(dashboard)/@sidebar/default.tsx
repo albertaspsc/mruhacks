@@ -3,6 +3,7 @@ import {
   FaAddressBook,
   FaChartPie,
   FaEnvelope,
+  FaFlag,
   FaIdBadge,
   FaPeopleArrows,
   FaWpforms,
@@ -22,7 +23,6 @@ import Link from "next/link";
 import Image from "next/image";
 import logo from "@/public/mru_title_dark.png";
 import { SheetTrigger, Sheet, SheetContent } from "@/components/ui/sheet";
-import { Mail } from "lucide-react";
 
 const MenuHeader = ({ children }: { children: ReactNode }) => (
   <li className="last:hidden mt-4 block text-primary font-bold">{children}</li>
@@ -45,13 +45,9 @@ const Items = async () => {
   } = super_admin ? {} : data?.[0] ?? {};
 
   return (
-    <div className="flex flex-col justify-start  h-screen w-max">
+    <div className="flex flex-col justify-start h-screen w-max">
       <Link href="/" className="h-10 mb-2 mt-4">
-        <Image
-          className="max-h-[52px] w-auto p-1"
-          src={logo}
-          alt="MRUHacks Logo"
-        />
+        <Image className="max-h-[52px] w-auto" src={logo} alt="MRUHacks Logo" />
       </Link>
       <div className="space-y-5 overflow-y-auto pt-5 text-nowrap">
         <ul>
@@ -92,6 +88,12 @@ const Items = async () => {
                 Permissions
               </MenuItem>
             )}
+            {super_admin && (
+              <MenuItem href="/admin/flags">
+                <FaFlag />
+                User Flags
+              </MenuItem>
+            )}
           </span>
           <span>
             <MenuHeader>Useful Links</MenuHeader>
@@ -118,7 +120,7 @@ const Items = async () => {
         <Suspense>
           <Profile />
         </Suspense>
-        <div className="flex items-center space-x-4 py-4 border-t mt-4 mb-10">
+        <div className="flex items-center border-t my-2">
           <Logout className="flex-1 w-full" />
         </div>
       </div>

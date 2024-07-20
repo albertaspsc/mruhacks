@@ -60,6 +60,7 @@ export function PermissionsRow({ row }: { row: UserPermissions }) {
       <TableCell>
         <Button
           variant="outline"
+          disabled={!!row.self}
           onClick={() => {
             if (!row.user_id) return;
             supabase
