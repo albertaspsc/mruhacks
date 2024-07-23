@@ -13,7 +13,7 @@ import {
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
-const EventDrawer = ({ event }) => {
+export function EventDrawer({ event }) {
   const [open, setOpen] = useState(false);
 
   return (
@@ -53,6 +53,6 @@ const EventDrawer = ({ event }) => {
       </CardContent>
     </Card>
   );
-};
+}
 
 export default EventDrawer;

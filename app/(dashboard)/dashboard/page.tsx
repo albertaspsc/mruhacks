@@ -8,7 +8,7 @@ import getUserInfo from "@/lib/auth/getUserInfo";
 import _ from "lodash";
 import { events } from "@/events/events";
 import { announcements } from "@/events/announcements";
-import { EventCards } from "./EventCard";
+import EventCards from "./EventCards";
 function SectionTitle({
   children,
   className,
