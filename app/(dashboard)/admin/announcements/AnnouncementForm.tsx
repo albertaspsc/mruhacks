@@ -123,20 +123,12 @@ export function AnnouncementForm() {
               )}
             />
           </div>
-          <div className="flex flex-row w-1/3 justify-between">
-            <Button
-              type="reset"
-              className="bg-neutral text-primary font-semibold text-md"
-            >
-              Cancel
-            </Button>
-            <Button
-              type="submit"
-              className="bg-primary text-white font-semibold text-md"
-            >
-              Submit
-            </Button>
-          </div>
+          <Button
+            type="submit"
+            className="bg-primary text-white font-semibold text-md"
+          >
+            Submit
+          </Button>
         </div>
       </form>
     </Form>

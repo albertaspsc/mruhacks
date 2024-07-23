@@ -6,7 +6,9 @@ import { cn } from "@/lib/utils";
 import { createClient } from "@/lib/supabase/server";
 import getUserInfo from "@/lib/auth/getUserInfo";
 import _ from "lodash";
-
+import { events } from "@/events/events";
+import { announcements } from "@/events/announcements";
+import { EventCards } from "./EventCard";
 function SectionTitle({
   children,
   className,
@@ -34,16 +36,16 @@ const Section = ({
   </div>
 );
 
-function PlaceHolderCard() {
-  return (
-    <Card>
-      <CardContent className="opacity-50 flex items-center justify-center h h-52 p-6">
-        Coming Soon
+function Announcements() {
+  return announcements.map((announcement) => (
+    <Card key={announcement.title} className="my-4">
+      <CardContent className="flex flex-row justify-between items-center h h-auto p-4">
+        <div className="font-semibold">{announcement.title}</div>
+        <div>{announcement.date}</div>
       </CardContent>
     </Card>
-  );
+  ));
 }
-
 async function Perms() {
   const supabase = createClient();
   const userInfo = await getUserInfo();
@@ -104,11 +106,11 @@ export default async function Page() {
         <div className="grid grid-cols-1 md:grid-cols-2  gap-5 ">
           <Section className="row-span-1">
             <SectionTitle>Upcoming Events</SectionTitle>
-            <PlaceHolderCard />
+            <EventCards />
           </Section>
           <Section className="row-span-1">
             <SectionTitle>Announcements</SectionTitle>
-            <PlaceHolderCard />
+            <Announcements />
           </Section>
           <Section className="overflow-hidden justify-self-center">
             <SectionTitle>MRUHacks Starts In</SectionTitle>

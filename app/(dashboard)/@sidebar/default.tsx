@@ -42,6 +42,7 @@ const Items = async () => {
     can_view_user_details = super_admin,
     can_view_demographics = super_admin,
     can_view_agg_stats = super_admin,
+    can_make_announcements = super_admin,
   } = super_admin ? {} : data?.[0] ?? {};
 
   return (
@@ -68,6 +69,12 @@ const Items = async () => {
             <MenuHeader>Admin</MenuHeader>
             {/* These don't control perms!! if the user navigates to here 
               they will only get data about themselves */}
+            {can_make_announcements ? (
+              <MenuItem href="/admin/announcements">
+                <FaEnvelope />
+                Announcements
+              </MenuItem>
+            ) : null}
             {can_view_user_details ? (
               <MenuItem href="/admin/applications">
                 <FaWpforms />

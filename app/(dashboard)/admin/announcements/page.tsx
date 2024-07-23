@@ -2,6 +2,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ReactNode } from "react";
 import { cn } from "@/lib/utils";
 import { AnnouncementForm } from "./AnnouncementForm";
+import { announcements } from "@/events/announcements";
+
 function SectionTitle({
   children,
   className,
@@ -29,14 +31,15 @@ const Section = ({
   </div>
 );
 
-function PlaceHolderCard() {
-  return (
-    <Card>
-      <CardContent className="opacity-50 flex items-center justify-center h h-52 p-6">
-        Coming Soon
+function Announcements() {
+  return announcements.map((announcement) => (
+    <Card key={announcement.title} className="my-4">
+      <CardContent className="flex flex-row justify-between items-center h h-auto p-4">
+        <div className="font-semibold">{announcement.title}</div>
+        <div>{announcement.date}</div>
       </CardContent>
     </Card>
-  );
+  ));
 }
 
 export default function Page() {
@@ -51,13 +54,13 @@ export default function Page() {
         <div className="grid grid-cols-1 md:grid-cols-2  gap-5 ">
           <Section className="row-span-1">
             <SectionTitle>Make an Announcement</SectionTitle>
-            <Card className="flex items-center justify-center h h-auto p-6">
+            <Card className="flex items-center justify-center h h-auto p-6 my-4">
               <AnnouncementForm />
             </Card>
           </Section>
           <Section className="row-span-1">
             <SectionTitle>Announcements</SectionTitle>
-            <PlaceHolderCard />
+            <Announcements />
           </Section>
         </div>
       </CardContent>

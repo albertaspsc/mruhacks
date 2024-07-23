@@ -10,9 +10,8 @@ export default function Loading() {
         </CardTitle>
       </CardHeader>
       <CardContent className="flex flex-row justify-evenly">
-        <Skeleton className="w-[20%] h-[50vh]" />
-        <Skeleton className="w-[20%] h-[50vh]" />
-        <Skeleton className="w-[20%] h-[50vh]" />
+        <Skeleton className="w-[10%] h-[50vh]" />
+        <Skeleton className="w-[10%] h-[50vh]" />
       </CardContent>
     </Card>
   );
