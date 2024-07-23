@@ -6,8 +6,7 @@ import { cn } from "@/lib/utils";
 import { createClient } from "@/lib/supabase/server";
 import getUserInfo from "@/lib/auth/getUserInfo";
 import _ from "lodash";
-import { events } from "@/events/events";
-import { announcements } from "@/events/announcements";
+import AnnouncementCards from "../admin/announcements/AnnouncementCards";
 import EventCards from "./EventCards";
 function SectionTitle({
   children,
@@ -36,16 +35,6 @@ const Section = ({
   </div>
 );
 
-function Announcements() {
-  return announcements.map((announcement) => (
-    <Card key={announcement.title} className="my-4">
-      <CardContent className="flex flex-row justify-between items-center h h-auto p-4">
-        <div className="font-semibold">{announcement.title}</div>
-        <div>{announcement.date}</div>
-      </CardContent>
-    </Card>
-  ));
-}
 async function Perms() {
   const supabase = createClient();
   const userInfo = await getUserInfo();
@@ -110,7 +99,7 @@ export default async function Page() {
           </Section>
           <Section className="row-span-1">
             <SectionTitle>Announcements</SectionTitle>
-            <Announcements />
+            <AnnouncementCards />
           </Section>
           <Section className="overflow-hidden justify-self-center">
             <SectionTitle>MRUHacks Starts In</SectionTitle>

@@ -2,7 +2,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ReactNode } from "react";
 import { cn } from "@/lib/utils";
 import { AnnouncementForm } from "./AnnouncementForm";
-import { announcements } from "@/events/announcements";
+import AnnouncementCards from "./AnnouncementCards";
 
 function SectionTitle({
   children,
@@ -31,17 +31,6 @@ const Section = ({
   </div>
 );
 
-function Announcements() {
-  return announcements.map((announcement) => (
-    <Card key={announcement.title} className="my-4">
-      <CardContent className="flex flex-row justify-between items-center h h-auto p-4">
-        <div className="font-semibold">{announcement.title}</div>
-        <div>{announcement.date}</div>
-      </CardContent>
-    </Card>
-  ));
-}
-
 export default function Page() {
   return (
     <Card>
@@ -60,7 +49,7 @@ export default function Page() {
           </Section>
           <Section className="row-span-1">
             <SectionTitle>Announcements</SectionTitle>
-            <Announcements />
+            <AnnouncementCards />
           </Section>
         </div>
       </CardContent>
