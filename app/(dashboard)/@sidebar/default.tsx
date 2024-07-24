@@ -45,8 +45,8 @@ const Items = async () => {
   } = super_admin ? {} : data?.[0] ?? {};
 
   return (
-    <div className="flex flex-col justify-start h-screen w-max">
-      <Link href="/" className="h-10 mb-2 mt-4">
+    <div className="w-max md:pt-5 h-dvh flex flex-col">
+      <Link href="/" className="h-10 my-4">
         <Image className="max-h-[52px] w-auto" src={logo} alt="MRUHacks Logo" />
       </Link>
       <div className="space-y-5 overflow-y-auto pt-5 text-nowrap">
@@ -116,7 +116,7 @@ const Items = async () => {
           </span>
         </ul>
       </div>
-      <div className="flex flex-col pt-4  mt-auto ">
+      <div className="flex flex-col pt-4 mt-auto">
         <Suspense>
           <Profile />
         </Suspense>
@@ -134,7 +134,7 @@ const Mobile = () => {
       <SheetTrigger className="md:hidden block">
         <HamburgerMenuIcon />
       </SheetTrigger>
-      <SheetContent side="left">
+      <SheetContent side="left" className="p-0 px-4 h-svh w-min">
         <Items />
       </SheetContent>
     </Sheet>
