@@ -79,34 +79,40 @@ async function Perms() {
 
 export default async function Page() {
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>My Dashboard</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <div className="p-5 flex flex-row space-x-5 flex-wrap ">
-          <Profile />
-          <span className="w-[1px] my-10 bg-primary" />
-          <Suspense>
-            <Perms />
-          </Suspense>
-        </div>
-        <hr className="py-5" />
-        <div className="grid grid-cols-1 md:grid-cols-2  gap-5 ">
-          <Section className="row-span-1">
-            <SectionTitle>Upcoming Events</SectionTitle>
-            <EventCards />
-          </Section>
-          <Section className="row-span-1">
-            <SectionTitle>Announcements</SectionTitle>
-            <AnnouncementCards />
-          </Section>
-          <Section className="overflow-hidden justify-self-center">
-            <SectionTitle>MRUHacks Starts In</SectionTitle>
-            <Countdown />
-          </Section>
-        </div>
-      </CardContent>
-    </Card>
+    <>
+      <Card>
+        <CardHeader>
+          <CardTitle>My Dashboard</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="flex flex-row justify-between">
+            <div className="p-5 flex flex-row space-x-5 flex-wrap w-1/2 ">
+              <Profile />
+              <span className="w-[1px] my-10 bg-primary" />
+              <Suspense>
+                <Perms />
+              </Suspense>
+            </div>
+            <div className="flex flex-row w-1/2 justify-around">
+              <Section className="overflow-hidden justify-self-center">
+                <SectionTitle>MRUHacks Starts In</SectionTitle>
+                <Countdown />
+              </Section>
+            </div>
+          </div>
+          <hr className="py-5" />
+          <div className="flex flex-row justify-around">
+            <Section className="h-fit w-[48%]">
+              <SectionTitle>Upcoming Events</SectionTitle>
+              <EventCards />
+            </Section>
+            <Section className="h-fit w-[48%]">
+              <SectionTitle>Announcements</SectionTitle>
+              <AnnouncementCards />
+            </Section>
+          </div>
+        </CardContent>
+      </Card>
+    </>
   );
 }

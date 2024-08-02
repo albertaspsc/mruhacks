@@ -35,6 +35,7 @@
     "@supabase/auth-js": "^2.64.3",
     "@supabase/ssr": "^0.3.0",
     "@tanstack/react-table": "^8.19.2",
+    "@uiw/react-md-editor": "^4.0.4",
     "@vercel/edge-config": "^1.2.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",

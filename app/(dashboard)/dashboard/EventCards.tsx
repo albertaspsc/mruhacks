@@ -1,16 +1,15 @@
-"use client";
 import { type Event, events } from "@/events/events";
-import { useMediaQuery } from "@/hooks/use-media-query";
 import { EventCard } from "./EventCard";
-import { EventDrawer } from "./EventDrawer";
 const EventCards = () => {
-  const isDesktop = useMediaQuery("(min-width: 768px)");
+  let entries = events.map((event) => (
+    <EventCard key={event.id} event={event} />
+  ));
 
-  if (isDesktop) {
-    return events.map((event) => <EventCard key={event.id} event={event} />);
-  }
-
-  return events.map((event) => <EventDrawer key={event.id} event={event} />);
+  return (
+    <div className="border border-solid rounded-lg h h-fit py-1 px-2 overflow-y-scroll">
+      {...entries}
+    </div>
+  );
 };
 
 export default EventCards;
