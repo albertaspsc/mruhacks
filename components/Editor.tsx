@@ -1,10 +1,15 @@
-import React from "react";
+import React, { ChangeEvent, Dispatch, SetStateAction } from "react";
 import MDEditor from "@uiw/react-md-editor";
 
-export default function Editor() {
-  const [value, setValue] = React.useState("");
+export default function Editor({
+  value,
+  setValue,
+}: {
+  value: string;
+  setValue: (value?: string, event?: ChangeEvent<HTMLTextAreaElement>) => void;
+}) {
   return (
-    <div className="container">
+    <div className="container" data-color-mode="dart">
       <MDEditor
         value={value}
         height="100%"

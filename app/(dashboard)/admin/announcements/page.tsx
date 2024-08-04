@@ -32,6 +32,12 @@ const Section = ({
 );
 
 export default function Page() {
+  const formSubmit = async (data: object) => {
+    "use server";
+
+    console.log(data);
+  };
+
   return (
     <Card>
       <CardHeader>
@@ -44,7 +50,7 @@ export default function Page() {
           <Section className="row-span-1">
             <SectionTitle>Make an Announcement</SectionTitle>
             <Card className="flex items-center justify-center h h-auto p-6 my-4">
-              <AnnouncementForm />
+              <AnnouncementForm formSubmit={formSubmit} />
             </Card>
           </Section>
           <Section className="row-span-1">
