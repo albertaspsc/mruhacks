@@ -49,7 +49,7 @@ export function AnnouncementForm() {
             <FormItem>
               <FormControl>
                 <Input
-                  placeholder="Annoucement Title"
+                  placeholder="Announcement Title"
                   className="resize-none"
                   {...field}
                 />
