@@ -16,6 +16,7 @@ import {
 import { toast } from "@/components/ui/use-toast";
 import { Input } from "@/components/ui/input";
 import Editor from "@/components/Editor";
+import React from "react";
 const FormSchema = z.object({
   subject: z
     .string()
@@ -37,6 +38,7 @@ export function AnnouncementForm() {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
   });
+  const [value, setValue] = React.useState("");
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="w-9/12 space-y-6">
@@ -62,7 +64,7 @@ export function AnnouncementForm() {
           render={({ field }) => (
             <FormItem>
               <FormControl>
-                <Editor />
+                <Editor value={field.value} setValue={setValue} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -118,6 +120,7 @@ export function AnnouncementForm() {
   );
 
   function onSubmit(data: z.infer<typeof FormSchema>) {
+    console.log(value);
     toast({
       title: "You submitted the following values:",
       description: (

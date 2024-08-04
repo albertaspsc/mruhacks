@@ -10,8 +10,9 @@ export default function Editor() {
         height="100%"
         // minHeight={50}
         visibleDragbar={false}
-        onChange={(val) => setValue(val)}
+        onChange={setValue}
       />
+      <MDEditor.Markdown source={value} />
     </div>
   );
 }

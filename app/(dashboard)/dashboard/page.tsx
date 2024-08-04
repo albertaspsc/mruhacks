@@ -8,6 +8,7 @@ import getUserInfo from "@/lib/auth/getUserInfo";
 import _ from "lodash";
 import AnnouncementCards from "../admin/announcements/AnnouncementCards";
 import EventCards from "./EventCards";
+import UserQR from "../QR";
 function SectionTitle({
   children,
   className,
@@ -85,15 +86,16 @@ export default async function Page() {
           <CardTitle>My Dashboard</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="flex flex-row justify-between">
-            <div className="p-5 flex flex-row space-x-5 flex-wrap w-1/2 ">
+          <div className="md:flex flex-row justify-between">
+            <div className="p-5 md:flex flex-row space-x-5 flex-wrap lg:w-1/2 ">
               <Profile />
               <span className="w-[1px] my-10 bg-primary" />
               <Suspense>
                 <Perms />
               </Suspense>
             </div>
-            <div className="flex flex-row w-1/2 justify-around">
+            <UserQR />
+            <div className="md:flex flex-row lg:w-1/2 justify-around">
               <Section className="overflow-hidden justify-self-center">
                 <SectionTitle>MRUHacks Starts In</SectionTitle>
                 <Countdown />
@@ -101,14 +103,14 @@ export default async function Page() {
             </div>
           </div>
           <hr className="py-5" />
-          <div className="flex flex-row justify-around">
-            <Section className="h-fit w-[48%]">
-              <SectionTitle>Upcoming Events</SectionTitle>
-              <EventCards />
-            </Section>
-            <Section className="h-fit w-[48%]">
+          <div className="lg:flex flex-row-reverse justify-around">
+            <Section className="h-fit lg:w-[48%]">
               <SectionTitle>Announcements</SectionTitle>
               <AnnouncementCards />
+            </Section>
+            <Section className="h-fit lg:w-[48%]">
+              <SectionTitle>Upcoming Events</SectionTitle>
+              <EventCards />
             </Section>
           </div>
         </CardContent>
