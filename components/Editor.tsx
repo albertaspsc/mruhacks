@@ -17,7 +17,7 @@ export default function Editor({
         visibleDragbar={false}
         onChange={setValue}
       />
-      <MDEditor.Markdown source={value} />
+      <MDEditor.Markdown source={value} style={{ background: "white" }} />
     </div>
   );
 }

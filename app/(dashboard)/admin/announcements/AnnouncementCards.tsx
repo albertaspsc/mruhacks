@@ -1,8 +1,24 @@
-import { type Announcement, announcements } from "@/events/announcements";
 import { AnnouncementCard } from "./AnnouncementCard";
-const AnnouncementCards = () => {
-  let entries = announcements.map((announcement) => (
-    <AnnouncementCard key={announcement.id} announcement={announcement} />
+import { createClient } from "@/lib/supabase/server";
+
+type Announcement = {
+  created_at: string;
+  subject: string;
+  message: string;
+};
+const AnnouncementCards = async () => {
+  const supabase = createClient();
+  let { data, error } = await supabase
+    .from("announcements")
+    .select("created_at, subject, message")
+    .order("created_at", { ascending: false });
+
+  data = data ?? [];
+  let entries = data.map((announcement: Announcement) => (
+    <AnnouncementCard
+      key={announcement.created_at}
+      announcement={announcement}
+    />
   ));
 
   return (
