@@ -2,7 +2,9 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ReactNode } from "react";
 import { cn } from "@/lib/utils";
 import { AnnouncementForm } from "./AnnouncementForm";
-import AnnouncementCards from "./AnnouncementCards";
+import Announcements from "./AnnouncementCards";
+import { createClient } from "@/lib/supabase/server";
+import getUserInfo from "@/lib/auth/getUserInfo";
 
 function SectionTitle({
   children,
@@ -34,8 +36,16 @@ const Section = ({
 export default function Page() {
   const formSubmit = async (data: object) => {
     "use server";
-
-    console.log(data);
+    const supabase = createClient();
+    const { error } = await supabase
+      .from("announcements")
+      .insert({
+        subject: data.title,
+        message: data.content,
+        discord: data.discord,
+        email: data.email,
+      })
+      .select();
   };
 
   return (
@@ -55,7 +65,7 @@ export default function Page() {
           </Section>
           <Section className="row-span-1">
             <SectionTitle>Announcements</SectionTitle>
-            <AnnouncementCards />
+            <Announcements />
           </Section>
         </div>
       </CardContent>
