@@ -1,6 +1,15 @@
-import { type Event, events } from "@/events/events";
+import { createClient } from "@/lib/supabase/server";
 import { EventCard } from "./EventCard";
-const EventCards = () => {
+const EventCards = async () => {
+  const supabase = createClient();
+
+  const { data } = await supabase
+    .from("events")
+    .select()
+    .order("created_at", { ascending: false });
+
+  const events = data ?? [];
+
   let entries = events.map((event) => (
     <EventCard key={event.id} event={event} />
   ));

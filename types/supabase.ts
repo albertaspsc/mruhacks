@@ -10,13 +10,31 @@ export type Database = {
   public: {
     Tables: {
       announcements: {
-        Insert: {
-          created_at: string | null
-          subject: string | null
-          message: string | null
-          discord: boolean
+        Row: {
+          created_at: string
+          discord: boolean | null
           email: boolean
+          id: string
+          message: string
+          subject: string
         }
+        Insert: {
+          created_at?: string
+          discord?: boolean | null
+          email?: boolean
+          id?: string
+          message?: string
+          subject?: string
+        }
+        Update: {
+          created_at?: string
+          discord?: boolean | null
+          email?: boolean
+          id?: string
+          message?: string
+          subject?: string
+        }
+        Relationships: []
       }
       events: {
         Row: {
@@ -137,6 +155,13 @@ export type Database = {
             foreignKeyName: "organizers_user_id_fkey"
             columns: ["user_id"]
             isOneToOne: true
+            referencedRelation: "user_info"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "organizers_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: true
             referencedRelation: "users"
             referencedColumns: ["user_id"]
           },
@@ -144,33 +169,39 @@ export type Database = {
       }
       permissions: {
         Row: {
-          can_modify_events: boolean | null
+          can_do_event_checkin: boolean
+          can_make_announcements: boolean | null
+          can_modify_account_flags: boolean
+          can_modify_events: boolean
           can_view_agg_stats: boolean | null
           can_view_demographics: boolean | null
-          can_view_user_details: boolean | null
-          can_make_announcements?: boolean | null
+          can_view_user_details: boolean
           created_at: string
-          super_admin: boolean | null
+          super_admin: boolean
           user_id: string
         }
         Insert: {
-          can_modify_events?: boolean | null
+          can_do_event_checkin?: boolean
+          can_make_announcements?: boolean | null
+          can_modify_account_flags?: boolean
+          can_modify_events?: boolean
           can_view_agg_stats?: boolean | null
           can_view_demographics?: boolean | null
-          can_view_user_details?: boolean | null
-          can_make_announcements?: boolean | null
+          can_view_user_details?: boolean
           created_at?: string
-          super_admin?: boolean | null
+          super_admin?: boolean
           user_id: string
         }
         Update: {
-          can_modify_events?: boolean | null
+          can_do_event_checkin?: boolean
+          can_make_announcements?: boolean | null
+          can_modify_account_flags?: boolean
+          can_modify_events?: boolean
           can_view_agg_stats?: boolean | null
           can_view_demographics?: boolean | null
-          can_view_user_details?: boolean | null
-          can_make_announcements?: boolean | null
+          can_view_user_details?: boolean
           created_at?: string
-          super_admin?: boolean | null
+          super_admin?: boolean
           user_id?: string
         }
         Relationships: [
@@ -193,6 +224,13 @@ export type Database = {
             columns: ["user_id"]
             isOneToOne: true
             referencedRelation: "named_users"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "permissions_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: true
+            referencedRelation: "user_info"
             referencedColumns: ["user_id"]
           },
           {
@@ -300,6 +338,13 @@ export type Database = {
             foreignKeyName: "registrations_id_fkey"
             columns: ["id"]
             isOneToOne: true
+            referencedRelation: "user_info"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "registrations_id_fkey"
+            columns: ["id"]
+            isOneToOne: true
             referencedRelation: "users"
             referencedColumns: ["user_id"]
           },
@@ -328,6 +373,94 @@ export type Database = {
           state?: string | null
         }
         Relationships: []
+      }
+      user_flag_types: {
+        Row: {
+          id: number
+          name: string
+          user_help: string | null
+        }
+        Insert: {
+          id?: number
+          name: string
+          user_help?: string | null
+        }
+        Update: {
+          id?: number
+          name?: string
+          user_help?: string | null
+        }
+        Relationships: []
+      }
+      user_flags: {
+        Row: {
+          created_at: string
+          flag: number
+          id: string
+          removed: boolean
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          flag: number
+          id?: string
+          removed?: boolean
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          flag?: number
+          id?: string
+          removed?: boolean
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_flags_flag_fkey"
+            columns: ["flag"]
+            isOneToOne: false
+            referencedRelation: "user_flag_types"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "user_flags_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "account_flags"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "user_flags_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "application_status"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "user_flags_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "named_users"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "user_flags_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "user_info"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "user_flags_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["user_id"]
+          },
+        ]
       }
       users: {
         Row: {
@@ -362,8 +495,10 @@ export type Database = {
     Views: {
       account_flags: {
         Row: {
-          is_organizer: boolean | null
-          testing_account: boolean | null
+          email: string | null
+          flag_ids: string[] | null
+          flags: number[] | null
+          name: string | null
           user_id: string | null
         }
         Relationships: [
@@ -447,10 +582,9 @@ export type Database = {
       }
       named_users: {
         Row: {
+          avatar_url: string | null
           email: string | null
-          is_organizer: boolean | null
           name: string | null
-          testing_account: boolean | null
           user_id: string | null
         }
         Relationships: [
@@ -484,8 +618,30 @@ export type Database = {
         }
         Relationships: []
       }
+      user_info: {
+        Row: {
+          additional: string | null
+          avatar_url: string | null
+          dietary: string[] | null
+          email: string | null
+          flags: string[] | null
+          name: string | null
+          user_id: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: true
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       user_permissions: {
         Row: {
+          can_modify_account_flags: boolean | null
+          can_modify_events: boolean | null
           can_view_agg_stats: boolean | null
           can_view_demographics: boolean | null
           can_view_user_details: boolean | null
@@ -523,6 +679,13 @@ export type Database = {
             columns: ["user_id"]
             isOneToOne: true
             referencedRelation: "named_users"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "permissions_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: true
+            referencedRelation: "user_info"
             referencedColumns: ["user_id"]
           },
         ]
@@ -585,6 +748,16 @@ export type Database = {
         Args: Record<PropertyKey, never>
         Returns: boolean
       }
+      search_user: {
+        Args: {
+          search: string
+        }
+        Returns: {
+          user_id: string
+          name: string
+          email: string
+        }[]
+      }
       set_limit: {
         Args: {
           "": number
@@ -615,80 +788,80 @@ type PublicSchema = Database[Extract<keyof Database, "public">]
 
 export type Tables<
   PublicTableNameOrOptions extends
-  | keyof (PublicSchema["Tables"] & PublicSchema["Views"])
-  | { schema: keyof Database },
+    | keyof (PublicSchema["Tables"] & PublicSchema["Views"])
+    | { schema: keyof Database },
   TableName extends PublicTableNameOrOptions extends { schema: keyof Database }
-  ? keyof (Database[PublicTableNameOrOptions["schema"]]["Tables"] &
-    Database[PublicTableNameOrOptions["schema"]]["Views"])
-  : never = never,
+    ? keyof (Database[PublicTableNameOrOptions["schema"]]["Tables"] &
+        Database[PublicTableNameOrOptions["schema"]]["Views"])
+    : never = never,
 > = PublicTableNameOrOptions extends { schema: keyof Database }
   ? (Database[PublicTableNameOrOptions["schema"]]["Tables"] &
-    Database[PublicTableNameOrOptions["schema"]]["Views"])[TableName] extends {
+      Database[PublicTableNameOrOptions["schema"]]["Views"])[TableName] extends {
       Row: infer R
     }
-  ? R
-  : never
+    ? R
+    : never
   : PublicTableNameOrOptions extends keyof (PublicSchema["Tables"] &
-    PublicSchema["Views"])
-  ? (PublicSchema["Tables"] &
-    PublicSchema["Views"])[PublicTableNameOrOptions] extends {
-      Row: infer R
-    }
-  ? R
-  : never
-  : never
+        PublicSchema["Views"])
+    ? (PublicSchema["Tables"] &
+        PublicSchema["Views"])[PublicTableNameOrOptions] extends {
+        Row: infer R
+      }
+      ? R
+      : never
+    : never
 
 export type TablesInsert<
   PublicTableNameOrOptions extends
-  | keyof PublicSchema["Tables"]
-  | { schema: keyof Database },
+    | keyof PublicSchema["Tables"]
+    | { schema: keyof Database },
   TableName extends PublicTableNameOrOptions extends { schema: keyof Database }
-  ? keyof Database[PublicTableNameOrOptions["schema"]]["Tables"]
-  : never = never,
+    ? keyof Database[PublicTableNameOrOptions["schema"]]["Tables"]
+    : never = never,
 > = PublicTableNameOrOptions extends { schema: keyof Database }
   ? Database[PublicTableNameOrOptions["schema"]]["Tables"][TableName] extends {
-    Insert: infer I
-  }
-  ? I
-  : never
+      Insert: infer I
+    }
+    ? I
+    : never
   : PublicTableNameOrOptions extends keyof PublicSchema["Tables"]
-  ? PublicSchema["Tables"][PublicTableNameOrOptions] extends {
-    Insert: infer I
-  }
-  ? I
-  : never
-  : never
+    ? PublicSchema["Tables"][PublicTableNameOrOptions] extends {
+        Insert: infer I
+      }
+      ? I
+      : never
+    : never
 
 export type TablesUpdate<
   PublicTableNameOrOptions extends
-  | keyof PublicSchema["Tables"]
-  | { schema: keyof Database },
+    | keyof PublicSchema["Tables"]
+    | { schema: keyof Database },
   TableName extends PublicTableNameOrOptions extends { schema: keyof Database }
-  ? keyof Database[PublicTableNameOrOptions["schema"]]["Tables"]
-  : never = never,
+    ? keyof Database[PublicTableNameOrOptions["schema"]]["Tables"]
+    : never = never,
 > = PublicTableNameOrOptions extends { schema: keyof Database }
   ? Database[PublicTableNameOrOptions["schema"]]["Tables"][TableName] extends {
-    Update: infer U
-  }
-  ? U
-  : never
+      Update: infer U
+    }
+    ? U
+    : never
   : PublicTableNameOrOptions extends keyof PublicSchema["Tables"]
-  ? PublicSchema["Tables"][PublicTableNameOrOptions] extends {
-    Update: infer U
-  }
-  ? U
-  : never
-  : never
+    ? PublicSchema["Tables"][PublicTableNameOrOptions] extends {
+        Update: infer U
+      }
+      ? U
+      : never
+    : never
 
 export type Enums<
   PublicEnumNameOrOptions extends
-  | keyof PublicSchema["Enums"]
-  | { schema: keyof Database },
+    | keyof PublicSchema["Enums"]
+    | { schema: keyof Database },
   EnumName extends PublicEnumNameOrOptions extends { schema: keyof Database }
-  ? keyof Database[PublicEnumNameOrOptions["schema"]]["Enums"]
-  : never = never,
+    ? keyof Database[PublicEnumNameOrOptions["schema"]]["Enums"]
+    : never = never,
 > = PublicEnumNameOrOptions extends { schema: keyof Database }
   ? Database[PublicEnumNameOrOptions["schema"]]["Enums"][EnumName]
   : PublicEnumNameOrOptions extends keyof PublicSchema["Enums"]
-  ? PublicSchema["Enums"][PublicEnumNameOrOptions]
-  : never
+    ? PublicSchema["Enums"][PublicEnumNameOrOptions]
+    : never
