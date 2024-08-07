@@ -14,6 +14,27 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
 import { FaGithub, FaGoogle } from "react-icons/fa";
+import { useSearchParams } from "next/navigation";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+
+import wave from "@/assets/wage.png";
+import { DialogContent } from "@/components/ui/dialog";
+import Image from "next/image";
+
+function Toast() {
+  return (
+    <div className="flex flex-col items-center justify-center">
+      <Image
+        src={wave}
+        className="h-[30vh] w-auto"
+        alt="crt montor with windows blue screen "
+      />
+      <h1 className="text-xl text-base-content">Signup Successful</h1>
+      <p>Please check your email for a confirmation link</p>
+    </div>
+  );
+}
 
 export default function SignUpClient({
   signInWithGithub,
@@ -22,12 +43,24 @@ export default function SignUpClient({
 }: {
   signInWithGithub: () => void;
   signInWithGoogle: () => void;
-  signUp: (formData: FormData) => void;
+  signUp: (formData: FormData) => Promise<{ message?: string; done?: boolean }>;
 }) {
+  const [message, setMessage] = useState("");
+  const [showToast, setShowToast] = useState(false);
+  const router = useRouter();
   const handleEmailSubmit = async (e: any) => {
     e.preventDefault();
-    await signUp(new FormData(e.target));
+    const data = await signUp(new FormData(e.target));
+    setMessage(data?.message ?? "");
+
+    if (data.done) {
+      setShowToast(true);
+    }
   };
+
+  if (showToast) {
+    return <Toast />;
+  }
 
   return (
     <>
@@ -80,9 +113,11 @@ export default function SignUpClient({
                 type="password"
                 name="password"
                 placeholder="********"
+                min={6}
                 required
               />
             </div>
+            <p className="text-xs">{message}</p>
             <Button type="submit" className="w-full text-white font-bold">
               Create an account
             </Button>

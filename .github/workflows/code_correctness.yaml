@@ -19,12 +19,13 @@ jobs:
 
       - name: Set up Node.js
         uses: actions/setup-node@v3
-        with:
-          node-version: "22"
 
       - name: Install dependencies
+        env:
+          HUSKY: 0
         run: |
-          npm i --silent
+          npm i
+          npm run prepare
 
       - name: ESLint
         if: always()
@@ -32,4 +33,4 @@ jobs:
 
       - name: Prettier Check
         if: always()
-        run: npx prettier --check .
+        run: npx  prettier --check .

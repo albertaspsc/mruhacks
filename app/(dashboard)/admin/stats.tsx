@@ -2,6 +2,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { createClient } from "@/lib/supabase/server";
 import { DemographicChart } from "./charts";
 import { get_perms } from "@/lib/auth/getPerms";
+import { Database } from "@/types/supabase";
 
 async function MapToChart({
   supabase,
@@ -15,7 +16,8 @@ async function MapToChart({
   key?: number;
 }) {
   let data = await supabase
-    .from(name)
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    .from(name as any)
     .select()
     .then(({ data, error }) => {
       if (error) console.error(error);

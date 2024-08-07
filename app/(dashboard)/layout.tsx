@@ -2,17 +2,21 @@ import { ReactNode } from "react";
 import React from "react";
 import Path from "./path";
 
+import * as ScrollArea from "@radix-ui/react-scroll-area";
+
 export default function Layout(props: {
   children: ReactNode;
   sidebar: ReactNode;
   modal: ReactNode;
 }) {
   return (
-    <div className="h-screen max-h-screen flex flex-col overflow-hidden bg-muted">
-      <div className="flex md:flex-row flex-col-reverse flex-1 max-h-screen overflow-y-hidden">
-        {props.sidebar}
-        <div className="flex-1 h-auto flex flex-col px-4 pb-4 overflow-y-auto">
-          <Path />
+    <div className="h-screen max-h-screen flex flex-col  bg-muted">
+      <div className="flex flex-row">
+        <div className="md:block hidden">{props.sidebar}</div>
+        <div className="px-4 pb-10 h-screen w-full overflow-auto">
+          <Path>
+            <div className="md:hidden block">{props.sidebar}</div>
+          </Path>
           {props.children}
         </div>
       </div>

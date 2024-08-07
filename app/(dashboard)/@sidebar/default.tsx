@@ -2,25 +2,27 @@ import { ReactNode, Suspense, useMemo } from "react";
 import {
   FaAddressBook,
   FaChartPie,
-  FaHome,
+  FaEnvelope,
+  FaFlag,
+  FaIdBadge,
   FaPeopleArrows,
-  FaQq,
-  FaQrcode,
-  FaShieldAlt,
   FaWpforms,
 } from "react-icons/fa";
-import { FiGrid } from "react-icons/fi";
 import { Logout } from "../logout";
 import { MenuItem } from "./menu_item";
-import { DashboardIcon } from "@radix-ui/react-icons";
+import {
+  DashboardIcon,
+  DiscordLogoIcon,
+  HamburgerMenuIcon,
+  InstagramLogoIcon,
+  NotionLogoIcon,
+} from "@radix-ui/react-icons";
 import { get_perms } from "@/lib/auth/getPerms";
-import { memoize } from "lodash";
 import Profile from "../profile";
 import Link from "next/link";
 import Image from "next/image";
 import logo from "@/public/mru_title_dark.png";
-import small_logo from "@/public/mruhacks.png";
-import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
+import { SheetTrigger, Sheet, SheetContent } from "@/components/ui/sheet";
 
 const MenuHeader = ({ children }: { children: ReactNode }) => (
   <li className="last:hidden mt-4 block text-primary font-bold">{children}</li>
@@ -43,23 +45,11 @@ const Items = async () => {
   } = super_admin ? {} : data?.[0] ?? {};
 
   return (
-    <div className="flex flex-col justify-between h-full">
-      <div className="pt-4 space-y-5">
-        <Link
-          href="/"
-          className="h-10 mb-2
-                    absolute left-[50%] translate-x-[-50%]
-                    md:relative md:left-auto lg:translate-x-0"
-        >
-          <Image
-            className="max-h-[52px] w-auto p-1"
-            src={logo}
-            alt="MRUHacks Logo"
-          />
-        </Link>
-        <div className="flex items-center justify-center w-full md:hidden">
-          <Logout />
-        </div>
+    <div className="w-max md:pt-5 h-dvh flex flex-col">
+      <Link href="/" className="h-10 my-4">
+        <Image className="max-h-[52px] w-auto" src={logo} alt="MRUHacks Logo" />
+      </Link>
+      <div className="space-y-5 overflow-y-auto pt-5 text-nowrap">
         <ul>
           <MenuHeader>My MRUHacks</MenuHeader>
           <MenuItem href="/dashboard">
@@ -92,14 +82,45 @@ const Items = async () => {
                 Stats
               </MenuItem>
             ) : null}
+            {super_admin && (
+              <MenuItem href="/admin/permissions">
+                <FaIdBadge />
+                Permissions
+              </MenuItem>
+            )}
+            {super_admin && (
+              <MenuItem href="/admin/flags">
+                <FaFlag />
+                User Flags
+              </MenuItem>
+            )}
+          </span>
+          <span>
+            <MenuHeader>Useful Links</MenuHeader>
+            <MenuItem href="https://discord.gg/nuJKBcaCKq">
+              <DiscordLogoIcon />
+              Discord
+            </MenuItem>
+            <MenuItem href="https://mruhacks.notion.site/Hackerpack-426b5b28cc0a4b069deb0f64f26af37a?pvs=74">
+              <NotionLogoIcon />
+              Hacker Pack
+            </MenuItem>
+            <MenuItem href="https://www.instagram.com/mruhacks/">
+              <InstagramLogoIcon />
+              Instagram
+            </MenuItem>
+            <MenuItem href="mailto:hello@mruhacks.ca">
+              <FaEnvelope />
+              Contact Us
+            </MenuItem>
           </span>
         </ul>
       </div>
-      <div className="flex flex-col pt-4">
+      <div className="flex flex-col pt-4 mt-auto">
         <Suspense>
           <Profile />
         </Suspense>
-        <div className="flex items-center space-x-4 py-4 border-t mt-4">
+        <div className="flex items-center border-t my-2">
           <Logout className="flex-1 w-full" />
         </div>
       </div>
@@ -107,32 +128,16 @@ const Items = async () => {
   );
 };
 
-const Mobile = async () => {
-  const has_perms = !!((await get_perms()).data?.length ?? 0 > 0);
-
+const Mobile = () => {
   return (
-    <div className="bg-background md:hidden flex flex-row p-4 border mb-0">
-      <Suspense>
-        <div className="w-full flex flex-row justify-between items-center">
-          <div className="flex-1 h-full flex flex-row space-x-4 justify-around items-center text-xl">
-            <Link href="/dashboard">
-              <FaHome />
-              <VisuallyHidden>Dashboard</VisuallyHidden>
-            </Link>
-            <Link href="/dashboard/apply">
-              <FaAddressBook />
-              <VisuallyHidden>Application</VisuallyHidden>
-            </Link>
-            {has_perms ? (
-              <Link href="/admin">
-                <FaShieldAlt />
-                <VisuallyHidden>Admin</VisuallyHidden>
-              </Link>
-            ) : null}
-          </div>
-        </div>
-      </Suspense>
-    </div>
+    <Sheet>
+      <SheetTrigger className="md:hidden block">
+        <HamburgerMenuIcon />
+      </SheetTrigger>
+      <SheetContent side="left" className="p-0 px-4 h-svh w-min">
+        <Items />
+      </SheetContent>
+    </Sheet>
   );
 };
 

@@ -116,7 +116,7 @@ export default function Home() {
           </p>
           <p className="text-text text-md w-full text-left px-2 leading-10 max-w-screen-sm mx-auto z-30 xl:max-w-screen-md">
             This October, join up to 150 hackers in the Riddell Library and
-            Learning Center for a hackathon experience like no other. Discover a
+            Learning Centre for a hackathon experience like no other. Discover a
             community of like-minded designers, developers, programmers, and
             tech enthusiasts. Connect and engage with experienced software
             engineer industry mentors, and enjoy free food throughout the event.
@@ -393,7 +393,7 @@ function AboutLayer() {
           </p>
           <p className="text-text text-lg w-full text-left px-2 md:text-center leading-10 xl:leading-[2.75rem] max-w-screen-sm mx-auto z-30 xl:max-w-screen-md">
             This October, join up to 150 hackers in the Riddell Library and
-            Learning Center for a hackathon experience like no other. Discover a
+            Learning Centre for a hackathon experience like no other. Discover a
             community of like-minded designers, developers, programmers, and
             tech enthusiasts. Connect and engage with experienced software
             engineer industry mentors, and enjoy free food throughout the event.

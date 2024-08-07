@@ -2,7 +2,7 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { DataTableColumnHeader } from "./sortable_header";
 import { Badge } from "@/components/ui/badge";
-import { Check, ListFilter, MoreHorizontal } from "lucide-react";
+import { ListFilter, MoreHorizontal } from "lucide-react";
 import {
   DropdownMenuItem,
   DropdownMenuSeparator,
@@ -13,14 +13,11 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { DropdownMenuLabel } from "@/components/ui/dropdown-menu";
-import { Checkbox } from "@radix-ui/react-checkbox";
 import Link from "next/link";
 
-type Application = {
-  user_id: string;
-  first_name: string;
-  last_name: string;
-};
+import { Database } from "@/types/supabase";
+
+type Application = Database["public"]["Views"]["application_status"]["Row"];
 
 export const columns: ColumnDef<Application>[] = [
   {

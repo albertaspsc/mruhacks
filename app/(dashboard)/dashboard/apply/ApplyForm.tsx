@@ -367,20 +367,6 @@ export default function ApplyForm({
             options={options.gender}
             required
           />
-          <SelectInput
-            label="Race"
-            name="race"
-            form={form}
-            options={options.race}
-            required
-          />
-          <SelectInput
-            label="Ethnicity"
-            name="ethnicity"
-            form={form}
-            options={options.ethnicity}
-            required
-          />
           <DietaryRestrictions form={form} disabled={loading} />
           <TextInput
             label="Additional Information"
@@ -416,16 +402,14 @@ export default function ApplyForm({
             required
           />
           <TextInput
-            label="Hackathon Experience"
+            label="How many hackathons have you attended?"
             name="hackathons"
             form={form}
-            description="Please enter the number of hackathons you have attended."
             number
             required
           />
           <SelectInput
-            label="Software Experience"
-            description="Rate your experience in software development."
+            label="How would you rate your experience in software development."
             name="software_exp"
             form={form}
             options={options.experience_level}

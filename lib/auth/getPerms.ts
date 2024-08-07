@@ -6,10 +6,12 @@ export async function is_admin() {
   const userInfo = await getUserInfo();
   const supabase = createClient();
 
+  if (!userInfo) return false;
+
   const { count } = await supabase
     .from("permissions")
     .select("", { count: "exact", head: true })
-    .eq("user_id", userInfo?.id);
+    .eq("user_id", userInfo.id);
 
   return !!count && count > 0;
 }
