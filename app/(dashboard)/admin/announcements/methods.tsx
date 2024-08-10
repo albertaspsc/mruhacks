@@ -9,9 +9,9 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { schema } from "./AnnouncementForm";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
+import { schema } from "./lib";
 
 export const MethodSelector = ({
   form,

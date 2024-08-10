@@ -1,4 +1,5 @@
 "use server";
+
 import { redirect } from "next/navigation";
 import { getCallbackUrl } from "../getCallbackUrl";
 import { createClient } from "../supabase/server";
@@ -10,7 +11,7 @@ export default async function signInWithGithub() {
     provider: "google",
     options: {
       // passes the desired redirect as a new param
-      redirectTo: getCallbackUrl("dashboard/apply"),
+      redirectTo: getCallbackUrl("dashboard"),
     },
   });
 

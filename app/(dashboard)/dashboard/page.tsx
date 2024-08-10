@@ -104,7 +104,7 @@ export default async function Page() {
           </div>
           <hr className="py-5" />
           <div className="lg:flex flex-row-reverse justify-around">
-            <Section className="h-fit lg:w-[48%]">
+            <Section className="lg:w-[48%] h-full">
               <SectionTitle>Announcements</SectionTitle>
               <AnnouncementCards />
             </Section>

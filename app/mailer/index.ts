@@ -1,5 +1,4 @@
 import nodemailer from "nodemailer";
-import { readFile } from "fs/promises";
 import { convert } from "html-to-text";
 import SMTPTransport from "nodemailer/lib/smtp-transport";
 

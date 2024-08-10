@@ -4,7 +4,6 @@ import { cn } from "@/lib/utils";
 import { AnnouncementForm } from "./AnnouncementForm";
 import Announcements from "./AnnouncementCards";
 import { createClient } from "@/lib/supabase/server";
-import getUserInfo from "@/lib/auth/getUserInfo";
 
 function SectionTitle({
   children,
@@ -72,7 +71,7 @@ export default function Page() {
           <Section className="row-span-1">
             <SectionTitle>Make an Announcement</SectionTitle>
             <Card className="flex items-center justify-center h h-auto p-6 my-4">
-              <AnnouncementForm formSubmit={formSubmit} />
+              <AnnouncementForm />
             </Card>
           </Section>
           <Section className="row-span-1">

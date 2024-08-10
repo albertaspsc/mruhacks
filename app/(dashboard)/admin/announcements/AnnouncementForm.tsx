@@ -16,18 +16,12 @@ import {
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { MethodSelector } from "./methods";
-import { createClient } from "@/lib/supabase/client";
+import { handleAnnouncementSubmit } from "./handleSubmit";
+import { schema } from "./lib";
 
-export const schema = z.object({
-  title: z.string().min(1, { message: "Announcement Must Have Title" }),
-  message: z.string().min(10),
-  submission_methods: z.array(z.enum(["Discord", "Email"]), {
-    message: "Distribution Method Required",
-  }),
-});
+export type AnnouncementSubmission = z.infer<typeof schema>;
 
 export function AnnouncementForm() {
-  const client = createClient();
   const form = useForm<z.infer<typeof schema>>({
     resolver: zodResolver(schema),
     defaultValues: {
@@ -36,15 +30,12 @@ export function AnnouncementForm() {
     },
   });
 
-  function onSubmit(values: z.infer<typeof schema>) {
-    client
-      .from("announcements")
-      .insert({
-        ...values,
-      })
-      .then((res) => {
-        console.log(res);
-      });
+  const { title, message } = form.watch();
+
+  function onSubmit(values: AnnouncementSubmission) {
+    handleAnnouncementSubmit(values).then(() => {
+      // TODO : toast, and reload page data
+    });
   }
 
   return (
