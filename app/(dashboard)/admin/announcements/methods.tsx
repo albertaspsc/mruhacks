@@ -1,9 +1,7 @@
 import { Checkbox } from "@/components/ui/checkbox";
 import React from "react";
 import {
-  Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -19,7 +17,6 @@ export const MethodSelector = ({
   form: ReturnType<typeof useForm<z.infer<typeof schema>>>;
 }) => (
   <FormItem>
-    <FormLabel className="text-lg">Methods</FormLabel>
     <div className="flex flex-row space-x-5">
       {Object.keys(schema.shape.submission_methods.element.enum).map((key) => (
         <FormField
@@ -48,9 +45,6 @@ export const MethodSelector = ({
         />
       ))}
     </div>
-    <FormDescription>
-      These methods will be used to notify participants
-    </FormDescription>
     <FormMessage />
   </FormItem>
 );

@@ -1,19 +1,13 @@
 import React from "react";
 import MDEditor from "@uiw/react-md-editor";
 import rehypeSanitize from "rehype-sanitize";
-import {
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
+import { FormField, FormItem, FormMessage } from "@/components/ui/form";
 
 export const Editor = () => (
   <FormField
     name="message"
     render={({ field }) => (
       <FormItem>
-        <FormLabel className="text-lg">Announcements Body</FormLabel>
         <MDEditor
           value={field.value}
           onChange={field.onChange}

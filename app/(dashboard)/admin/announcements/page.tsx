@@ -33,32 +33,6 @@ const Section = ({
 );
 
 export default function Page() {
-  const formSubmit = async (data: object) => {
-    "use server";
-    const supabase = createClient();
-    const { error } = await supabase
-      .from("announcements")
-      .insert({
-        subject: data.title,
-        message: data.content,
-        discord: data.discord,
-        email: data.email,
-      })
-      .select();
-
-    if (data.discord) {
-      let messageContent = "# " + data.title + "\n\n" + data.content;
-      await fetch(process.env.DISCORD_HOOK, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          content: messageContent,
-          username: "AnnouncementBot",
-        }),
-      });
-    }
-  };
-
   return (
     <Card>
       <CardHeader>
