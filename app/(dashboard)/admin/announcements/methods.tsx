@@ -1,35 +1,43 @@
 import { Checkbox } from "@/components/ui/checkbox";
-import React from "react";
+import React, { ReactNode } from "react";
 import {
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { z } from "zod";
+import { Schema, z } from "zod";
 import { useForm } from "react-hook-form";
 import { schema } from "./lib";
 
-export const MethodSelector = ({
+type ArrayOfEnumsKeys<T> = {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  [K in keyof T]: T[K] extends z.ZodArray<z.ZodEnum<any>> ? K : never;
+}[keyof T];
+
+export const FieldSelector = ({
   form,
+  children,
+  field,
 }: {
   form: ReturnType<typeof useForm<z.infer<typeof schema>>>;
+  children?: ReactNode;
+  field: ArrayOfEnumsKeys<typeof schema.shape>;
 }) => (
   <FormItem>
     <div className="flex flex-row space-x-5">
-      {Object.keys(schema.shape.submission_methods.element.enum).map((key) => (
+      {Object.keys(schema.shape[field].element.enum).map((key) => (
         <FormField
           key={key}
           control={form.control}
-          name="submission_methods"
+          name={field}
           render={({ field }) => (
-            <FormItem className="flex flex-row items-center space-x-3 space-y-0 ">
+            <div className="flex items-center space-x-2">
               <FormControl>
                 <Checkbox
-                  checked={field.value?.includes(
-                    key as (typeof field.value)[number],
-                  )}
+                  checked={field.value?.includes(key as never)}
                   onCheckedChange={(checked) =>
                     checked
                       ? field.onChange([...(field.value ?? []), key])
@@ -40,11 +48,12 @@ export const MethodSelector = ({
                 />
               </FormControl>
               <FormLabel className="font-normal">{key}</FormLabel>
-            </FormItem>
+            </div>
           )}
         />
       ))}
     </div>
+    <FormDescription>{children}</FormDescription>
     <FormMessage />
   </FormItem>
 );

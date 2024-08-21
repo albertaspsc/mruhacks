@@ -2,22 +2,24 @@
 
 import { Input } from "@/components/ui/input";
 import { Editor } from "./Editor";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { z } from "zod";
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
+  FormLabel,
   FormMessage,
 } from "@/components/ui/form";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { MethodSelector } from "./methods";
+import { FieldSelector } from "./methods";
 import { handleAnnouncementSubmit } from "./handleSubmit";
 import { schema } from "./lib";
-import AnnouncementConfirm from "./AnnouncementConfirm";
 import { Button } from "@/components/ui/button";
+import { toast } from "@/components/ui/use-toast";
 export type AnnouncementSubmission = z.infer<typeof schema>;
 
 export const FormSection = ({
@@ -39,34 +41,61 @@ export const FormSection = ({
 );
 
 export function AnnouncementForm() {
+  const [sending, setSending] = useState(false);
   const form = useForm<z.infer<typeof schema>>({
     resolver: zodResolver(schema),
     defaultValues: {
-      title: "",
-      message: "",
+      title: "Testing Title",
+      message: `**A superlong test message.....**
+
+# Heading
+> Block
+
+\`\`\`python
+code
+\`\`\`\`
+`,
+      submission_methods: ["Email", "Discord"],
+      test_options: ["Test Announcement", "Send Locally"],
     },
   });
 
-  const { title, message } = form.watch();
-
   function onSubmit(values: AnnouncementSubmission) {
-    handleAnnouncementSubmit(values).then(() => {
-      // TODO : toast, and reload page data
+    if (sending) return;
+    setSending(true);
+
+    handleAnnouncementSubmit(values).then((response) => {
+      toast({
+        title: response.ok ? "Posted Announcement" : "Failed With Error",
+        description: response.ok ?? response.error,
+      });
+
+      if (response.ok) {
+        form.reset();
+      }
+
+      setSending(false);
     });
   }
 
+  const disableFormClasses = sending ? "pointer-events-none opacity-50" : "";
+
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="w-full">
-        <FormSection
-          title="Announcement Title"
-          description="This will be included in Discord messages, as well as used for email subject lines."
-        >
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className={`w-full ${disableFormClasses}`}
+      >
+        <FormSection title="Announcement Title">
           <FormField
             control={form.control}
             name="title"
             render={({ field }) => (
               <FormItem>
+                <FormDescription>
+                  This will be included in Discord messages, as well as used for
+                  email subject lines
+                </FormDescription>
                 <FormControl>
                   <Input placeholder="Announcement Subject" {...field} />
                 </FormControl>
@@ -78,13 +107,26 @@ export function AnnouncementForm() {
         <FormSection title="Announcement Content" description="">
           <Editor />
         </FormSection>
-        <FormSection
-          title="Announcement Type"
-          description="These methods will be used to notify participants."
-        >
-          <MethodSelector form={form} />
+        <FormSection title="Announcement Settings">
+          <FormItem>
+            <FormLabel>Delivery Methods</FormLabel>
+            <FieldSelector form={form} field="submission_methods" />
+          </FormItem>
+          <FormItem>
+            <FormLabel>Testing Option(s)</FormLabel>
+            <FieldSelector form={form} field="test_options">
+              <>
+                <strong>Test Announcement</strong> Controls if this announcement
+                will only be sent on private testing channels and or your own
+                email(s)
+                <br />
+                <strong>Send Locally</strong> Will send email over dev email
+                server
+              </>
+            </FieldSelector>
+          </FormItem>
         </FormSection>
-        <AnnouncementConfirm />
+        <Button role="submit">Send</Button>
       </form>
     </Form>
   );

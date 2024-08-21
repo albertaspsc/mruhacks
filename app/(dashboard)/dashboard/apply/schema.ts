@@ -3,7 +3,7 @@ import { assert } from "console";
 import { record, z } from "zod";
 
 // This is ugly, but zod requires this type
-type MinLengthArray = [string, ...string[]];
+export type MinLengthArray = [string, ...string[]];
 
 export const options = {
   race: [

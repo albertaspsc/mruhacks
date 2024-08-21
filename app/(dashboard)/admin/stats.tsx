@@ -1,8 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { createClient } from "@/lib/supabase/server";
 import { DemographicChart } from "./charts";
-import { get_perms } from "@/lib/auth/getPerms";
-import { Database } from "@/types/supabase";
+import { checkUserPerm, get_perms } from "@/lib/auth/getPerms";
 
 async function MapToChart({
   supabase,
@@ -37,23 +36,15 @@ async function MapToChart({
 export const Demographics = async () => {
   const supabase = createClient();
 
-  const { data, error } = await get_perms();
+  const can_view_demographics = await checkUserPerm("can_view_demographics");
 
-  if (!data || error) {
-    console.error(error);
-    return;
-  }
-
-  const { super_admin, can_view_demographics } = data[0];
-
-  const demographic_views =
-    super_admin || can_view_demographics
-      ? [
-          { name: "gender_demographics" },
-          { name: "race_demographics" },
-          { name: "ethnicity_count" },
-        ]
-      : [];
+  const demographic_views = can_view_demographics
+    ? [
+        { name: "gender_demographics" },
+        { name: "race_demographics" },
+        { name: "ethnicity_count" },
+      ]
+    : [];
 
   return (
     <Card className="flex-1">
@@ -74,14 +65,8 @@ export const Demographics = async () => {
 export async function AggView() {
   const supabase = createClient();
 
-  const { data, error } = await get_perms();
-
-  if (!data || error) {
-    console.error(error);
-    return;
-  }
-
-  const { super_admin, can_view_user_details, can_view_agg_stats } = data[0];
+  const { super_admin, can_view_user_details, can_view_agg_stats } =
+    (await get_perms()) ?? {};
 
   const agg_views =
     super_admin || can_view_agg_stats || can_view_user_details

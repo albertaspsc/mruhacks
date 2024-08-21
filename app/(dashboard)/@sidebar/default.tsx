@@ -16,34 +16,19 @@ import {
   InstagramLogoIcon,
   NotionLogoIcon,
 } from "@radix-ui/react-icons";
-import { get_perms } from "@/lib/auth/getPerms";
+import { get_perms, Perms } from "@/lib/auth/getPerms";
 import Profile from "../profile";
 import Link from "next/link";
 import Image from "next/image";
 import logo from "@/public/mru_title_dark.png";
 import { SheetTrigger, Sheet, SheetContent } from "@/components/ui/sheet";
-import { Mail } from "lucide-react";
 
 const MenuHeader = ({ children }: { children: ReactNode }) => (
   <li className="last:hidden mt-4 block text-primary font-bold">{children}</li>
 );
 
 const Items = async () => {
-  const { data, error } = await useMemo(() => {
-    return get_perms();
-  }, []);
-  if (error) console.error(error);
-
-  // This is a bit convoluted, but in effect the can_* will be set to true for
-  // if the user is super_admin, otherwise it will the value in database or false
-  // by default
-  const { super_admin = false } = data?.[0] ?? {};
-  const {
-    can_view_user_details = super_admin,
-    can_view_demographics = super_admin,
-    can_view_agg_stats = super_admin,
-    can_make_announcements = super_admin,
-  } = super_admin ? {} : data?.[0] ?? {};
+  const perm = await get_perms();
 
   return (
     <div className="flex flex-col justify-start  h-screen w-max">
@@ -69,31 +54,31 @@ const Items = async () => {
             <MenuHeader>Admin</MenuHeader>
             {/* These don't control perms!! if the user navigates to here 
               they will only get data about themselves */}
-            {can_make_announcements ? (
+            {perm?.can_make_announcements && (
               <MenuItem href="/admin/announcements">
                 <FaEnvelope />
                 Announcements
               </MenuItem>
-            ) : null}
-            {can_view_user_details ? (
+            )}
+            {perm?.can_view_user_details && (
               <MenuItem href="/admin/applications">
                 <FaWpforms />
                 Applications
               </MenuItem>
-            ) : null}
-            {can_view_demographics ? (
+            )}
+            {perm?.can_view_demographics && (
               <MenuItem href="/admin/demographics">
                 <FaPeopleArrows />
                 Demographics
               </MenuItem>
-            ) : null}
-            {can_view_agg_stats ? (
+            )}
+            {perm?.can_view_agg_stats && (
               <MenuItem href="/admin/stats">
                 <FaChartPie />
                 Stats
               </MenuItem>
-            ) : null}
-            {super_admin && (
+            )}
+            {perm?.super_admin && (
               <MenuItem href="/admin/permissions">
                 <FaIdBadge />
                 Permissions

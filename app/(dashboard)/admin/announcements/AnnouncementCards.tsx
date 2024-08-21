@@ -1,19 +1,15 @@
+import { Database } from "@/types/supabase";
 import { AnnouncementCard } from "./AnnouncementCard";
 import { createClient } from "@/lib/supabase/server";
 
-export type Announcement = {
-  created_at: string;
-  subject: string;
-  id: string;
-  message: string;
-};
+export type Announcement = Database["public"]["Tables"]["announcements"]["Row"];
 
 const AnnouncementCards = async () => {
   const supabase = createClient();
 
   const { data } = await supabase
     .from("announcements")
-    .select("created_at, subject, id,message")
+    .select()
     .order("created_at", { ascending: false });
 
   return (

@@ -12,27 +12,115 @@ export type Database = {
       announcements: {
         Row: {
           created_at: string
-          discord: boolean | null
-          email: boolean
+          date_created: string
           id: string
           message: string
-          subject: string
+          pending: boolean
+          submission_methods: string[] | null
+          test_options: string[] | null
+          title: string
         }
         Insert: {
           created_at?: string
-          discord?: boolean | null
-          email?: boolean
+          date_created?: string
           id?: string
           message?: string
-          subject?: string
+          pending?: boolean
+          submission_methods?: string[] | null
+          test_options?: string[] | null
+          title?: string
         }
         Update: {
           created_at?: string
-          discord?: boolean | null
-          email?: boolean
+          date_created?: string
           id?: string
           message?: string
-          subject?: string
+          pending?: boolean
+          submission_methods?: string[] | null
+          test_options?: string[] | null
+          title?: string
+        }
+        Relationships: []
+      }
+      email_unsubscribe: {
+        Row: {
+          announcement_cause: string | null
+          created_at: string
+          user_id: string
+        }
+        Insert: {
+          announcement_cause?: string | null
+          created_at?: string
+          user_id?: string
+        }
+        Update: {
+          announcement_cause?: string | null
+          created_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "email_unsubscribe_announcement_cause_fkey"
+            columns: ["announcement_cause"]
+            isOneToOne: false
+            referencedRelation: "announcements"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "email_unsubscribe_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: true
+            referencedRelation: "account_flags"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "email_unsubscribe_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: true
+            referencedRelation: "application_status"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "email_unsubscribe_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: true
+            referencedRelation: "named_users"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "email_unsubscribe_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: true
+            referencedRelation: "user_info"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "email_unsubscribe_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: true
+            referencedRelation: "users"
+            referencedColumns: ["user_id"]
+          },
+        ]
+      }
+      endpoint: {
+        Row: {
+          env_kind: Database["public"]["Enums"]["env_type"]
+          id: number
+          name: string
+          value: string
+        }
+        Insert: {
+          env_kind: Database["public"]["Enums"]["env_type"]
+          id?: number
+          name: string
+          value: string
+        }
+        Update: {
+          env_kind?: Database["public"]["Enums"]["env_type"]
+          id?: number
+          name?: string
+          value?: string
         }
         Relationships: []
       }
@@ -170,11 +258,11 @@ export type Database = {
       permissions: {
         Row: {
           can_do_event_checkin: boolean
-          can_make_announcements: boolean | null
+          can_make_announcements: boolean
           can_modify_account_flags: boolean
           can_modify_events: boolean
-          can_view_agg_stats: boolean | null
-          can_view_demographics: boolean | null
+          can_view_agg_stats: boolean
+          can_view_demographics: boolean
           can_view_user_details: boolean
           created_at: string
           super_admin: boolean
@@ -182,11 +270,11 @@ export type Database = {
         }
         Insert: {
           can_do_event_checkin?: boolean
-          can_make_announcements?: boolean | null
+          can_make_announcements?: boolean
           can_modify_account_flags?: boolean
           can_modify_events?: boolean
-          can_view_agg_stats?: boolean | null
-          can_view_demographics?: boolean | null
+          can_view_agg_stats?: boolean
+          can_view_demographics?: boolean
           can_view_user_details?: boolean
           created_at?: string
           super_admin?: boolean
@@ -194,11 +282,11 @@ export type Database = {
         }
         Update: {
           can_do_event_checkin?: boolean
-          can_make_announcements?: boolean | null
+          can_make_announcements?: boolean
           can_modify_account_flags?: boolean
           can_modify_events?: boolean
-          can_view_agg_stats?: boolean | null
-          can_view_demographics?: boolean | null
+          can_view_agg_stats?: boolean
+          can_view_demographics?: boolean
           can_view_user_details?: boolean
           created_at?: string
           super_admin?: boolean
@@ -611,6 +699,12 @@ export type Database = {
         }
         Relationships: []
       }
+      subscribed_emails: {
+        Row: {
+          email: string | null
+        }
+        Relationships: []
+      }
       university_count: {
         Row: {
           count: number | null
@@ -640,6 +734,8 @@ export type Database = {
       }
       user_permissions: {
         Row: {
+          can_do_event_checkin: boolean | null
+          can_make_announcements: boolean | null
           can_modify_account_flags: boolean | null
           can_modify_events: boolean | null
           can_view_agg_stats: boolean | null
@@ -708,6 +804,31 @@ export type Database = {
           is_lead: boolean
         }[]
       }
+      can_send_emails: {
+        Args: Record<PropertyKey, never>
+        Returns: boolean
+      }
+      count_subscribed_users: {
+        Args: Record<PropertyKey, never>
+        Returns: number
+      }
+      generate_usub_sig: {
+        Args: {
+          email: string
+          uuid: string
+        }
+        Returns: string
+      }
+      get_usub_signatures: {
+        Args: {
+          uuid: string
+        }
+        Returns: {
+          email: string
+          sig: string
+          anc_uuid: string
+        }[]
+      }
       gtrgm_compress: {
         Args: {
           "": unknown
@@ -774,9 +895,17 @@ export type Database = {
         }
         Returns: string[]
       }
+      unsubscribe_email: {
+        Args: {
+          in_email: string
+          in_uuid: string
+          in_sig: string
+        }
+        Returns: undefined
+      }
     }
     Enums: {
-      [_ in never]: never
+      env_type: "prod" | "dev" | "testing"
     }
     CompositeTypes: {
       [_ in never]: never
