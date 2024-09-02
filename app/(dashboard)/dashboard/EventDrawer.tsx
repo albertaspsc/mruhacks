@@ -12,15 +12,25 @@ import {
 } from "@/components/ui/drawer";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-
-export function EventDrawer({ event }) {
+import { type Event } from "@/lib/events/events";
+export function EventDrawer(event: Event) {
   const [open, setOpen] = useState(false);
 
+  const dateOptions = {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  };
+  const timeOptions = {
+    hour: "numeric",
+    minute: "2-digit",
+  };
   return (
     <Card className="my-4">
       <CardContent className="flex flex-row justify-between items-center h h-auto p-4">
         <div>{event.title}</div>
-        <div>{event.start}</div>
+        <div>{event.startDate.toLocaleDateString("en-us", dateOptions)}</div>
         <Drawer open={open} onOpenChange={setOpen}>
           <DrawerTrigger asChild>
             <Button variant="outline">View Details</Button>
@@ -29,8 +39,15 @@ export function EventDrawer({ event }) {
             <DrawerHeader className="text-left">
               <DrawerTitle>{event.title}</DrawerTitle>
               <DrawerDescription>
-                <DrawerDescription className="font-semibold text-black">
-                  {event.start} - {event.end} - {event.location}
+                {event.startDate.toLocaleDateString("en-us", dateOptions)}
+              </DrawerDescription>
+              <DrawerDescription>
+                <DrawerDescription className="flex flex-row justify-between font-semibold text-black">
+                  <div>
+                    {event.startDate.toLocaleTimeString("en-us", timeOptions)} -{" "}
+                    {event.endDate.toLocaleTimeString("en-us", timeOptions)}
+                  </div>
+                  <div>{event.location}</div>
                 </DrawerDescription>
                 {event.description}
               </DrawerDescription>
@@ -38,12 +55,14 @@ export function EventDrawer({ event }) {
             <DrawerFooter className="pt-2">
               <DrawerClose asChild>
                 <div className="flex flex-col space-y-2">
-                  <Button
-                    variant="default"
-                    className="text-white font-semibold"
-                  >
-                    Register
-                  </Button>
+                  <a href={event.registration} target="_blank">
+                    <Button
+                      variant="default"
+                      className="text-white font-semibold w-full"
+                    >
+                      Register
+                    </Button>
+                  </a>
                   <Button variant="outline">Close</Button>
                 </div>
               </DrawerClose>

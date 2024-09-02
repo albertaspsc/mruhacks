@@ -49,6 +49,7 @@
     "embla-carousel-react": "^8.1.5",
     "emitter": "^0.0.5",
     "html-to-text": "^9.0.5",
+    "ics": "^3.7.6",
     "juice": "^10.0.0",
     "lodash": "^4.17.21",
     "lucide-react": "^0.383.0",
