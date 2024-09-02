@@ -55,8 +55,8 @@ export function AnnouncementForm() {
 code
 \`\`\`\`
 `,
-      submission_methods: ["Email", "Discord"],
-      test_options: ["Test Announcement", "Send Locally"],
+      submission_methods: ["Discord"],
+      test_options: ["Test Announcement"],
     },
   });
 

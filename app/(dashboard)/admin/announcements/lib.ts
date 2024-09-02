@@ -17,10 +17,10 @@ export const schema = z.object({
   message: z.string().min(10).max(MAX_MESSAGE_LEN, {
     message: "Message Too Long",
   }),
-  submission_methods: z.array(z.enum(["Discord", "Email"]), {
+  submission_methods: z.array(z.enum(["Discord"]), {
     message: "Distribution Method Required",
   }),
-  test_options: z.array(z.enum(["Test Announcement", "Send Locally"]), {
+  test_options: z.array(z.enum(["Test Announcement"]), {
     message: "Distribution Method Required",
   }),
 });

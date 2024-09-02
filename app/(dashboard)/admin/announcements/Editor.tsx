@@ -20,11 +20,11 @@ export const Editor = () => (
           <FormDescription>
             Please Note: Style,Script and Table Tags are{" "}
             <strong>not allowed</strong> here they will either be stripped
-            entrily or rendered as literal text. <br />
+            entirely or rendered as literal text. <br />
             This will be sent to discord, while we have done our best to ensure
-            that previews here are accurate this may not be entrily faithful.
-            Please use the &apos;stest annoucment&apos; feature to ensure
-            you&apos;re annoucment looks appropriate
+            that previews here are accurate this may not be entirely faithful.
+            Please use the &apos;test announcement&apos; feature to ensure your
+            announcement looks appropriate
           </FormDescription>
           <MDEditor
             previewOptions={{

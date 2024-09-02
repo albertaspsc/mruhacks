@@ -39,8 +39,10 @@ export async function handleAnnouncementSubmit(
     results.push(sendDiscordNotification(values));
   }
 
-  if (values.submission_methods.includes("Email")) {
+  {
+    /* if (values.submission_methods.includes("Email")) {
     results.push(sendEmailNotification(values, id));
+  } */
   }
 
   await Promise.all(results);
@@ -89,7 +91,8 @@ async function sendDiscordNotification(values: Schema) {
   });
 }
 
-async function sendEmailNotification(values: Schema, id: string) {
+{
+  /* async function sendEmailNotification(values: Schema, id: string) {
   "use server";
   const supabase = createClient();
   const transporter = createEmailTransporter(values.test_options);
@@ -103,10 +106,10 @@ async function sendEmailNotification(values: Schema, id: string) {
   // infred using the .map().filter() chain
   function defined<T>(x: T | null | undefined): x is T {
     return !!x;
-  }
+  } 
 
   // If this is test Announcement we only send this to the user themselves
-  const emails =
+ const emails =
     (isTestAnnoucment
       ? [(await getUserInfo())?.email]
       : fetchedEmails?.map((x) => x.email)
@@ -129,9 +132,11 @@ async function sendEmailNotification(values: Schema, id: string) {
       })
       .then((x) => console.log(x));
   }
+} */
 }
 
-async function createEmailTransporter(options: Schema["test_options"]) {
+{
+  /* async function createEmailTransporter(options: Schema["test_options"]) {
   const smtp_config = z.object({
     SMTP_HOST: z.string(),
     SMTP_PORT: z.coerce.number(),
@@ -173,6 +178,7 @@ async function createEmailTransporter(options: Schema["test_options"]) {
       pass: config.SMTP_PASSWORD,
     },
   });
+} */
 }
 
 import { Email as NotificationTemplate } from "./email_template";
