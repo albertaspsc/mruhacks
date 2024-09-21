@@ -7,7 +7,8 @@ import getUserInfo from "@/lib/auth/getUserInfo";
 import { createClient } from "@/lib/supabase/server";
 import { Suspense } from "react";
 
-export const RegisterText = () => {
+{
+  /* export const RegisterText = () => {
   const get_text = async () => {
     const supabase = createClient();
 
@@ -34,10 +35,11 @@ export const RegisterText = () => {
   };
 
   return <Suspense fallback="Register Now!">{get_text()}</Suspense>;
-};
+}; */
+}
 
-export default async function Welcome() {
-  const userInfo = await getUserInfo();
+export default function Welcome() {
+  // const userInfo = await getUserInfo();
 
   return (
     <div
@@ -63,8 +65,9 @@ export default async function Welcome() {
         className="h-16 min-h-16 px-5 text-lg"
         asChild
       >
-        <Link href="/dashboard/apply">
-          <RegisterText />
+        <Link href="https://forms.gle/zcKry96wHj94FyZ96">
+          {/* <RegisterText /> */}
+          Register Now!
         </Link>
       </Button>
     </div>

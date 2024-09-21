@@ -4,18 +4,20 @@ import { FaBars } from "react-icons/fa";
 import Logo from "../public/mru_title_light.png";
 import { Button } from "./ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
-import AdminLink from "./AdminLink";
+// import AdminLink from "./AdminLink";
 import { createClient } from "@/lib/supabase/server";
 
 export default async function Header() {
-  const client = createClient();
+  {
+    /* const client = createClient();
   const getSession = async () => {
     const session = await client.auth.getSession();
     return session;
   };
 
   const isLoggedIn = (await getSession()).data.session !== null;
-
+*/
+  }
   const DropDown = () => (
     <Popover>
       <PopoverTrigger asChild>
@@ -25,13 +27,13 @@ export default async function Header() {
       </PopoverTrigger>
       <PopoverContent className="bg-secondary w-min outline-none border-none m-1 mt-0">
         <div className="flex flex-col bg-secondary [&>*]:text-nowrap text-base-100 space-y-1">
-          <AdminLink />
+          {/* <AdminLink /> */}
           <Link href="/#home">Home</Link>
           <Link href="/#about">About MRUHacks</Link>
           <Link href="/#fLinkq">FAQs</Link>
           <Link href="/#community">Our Community</Link>
           <Link href="/#sponsors">Sponsors</Link>
-          {isLoggedIn ? (
+          {/* {isLoggedIn ? (
             <Link href="/dashboard">
               <Button
                 variant="outline"
@@ -51,7 +53,7 @@ export default async function Header() {
                 Log In / Sign Up
               </Button>
             </Link>
-          )}
+          )} */}
         </div>
       </PopoverContent>
     </Popover>
@@ -76,13 +78,13 @@ export default async function Header() {
           />
         </Link>
         <div className="hidden lg:flex flex-row items-center *:px-2 pr-2">
-          <AdminLink />
+          {/* <AdminLink /> */}
           <Link href="/#home">Home</Link>
           <Link href="/#about">About MRUHacks</Link>
           <Link href="/#fLinkq">FAQs</Link>
           <Link href="/#community">Our Community</Link>
           <Link href="/#sponsors">Sponsors</Link>
-          {isLoggedIn ? (
+          {/* {isLoggedIn ? (
             <Link href="/dashboard">
               <Button
                 variant="outline"
@@ -102,7 +104,7 @@ export default async function Header() {
                 Log In / Sign Up
               </Button>
             </Link>
-          )}
+          )} */}
         </div>
       </div>
     </nav>

@@ -19,7 +19,7 @@ export default function Home() {
         <Section
           image={welcomeImage}
           title="Welcome to MRUHacks"
-          body="This October, join up to 150 hackers in the Riddell Library and Learning Center for a hackathon experience like no other. Discover a community of like-minded designers, developers, programmers, and tech enthusiasts. Connect and engage with experienced software engineer industry mentors, and enjoy free food throughout the event. At MRUHacks, the participant experience comes first. Experience engaging workshops, exciting activities before and during the event, and have the chance to network with not only companies but your fellow hackers."
+          body="This October, join up to 150 hackers in the Riddell Library and Learning Centre for a hackathon experience like no other. Discover a community of like-minded designers, developers, programmers, and tech enthusiasts. Connect and engage with experienced software engineer industry mentors, and enjoy free food throughout the event. At MRUHacks, the participant experience comes first. Experience engaging workshops, exciting activities before and during the event, and have the chance to network with not only companies but your fellow hackers."
         />
         <Section
           image={aboutImage}
