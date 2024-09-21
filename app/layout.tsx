@@ -19,16 +19,16 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-  modal,
+  // modal,
 }: Readonly<{
   children: ReactNode;
-  modal: ReactNode;
+  // modal: ReactNode;
 }>) {
   return (
     <html lang="en" data-theme="mruhacks">
       <meta name="theme-color" content="#002766" />
       <body className={dm_sans.className + " bg-background"}>
-        <Suspense>{modal}</Suspense>
+        {/* <Suspense>{modal}</Suspense> */}
         {children}
         <Toaster />
       </body>
